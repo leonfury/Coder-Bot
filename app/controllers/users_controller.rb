@@ -1,4 +1,3 @@
-
 class UsersController <  Clearance::UsersController
     def new
         @user = User.new
@@ -9,7 +8,7 @@ class UsersController <  Clearance::UsersController
 
         if user.save 
             p 'user info save'
-          		redirect_to sign_in_path
+            redirect_to sign_in_path
         else
             p 'failed to save listing'
            redirect_to sign_up_path, notice: "Error signing up"
