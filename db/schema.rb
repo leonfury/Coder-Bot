@@ -10,32 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_30_084404) do
+ActiveRecord::Schema.define(version: 2019_01_30_035121) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "midpoints", force: :cascade do |t|
-    t.string "username"
-    t.string "address"
-    t.float "longtitude"
-    t.float "latitude"
-    t.string "poi"
+
+  create_table "authentications", force: :cascade do |t|
+    t.string "uid"
+    t.string "token"
+    t.string "provider"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "fname"
-    t.string "lname"
-    t.string "email"
-    t.string "address"
-    t.float "longtitude"
-    t.float "latitude"
-    t.string "poi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", limit: 128, null: false
+    t.string "confirmation_token", limit: 128
+    t.string "remember_token", limit: 128, null: false
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["remember_token"], name: "index_users_on_remember_token"
   end
+
+  add_foreign_key "authentications", "users"
 
 end

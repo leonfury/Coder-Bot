@@ -1,4 +1,5 @@
-class UsersController < ApplicationController
+
+class UsersController <  Clearance::UsersController
     def new
         @user = User.new
     end
@@ -8,14 +9,24 @@ class UsersController < ApplicationController
 
         if user.save 
             p 'user info save'
+          		redirect_to sign_in_path
         else
             p 'failed to save listing'
-            redirect_to new_user_path
+           redirect_to sign_up_path, notice: "Error signing up"
         end
     end
-
+  private
     def user_params
-        params.require(:user).permit(:fname, :lname, :email, :address, :longtitude, :latitude, :poi)
+        params.require(:user).permit(
+          :first_name, 
+          :last_name, 
+          :email, 
+          :password,
+          :address, 
+          :longtitude, 
+          :latitude, 
+          :poi
+          )
     end
-
 end
+
