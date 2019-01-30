@@ -1,0 +1,16 @@
+<div class="card" style="width: 40rem;">
+  <div class="card-body">
+    <div id="clearance" class="sign-up">
+      <h2><%= t(".title") %></h2>
+      <%= form_for @user do |form| %>
+
+      <%= render partial: '/users/form', object: form %>
+    <div class="submit-field">
+      <%= form.submit class: "btn btn-primary", role: "button"%>
+    </div>
+  </div>
+</div>
+
+  
+  <% end %>
+</div>
