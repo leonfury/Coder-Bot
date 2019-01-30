@@ -6,8 +6,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     	t.string :lname
     	t.string :email
     	t.string :address
-    	t.integer :longtitude
-      t.integer :latitude
+    	t.float :longtitude
+      t.float :latitude
       t.string :poi
 
       t.timestamps

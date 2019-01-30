@@ -4,6 +4,9 @@
 
 
 <%= form_with model: @user do |l| %>
+	<%= l.label "username" %>
+	<%= l.text_field :username %>
+	<br>
 	<%= l.label "first name" %>
 	<%= l.text_field :fname %>
 	<br>
@@ -16,13 +19,12 @@
 	<%= l.label "address" %>
 	<%= l.text_field :address %>
 	<br>
-    <div id="test">
 	<%= l.label "longtitude" %>
-	<%= l.text_field :longtitude, disabled: true %>
+	<%= l.text_field :longtitude, readonly: true %>
 	<br>
 	<%= l.label "latitude" %>
-	<%= l.text_field :latitude, disabled: true  %>
-    </div>
+	<%= l.text_field :latitude, readonly: true  %>
+	<%= l.hidden_field :poi %>
 	<%= l.submit "submit" %>
 <% end %>
 
@@ -32,12 +34,11 @@
 
 <%# getCoordinates function, get an address coordinates %>
 <script>
-	$('#test').addClass("d-none");
 	function getCoordinates(){
 		getAddress = document.getElementById('user_address').value;
 		mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
 		var client = new MapboxClient(mapboxgl.accessToken);
-		console.log(client);
+		// console.log(client);
 
 		var test = client.geocodeForward(getAddress, function(err, data, res){
 
@@ -46,6 +47,10 @@
 			// console.log(getAddress);
 			$('#user_longtitude')[0].value = coordinates[0];
 			$('#user_latitude')[0].value = coordinates[1];
+			$('#user_longtitude').value = coordinates[0];
+			$('#user_latitude').value = coordinates[1];
+			$('#user_poi')[0].value = data.features[0].id
+			
 		});
 	}
 
@@ -71,8 +76,7 @@
 
       var coordinates = data.features[0].center;
 
-      console.log(coordinates)
-      console.log(address)
+	  console.log(data.features)
 
       var map = new mapboxgl.Map({
         container: 'map',
