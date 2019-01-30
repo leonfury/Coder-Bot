@@ -1,16 +1,97 @@
-<div class="card" style="width: 40rem;">
-  <div class="card-body">
-    <div id="clearance" class="sign-up">
-      <h2><%= t(".title") %></h2>
-      <%= form_for @user do |form| %>
+<h1>Enter your information here</h1>
 
-      <%= render partial: '/users/form', object: form %>
-    <div class="submit-field">
-      <%= form.submit class: "btn btn-primary", role: "button"%>
-    </div>
-  </div>
-</div>
+<script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
 
-  
-  <% end %>
-</div>
+
+<%= form_with model: @user do |l| %>
+	<%= l.label "username" %>
+	<%= l.text_field :username %>
+	<br>
+	<%= l.label "first name" %>
+	<%= l.text_field :first_name %>
+	<br>
+	<%= l.label "last name" %>
+	<%= l.text_field :last_name %>
+	<br>
+	<%= l.label "password" %>
+	<%= l.password_field :password %>
+	<br>
+	<%= l.label "email" %>
+	<%= l.text_field :email %>
+	<br>
+	<%= l.label "address" %>
+	<%= l.text_field :address %>
+	<br>
+	<%= l.label "longtitude" %>
+	<%= l.text_field :longtitude, readonly: true %>
+	<br>
+	<%= l.label "latitude" %>
+	<%= l.text_field :latitude, readonly: true  %>
+	<%= l.hidden_field :poi %>
+	<%= l.submit "submit" %>
+<% end %>
+
+<div id="map" style="width:500px; height:500px; margin-top:300px"></div>
+
+<input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
+
+<%# getCoordinates function, get an address coordinates %>
+<script>
+	function getCoordinates(){
+		getAddress = document.getElementById('user_address').value;
+		mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+		var client = new MapboxClient(mapboxgl.accessToken);
+		// console.log(client);
+
+		var test = client.geocodeForward(getAddress, function(err, data, res){
+
+			var coordinates = data.features[0].center;
+			// console.log(coordinates);
+			// console.log(getAddress);
+			$('#user_longtitude')[0].value = coordinates[0];
+			$('#user_latitude')[0].value = coordinates[1];
+			$('#user_longtitude').value = coordinates[0];
+			$('#user_latitude').value = coordinates[1];
+			$('#user_poi')[0].value = data.features[0].id
+			
+		});
+	}
+
+</script>
+
+<%# showMap function, show the map of the address when user click on the verify address function  %>
+
+<script>
+    function showMap(){
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+    console.log(mapboxgl.accessToken);
+    var client = new MapboxClient(mapboxgl.accessToken);
+    console.log(client);
+
+    var address = document.getElementById('user_address').value;
+    var test = client.geocodeForward(address, function(err, data, res) {
+      // data is the geocoding result as parsed JSON
+      // res is the http response, including: status, headers and entity properties
+
+    //   console.log(res);
+    //   console.log(res.url);
+    //   console.log(data);
+
+      var coordinates = data.features[0].center;
+
+	  console.log(data.features)
+
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+        center: coordinates,
+        zoom: 14
+      });
+      new mapboxgl.Marker()
+        .setLngLat(coordinates)
+        .addTo(map);
+
+
+    });
+    }
+</script>

@@ -12,8 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2019_01_30_035121) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
 
   create_table "authentications", force: :cascade do |t|
     t.string "uid"
@@ -39,4 +41,5 @@ ActiveRecord::Schema.define(version: 2019_01_30_035121) do
   end
 
   add_foreign_key "authentications", "users"
+
 end
