@@ -21,8 +21,8 @@ class User < ApplicationRecord
 
    )
    
-   user.remote_avatar_url = auth_hash["info"]["image"]
-   user.save
+   # user.remote_avatar_url = auth_hash["info"]["image"]
+   # user.save
    user.authentications << authentication
    return user
     end
