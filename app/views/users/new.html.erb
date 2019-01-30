@@ -4,6 +4,9 @@
 
 
 <%= form_with model: @user do |l| %>
+	<%= l.label "username" %>
+	<%= l.text_field :username %>
+	<br>
 	<%= l.label "first name" %>
 	<%= l.text_field :fname %>
 	<br>
