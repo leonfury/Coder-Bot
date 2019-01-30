@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2019_01_30_045304) do
     t.string "lname"
     t.string "email"
     t.string "address"
-    t.integer "longtitude"
-    t.integer "latitude"
+    t.float "longtitude"
+    t.float "latitude"
     t.string "poi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
