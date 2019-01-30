@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+ /* mapbox */
+ body { margin:0; padding:0; }
+
+ /* robot animation */
+ #image {
+    height: 256px;
+    width: 256px;
+  background: 
+  url('https://i.ibb.co/JmRG2gV/coderbot.png') 0px 0px;
+  }

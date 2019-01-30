@@ -1,5 +1,0 @@
- <% if signed_in? %>
-      <%=link_to "Sign out", sign_out_path, method: :delete, class: "nav-link" %>
-      <% elsif signed_in? == false %>
-      <%=link_to "Sign in", sign_in_path, method: :get, class: "nav-link" %>
-      <%end%>
