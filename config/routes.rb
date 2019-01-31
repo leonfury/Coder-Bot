@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     
 
     post "/map" => "welcomes#map", as: "map"
+    get "/show" => "welcomes#show", as: "show"
     root 'welcomes#index'
 
 

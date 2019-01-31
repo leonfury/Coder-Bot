@@ -17,7 +17,7 @@ class WelcomesController < ApplicationController
         @Locresults = Midpoint.all
     end
     
-    def map
+    def show
         bundle, user_location, target_location = [], [], []
         # byebug
         @users = User.all
@@ -70,6 +70,102 @@ class WelcomesController < ApplicationController
         target = {"type": "FeatureCollection", "features":  target_location}
         bundle << user
         bundle << target
+        render :json => ActiveSupport::JSON.encode(bundle)
+    end
+
+    def map
+        @users = User.all
+        bundle, user_ruby, user_python, user_js, user_css = [], [], [], [], []
+        @users.where(lang: 'ruby').each do |u|
+            user_ruby << {
+                "id": "", #get from database
+                "type": "Feature",
+                "relevance": 1,
+                "properties": {
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "landmark": true,
+                    "category": "college, university, building",
+                    "iconSize": [60, 60],
+                    "lang": "#{u.lang}",
+                },
+                "center": [u.longtitude, u.latitude], #
+                "geometry": {
+                    "coordinates": [u.longtitude, u.latitude], #
+                    "type": "Point"
+                }
+            }
+        end
+        ruby = {"type": "FeatureCollection", "features":  user_ruby}
+        
+        @users.where(lang: 'python').each do |u|
+            user_python << {
+                "id": "", #get from database
+                "type": "Feature",
+                "relevance": 1,
+                "properties": {
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "landmark": true,
+                    "category": "college, university, building",
+                    "iconSize": [60, 60],
+                    "lang": "#{u.lang}",
+                },
+                "center": [u.longtitude, u.latitude], #
+                "geometry": {
+                    "coordinates": [u.longtitude, u.latitude], #
+                    "type": "Point"
+                }
+            }
+        end
+        python = {"type": "FeatureCollection", "features":  user_python}
+        
+        @users.where(lang: 'javascript').each do |u|
+            user_js << {
+                "id": "", #get from database
+                "type": "Feature",
+                "relevance": 1,
+                "properties": {
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "landmark": true,
+                    "category": "college, university, building",
+                    "iconSize": [60, 60],
+                    "lang": "#{u.lang}",
+                },
+                "center": [u.longtitude, u.latitude], #
+                "geometry": {
+                    "coordinates": [u.longtitude, u.latitude], #
+                    "type": "Point"
+                }
+            }
+        end
+        js = {"type": "FeatureCollection", "features":  user_js}
+        
+        @users.where(lang: 'css').each do |u|
+            user_css << {
+                "id": "", #get from database
+                "type": "Feature",
+                "relevance": 1,
+                "properties": {
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "landmark": true,
+                    "category": "college, university, building",
+                    "iconSize": [60, 60],
+                    "lang": "#{u.lang}",
+                },
+                "center": [u.longtitude, u.latitude], #
+                "geometry": {
+                    "coordinates": [u.longtitude, u.latitude], #
+                    "type": "Point"
+                }
+            }
+        end
+        css = {"type": "FeatureCollection", "features":  user_css}
+        
+        
+        bundle << ruby
+        bundle << python
+        bundle << js
+        bundle << css
+        
         render :json => ActiveSupport::JSON.encode(bundle)
     end
 end
