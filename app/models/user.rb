@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-
+    has_many :codelangs
 	include Clearance::User
 
  has_many :authentications, dependent: :destroy

@@ -6,6 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.delete_all
+Midpoint.delete_all
+Codelang.delete_all
+
 User.create(
     username: 'user1',
     first_name: 'user',
@@ -72,6 +76,15 @@ User.create(
     longtitude: 101.6631873,
     latitude: 3.150991,
 )
+
+2.times {
+    User.all.each do  |u|
+        Codelang.create(
+            user_id: u.id,
+            lang: ['ruby', 'javascript', 'python', 'rust', 'c'].sample,
+        )
+    end
+}
 
 Midpoint.create(
     name: 'KLCC Outdoor Plaza',

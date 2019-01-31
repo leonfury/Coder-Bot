@@ -1,0 +1,2 @@
+module CodelangsHelper
+end
