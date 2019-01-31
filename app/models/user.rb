@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-    has_many :codelangs
+    belongs_to :event
+    belongs_to :invite
 	include Clearance::User
 
  has_many :authentications, dependent: :destroy
