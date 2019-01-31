@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CodelangsControllerTest < ActionDispatch::IntegrationTest
+class InvitesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
