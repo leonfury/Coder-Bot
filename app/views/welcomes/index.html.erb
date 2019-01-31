@@ -9,23 +9,20 @@
 <div class="row">
     <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
     <div class="col-4">
-        <div>
-            <h1>Meet Points</h1>
-            <% @Locresults.each do |r| %>
-                <p>
-                    <button onclick="map.flyTo({center: [0,0], zoom: 18,})"> 
-                        <%= r.description %>
-                    </button>
-                </p>
-            <% end %>
+        <div id="meet_point">
+            
+
         </div>
         <div id="route_detail"> 
             <h1>Description</h1>
         </div>
     </div>
 </div>
+
 <script>
 $(document).on('turbolinks:load', function(){
+//-----------------------------------------------------------------------------
+// MAPBOX SCRIPT START
     let nos_routes = 0; //for clear_routes
     var center_calc = `${<%= @center %>}`;
     center_calc = center_calc.split(',');
@@ -50,6 +47,7 @@ $(document).on('turbolinks:load', function(){
                     type: 'geojson',
                     data: response[0]
                 }); 
+
                 map.addLayer({
                     'id': 'testmap',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
@@ -67,6 +65,7 @@ $(document).on('turbolinks:load', function(){
                     type: 'geojson',
                     data: response[1]
                 }); 
+
                 map.addLayer({
                     'id': 'destination',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
@@ -80,11 +79,8 @@ $(document).on('turbolinks:load', function(){
                     },
                 }); 
 
-
                 //-----------------------------------------------------------------
-
                 var layers = map.getStyle().layers;
-
                 var labelLayerId;
                 for (var i = 0; i < layers.length; i++) {
                     if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
@@ -119,42 +115,12 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
 
-                //-----------------------------------------------------------------
+            //-----------------------------------------------------------------
             },
             error: function(error){
                 console.log(error);
             }
         });
-    });
-
-
-
-
-    //------------------ Display
-    var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
-
-    map.on('mouseenter', 'testmap', function(e) { //action, name
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
-
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var description = e.features[0].properties.description;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
     });
 
     map.on('mouseenter', 'destination', function(e) { //action, name
@@ -177,20 +143,11 @@ $(document).on('turbolinks:load', function(){
             .addTo(map);
     });
 
-    map.on('click', 'testmap', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
-
-    map.on('click', function() { //remove popup when click anywhere
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
-
     map.on('click', 'destination', function(e) {
         map.getCanvas().style.cursor = '';
         popup.remove();
-        let end_point = e.features[0].geometry.coordinates.slice(); //end point
+        let feature = e.features[0];
+        let end_point = feature.geometry.coordinates.slice(); //end point
 
         map.flyTo({
             center: end_point,
@@ -199,13 +156,19 @@ $(document).on('turbolinks:load', function(){
 
         let query = map.getSource('testmap')._options.data.features;
         $('#route_detail p').remove(); //clears all previous detail
+        $('#meet_point p').remove(); //clear previos detail
         clear_routes(nos_routes); //clears all previous route
         nos_routes = query.length; //for clear_routes use on next click
 
         for (let i = 0; i < query.length; i++) { // get all routes to point to target location
             let start_point = query[i].center;
-            getRoute(start_point, end_point, query[i], e.features[0], i);
+            getRoute(start_point, end_point, query[i], feature, i);
         }
+        
+        let properties = feature.properties
+        let new_p = document.createElement('p');
+        new_p.innerHTML = `${properties.name} <br> Description: ${properties.description} <br> Category: ${properties.category} <br> Address: ${properties.address}`;
+        $('#meet_point').append(new_p);
     });
 
     
@@ -276,10 +239,48 @@ $(document).on('turbolinks:load', function(){
         req.send();
 
         
-    }
+    } //get route function end
 
-})
+    //------------------ Display
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'testmap', function(e) { //action, name
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+
+    map.on('click', 'testmap', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('click', function() { //remove popup when click anywhere
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+// MAPBOX SCRIPT END
+//-------------------------------------------------------------------------------------
+}) //turbolinks end
+
 </script>
-
-
-
