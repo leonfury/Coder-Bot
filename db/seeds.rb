@@ -33,17 +33,6 @@ User.create(
 )
 
 User.create(
-    username: 'user2',
-    first_name: 'user',
-    last_name: 'two',
-    email: 'user2@mail.com',
-    password: "123",
-    address: 'PV15',
-    longtitude: 101.71627,
-    latitude: 3.201563,
-)
-
-User.create(
     username: 'user3',
     first_name: 'user',
     last_name: 'three',
@@ -76,6 +65,24 @@ User.create(
     longtitude: 101.6631873,
     latitude: 3.150991,
 )
+
+i = User.last.id
+50.times {
+    User.create(
+        username: "user#{i}",
+        first_name: "user",
+        last_name: "#{i}",
+        email: "user#{i}@mail.com",
+        password: "123",
+        address: "-",
+        longtitude: rand(101.4318908..101.7506561),
+        latitude: rand(3.0014384..3.209542),
+    )
+    p "User#{i} created"
+    i += 1
+}
+
+
 
 2.times {
     User.all.each do  |u|
@@ -115,3 +122,4 @@ Midpoint.create(
     poi: 'poi.1580547980092',
     category: 'college, university, building',
 )
+p "Midpoint creation complete"
