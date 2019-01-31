@@ -74,25 +74,31 @@ User.create(
 )
 
 Midpoint.create(
-    address: '',
-    description: 'KLCC',
-    longtitude: 101.712234,
-    latitude: 3.151902,
-    poi: 'poi.1116691549419',
+    name: 'KLCC Outdoor Plaza',
+    address: 'KLCC Outdoor Plaza, Infront Suria KLCC, Kuala Lumpur, 50450, Malaysia',
+    description: '',
+    longtitude: 101.71126,
+    latitude: 3.158599,
+    poi: 'poi.1236950609238',
+    category: 'outdoors, attraction, tourism',
 )
 
 Midpoint.create(
-    address: '',
-    description: 'Next Academy',
-    longtitude: 101.629845,
-    latitude: 3.134673,
-    poi: 'poi.1580547980092',
-)
-
-Midpoint.create(
-    address: '',
-    description: 'Mid Valley',
+    name: 'Mid Valley Megamall',
+    address: 'Mid Valley Megamall, Lingkaran Syed Putra, Kuala Lumpur, 59200, Malaysia',
+    description: 'Impossible to find parking',
     longtitude: 101.67693,
     latitude: 3.117723,
     poi: 'poi.1219770754374',
+    category: 'mall, shop',
+)
+
+Midpoint.create(
+    name: 'NEXT Academy',
+    address: 'Next Academy, Kuala Lumpur, 60000, Malaysia',
+    description: 'An event space',
+    longtitude: 101.629845,
+    latitude: 3.134673,
+    poi: 'poi.1580547980092',
+    category: 'college, university, building',
 )

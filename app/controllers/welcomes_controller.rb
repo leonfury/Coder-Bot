@@ -40,20 +40,20 @@ class WelcomesController < ApplicationController
 
         Midpoint.all.each do |p|
             target_location << {
-                "id": "poi.1580547980092",
+                "id": "#{p.poi}",
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "#{p.description} \n #{p.longtitude}, #{p.latitude}", #
+                    "name": "#{p.name}", #
+                    "address": "#{p.address}",
+                    "description": "#{p.description}", #
+                    "category": "#{p.category}",
                     "landmark": true,
-                    "category": "college, university, building"
                 },
-                "text": "Next Academy",
-                "place_name": "Next Academy, Kuala Lumpur, 60000, Malaysia",
                 "center": [p.longtitude, p.latitude], #
                 "geometry": {
                     "coordinates": [p.longtitude, p.latitude], #
-                    "type": "Point"
+                    "type": "Point",
                 }
             }
         end
