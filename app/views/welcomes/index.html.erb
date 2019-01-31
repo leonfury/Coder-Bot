@@ -6,31 +6,13 @@
 
 <h1> Home Page </h1> 
 <hr>
-<h1> Search </h1>
+<!-- mapbox search bar start -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!-- mapbox search bar end -->
 
-<%= form_with url: root_path, method: "get", local: true do %>
-<select id="filter_options" class="form-control_2">
-    <option value=""> All </option>
-    <% User.select(:lang).map(&:lang).uniq.each do |s| %>
-        <option value="<%= s %>"><%= s %></option>
-    <% end %>
-</select>
-
-<!-- <%= submit_tag("Search By Code Language", id:"code_filter", class:"search-btn btn-primary") %> -->
-<% end %>
-<hr>
-<div class="row">
-    <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
-    <div class="col-4">
-        <div id="meet_point">
-            
-            
-        </div>
-        <div id="route_detail"> 
-            <h1>Description</h1>
-        </div>
-    </div>
-</div>
+<nav id="menu"></nav>
+<div id='map' class="w-100" style='height: 80vh;'></div>
 
 <script>
 $(document).on('turbolinks:load', function(){
@@ -50,52 +32,86 @@ $(document).on('turbolinks:load', function(){
         bearing: 0, //bearings adjust latitude baseline
     });
 
-
-    function ajaxCall() {
-        console.log('ajax call executed');
-        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-        key = $('#filter_options').val();
-        let search = {"word": key}
-        search["authenticity_token"] = AUTH_TOKEN;
+    map.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+    }));
+    map.on("load", () => {
         $.ajax({
             url: "/map",
             method: "POST",
-            data: search,
             dataType: "JSON",
             success: function(response){
-                map.addSource('testmap', {
+                console.log(response);
+
+                map.addSource('Ruby', {
                     type: 'geojson',
                     data: response[0]
                 }); 
-
+                
                 map.addLayer({
-                    'id': 'testmap',
+                    'id': 'Ruby',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
-                    'source': 'testmap',
+                    'source': 'Ruby',
                     'layout': {
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 3,
+                        'circle-radius': 10,
                         'circle-color': 'rgba(255,0,0,1)' // pin color
                     },
                 }); 
 
-                map.addSource('destination', {
+                map.addSource('Python', {
                     type: 'geojson',
                     data: response[1]
                 }); 
-
+                
                 map.addLayer({
-                    'id': 'destination',
+                    'id': 'Python',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
-                    'source': 'destination',
+                    'source': 'Python',
                     'layout': {
                     'visibility': 'visible'
                     },
                     'paint': {
                         'circle-radius': 10,
                         'circle-color': 'rgba(0,255,0,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('Java-Script', {
+                    type: 'geojson',
+                    data: response[2]
+                }); 
+                
+                map.addLayer({
+                    'id': 'Java-Script',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'Java-Script',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(0,0,255,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('HTML-CSS', {
+                    type: 'geojson',
+                    data: response[3]
+                }); 
+                
+                map.addLayer({
+                    'id': 'HTML-CSS',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'HTML-CSS',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(100,100,100,1)' // pin color
                     },
                 }); 
 
@@ -135,215 +151,17 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
 
-                map.getSource('testmap')._data.features.forEach(function(marker) {
-                    let pin_url;
-                    switch (marker.properties.lang) {
-                        case "ruby": 
-                            pin_url = 'url(/assets/pin_ruby.gif)'
-                            break;
-                        case "javascript":
-                            pin_url = 'url(/assets/pin_js.gif)'
-                            break;
-                        case "python":
-                            pin_url = 'url(/assets/pin_python.gif)'
-                            break;
-                        case "css":
-                            pin_url = 'url(/assets/pin_hypercss.gif)'
-                            break;
-                    }
-                    let el = document.createElement('div');
-                    el.className = 'marker';
-                    el.style.backgroundImage = pin_url;
-                    // add marker to map
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .addTo(map);
-                });
-
-
-            //-----------------------------------------------------------------
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby.gif)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python.gif)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js.gif)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss.gif)') });
+            //-----------------------------------------------------------------success call end
             },
             error: function(error){
                 console.log(error);
             }
         });
-    }
-
-    map.on("load", () => {
-        console.log('map load start');
-        console.log(map.getLayer('testmap'));
-        console.log(map.getSource('testmap'));
-        ajaxCall();
-
-        if (map.getLayer(`testmap`) != true) {
-            console.log('map ajax call')
-        }
-        console.log(map.getLayer('testmap'));
-        console.log(map.getSource('testmap'));
-        console.log('map load end');
     });
-
-    // $('#code_filter').click(() => {
-
-
-    //     if (map.getLayer('testmap')){
-    //         map.removeLayer('testmap');
-    //     }
-
-    //     if (map.getSource('testmap')){
-    //         map.removeSource('testmap');
-    //     }
-
-    //     if (map.getLayer('destination')){
-    //         map.removeLayer('destination');
-    //     }
-
-    //     if (map.getSource('destination')){
-    //         map.removeSource('destination');
-    //     }
-
-    //     if (map.getLayer('3d-buildings')){
-    //         map.removeLayer('3d-buildings');
-    //     }
-
-    //     if (map.getSource('3d-buildings')){
-    //         map.removeSource('3d-buildings');
-    //     }
-
-
-    //     ajaxCall();
-    // });
-
-
-    map.on('mouseenter', 'destination', function(e) { //action, name
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var name = e.features[0].properties.name;
-
-
-
-        let el = document.createElement('div');
-                    el.className = 'marker';
-                    
-                    el.style.backgroundImage = pin_url;
-                    
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(name)
-            .addTo(map);
-    });
-
-    map.on('click', 'destination', function(e) {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-        let feature = e.features[0];
-        let end_point = feature.geometry.coordinates.slice(); //end point
-
-
-        
-                    
-
-        map.flyTo({
-            center: end_point,
-            zoom: 18,
-        });
-
-        let query = map.getSource('testmap')._options.data.features;
-        $('#route_detail p').remove(); //clears all previous detail
-        $('#meet_point p').remove(); //clear previos detail
-        clear_routes(nos_routes); //clears all previous route
-        nos_routes = query.length; //for clear_routes use on next click
-
-        for (let i = 0; i < query.length; i++) { // get all routes to point to target location
-            let start_point = query[i].center;
-            getRoute(start_point, end_point, query[i], feature, i);
-        }
-        
-        let properties = feature.properties
-        let new_p = document.createElement('p');
-        new_p.innerHTML = `${properties.name} <br> Description: ${properties.description} <br> Category: ${properties.category} <br> Address: ${properties.address}`;
-        $('#meet_point').append(new_p);
-    });
-
-    
-    function clear_routes(n) { //removes all existing map routes
-        for (let i = 0; i < n; i++) {
-            if (map.getSource(`route_${i}`)) {
-                map.removeLayer(`route_${i}`);
-                map.removeSource(`route_${i}`);
-            }
-        }
-    }
-
-    function getRoute(start, end, start_loc, end_loc, i) {
-        // make a directions request using cycling profile
-        // an arbitrary start will always be the same
-        // only the end or destination will change
-   
-        var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + mapboxgl.accessToken;
-        // make an XHR request https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
-        var req = new XMLHttpRequest();
-        req.responseType = 'json';
-        req.open('GET', url, true);
-        req.onload = function() {
-            var data = req.response.routes[0];
-            let trip_duration = data.duration;
-            let trip_distance = data.distance;
-            var route = data.geometry.coordinates;
-            var geojson = {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                    type: 'LineString',
-                    coordinates: route
-                }
-            };
-            map.addLayer({ //setting routes
-                id: `route_${i}`,
-                type: 'line',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'Feature',
-                        properties: {},
-                        geometry: {
-                        type: 'LineString',
-                        coordinates: geojson
-                        }
-                    }
-                },
-                layout: {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                paint: {
-                    'line-color': '#3887be',
-                    'line-width': 5,
-                    'line-opacity': 0.75
-                }
-            });
-            map.getSource(`route_${i}`).setData(geojson);
-            // if the route already exists on the map, reset it using setData
-            // add turn instructions here at the end
-            //write to description
-            let new_p = document.createElement('p');
-            new_p.innerHTML = `From: ${start_loc.properties.description} <br> To:${end_loc.properties.description} <br> ${parseFloat(trip_duration / 60).toFixed(1)} minutes <br> Distance: ${parseFloat(trip_distance / 1000).toFixed(1)} km`;
-            $('#route_detail').append(new_p);
-        };
-        req.send();
-
-        
-    } //get route function end
 
     //------------------ Display
     var popup = new mapboxgl.Popup({
@@ -351,7 +169,18 @@ $(document).on('turbolinks:load', function(){
         closeOnClick: false
     });
 
-    map.on('mouseenter', 'testmap', function(e) { //action, name
+    map.on('mouseenter', 'Ruby', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'Python', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'Java-Script', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'HTML-CSS', function(e) {mapPopup(e)});
+
+    map.on('click', function() { //remove popup when click anywhere on the map
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+
+    function mapPopup(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
 
@@ -370,19 +199,42 @@ $(document).on('turbolinks:load', function(){
         popup.setLngLat(coordinates)
             .setHTML(description)
             .addTo(map);
-    });
+    }
 
+    function mapMarker(marker, lang, marker_img) {
+        let el = document.createElement('div');
+        el.className = `marker ${lang}`;
+        el.style.backgroundImage = marker_img;
+        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+    }
 
-    map.on('click', 'testmap', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
+    var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
 
-    map.on('click', function() { //remove popup when click anywhere on the map
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+        link.textContent = id;
+        link.onclick = function (e) {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                $(`.${clickedLayer}`).addClass('d-none');
+                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
+            } else {
+                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+                $(`.${clickedLayer}`).removeClass('d-none');
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
 
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
 }) //turbolinks end
