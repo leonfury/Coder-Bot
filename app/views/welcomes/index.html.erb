@@ -8,28 +8,17 @@
 <hr>
 <h1> Search </h1>
 
-<%= form_with url: root_path, method: "get", local: true do %>
 <select id="filter_options" class="form-control_2">
     <option value=""> All </option>
     <% User.select(:lang).map(&:lang).uniq.each do |s| %>
         <option value="<%= s %>"><%= s %></option>
     <% end %>
 </select>
-
-<!-- <%= submit_tag("Search By Code Language", id:"code_filter", class:"search-btn btn-primary") %> -->
-<% end %>
+12
 <hr>
-<div class="row">
-    <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
-    <div class="col-4">
-        <div id="meet_point">
-            
-            
-        </div>
-        <div id="route_detail"> 
-            <h1>Description</h1>
-        </div>
-    </div>
+<div id="map_content" class="row">
+    <%= render partial: "welcomes/map" %>
+
 </div>
 
 <script>
@@ -50,9 +39,7 @@ $(document).on('turbolinks:load', function(){
         bearing: 0, //bearings adjust latitude baseline
     });
 
-
     function ajaxCall() {
-        console.log('ajax call executed');
         var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
         key = $('#filter_options').val();
         let search = {"word": key}
@@ -63,11 +50,13 @@ $(document).on('turbolinks:load', function(){
             data: search,
             dataType: "JSON",
             success: function(response){
+                console.log(response);
+
                 map.addSource('testmap', {
                     type: 'geojson',
                     data: response[0]
                 }); 
-
+                
                 map.addLayer({
                     'id': 'testmap',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
@@ -160,7 +149,7 @@ $(document).on('turbolinks:load', function(){
                         .addTo(map);
                 });
 
-
+                console.log('ajax call success loop executed');
             //-----------------------------------------------------------------
             },
             error: function(error){
@@ -170,50 +159,13 @@ $(document).on('turbolinks:load', function(){
     }
 
     map.on("load", () => {
-        console.log('map load start');
-        console.log(map.getLayer('testmap'));
-        console.log(map.getSource('testmap'));
         ajaxCall();
-
-        if (map.getLayer(`testmap`) != true) {
-            console.log('map ajax call')
-        }
-        console.log(map.getLayer('testmap'));
-        console.log(map.getSource('testmap'));
-        console.log('map load end');
     });
 
-    // $('#code_filter').click(() => {
-
-
-    //     if (map.getLayer('testmap')){
-    //         map.removeLayer('testmap');
-    //     }
-
-    //     if (map.getSource('testmap')){
-    //         map.removeSource('testmap');
-    //     }
-
-    //     if (map.getLayer('destination')){
-    //         map.removeLayer('destination');
-    //     }
-
-    //     if (map.getSource('destination')){
-    //         map.removeSource('destination');
-    //     }
-
-    //     if (map.getLayer('3d-buildings')){
-    //         map.removeLayer('3d-buildings');
-    //     }
-
-    //     if (map.getSource('3d-buildings')){
-    //         map.removeSource('3d-buildings');
-    //     }
-
-
-    //     ajaxCall();
-    // });
-
+    $('#filter_options').on('change', () => {
+        clear_all_layer();
+        ajaxCall();
+    })
 
     map.on('mouseenter', 'destination', function(e) { //action, name
         // Change the cursor style as a UI indicator.
@@ -249,10 +201,6 @@ $(document).on('turbolinks:load', function(){
         let feature = e.features[0];
         let end_point = feature.geometry.coordinates.slice(); //end point
 
-
-        
-                    
-
         map.flyTo({
             center: end_point,
             zoom: 18,
@@ -282,6 +230,20 @@ $(document).on('turbolinks:load', function(){
                 map.removeLayer(`route_${i}`);
                 map.removeSource(`route_${i}`);
             }
+        }
+    }
+
+    function clear_all_layer() { //removes all layers
+        if (map.getSource(`testmap`)) {
+            map.removeLayer(`testmap`);
+            map.removeSource(`testmap`);
+        }
+        if (map.getSource(`destination`)) {
+            map.removeLayer(`destination`);
+            map.removeSource(`destination`);
+        }
+        if (map.getLayer(`3d-buildings`)) {
+            map.removeLayer(`3d-buildings`);
         }
     }
 

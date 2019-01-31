@@ -1,7 +1,6 @@
 class WelcomesController < ApplicationController
     def index
         @users = User.all
-        
 
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
         latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
@@ -20,6 +19,7 @@ class WelcomesController < ApplicationController
     
     def map
         bundle, user_location, target_location = [], [], []
+        # byebug
         @users = User.all
         if params[:word] != nil && params[:word] != ""
             @users = @users.where(lang: params[:word]);
