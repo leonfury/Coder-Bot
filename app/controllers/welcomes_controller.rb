@@ -1,9 +1,12 @@
 class WelcomesController < ApplicationController
     def index
-        longtitude_tot = User.maximum(:longtitude).to_f + User.minimum(:longtitude).to_f
-        latitude_tot = User.maximum(:latitude).to_f + User.minimum(:latitude).to_f
-        longtitude_dif = User.maximum(:longtitude).to_f - User.minimum(:longtitude).to_f
-        latitude_dif = User.maximum(:latitude).to_f - User.minimum(:latitude).to_f
+        @users = User.all
+        
+
+        longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
+        latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
+        longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f
+        latitude_dif = @users.maximum(:latitude).to_f - @users.minimum(:latitude).to_f
         # zoom = 0;
         zoom = 12.8;
         if longtitude_dif > latitude_dif 
@@ -17,15 +20,22 @@ class WelcomesController < ApplicationController
     
     def map
         bundle, user_location, target_location = [], [], []
-        User.all.each do |u|
+        @users = User.all
+        if params[:word] != nil && params[:word] != ""
+            @users = @users.where(lang: params[:word]);
+        end
+
+        @users.each do |u|
             user_location << {
                 "id": "poi.1580547980092", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "#{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.codelangs[0].lang}, #{u.codelangs[1].lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
                     "landmark": true,
-                    "category": "college, university, building"
+                    "category": "college, university, building",
+                    "iconSize": [60, 60],
+                    "lang": "#{u.lang}",
                 },
                 "text": "Next Academy",
                 "place_name": "Next Academy, Kuala Lumpur, 60000, Malaysia",
@@ -37,7 +47,7 @@ class WelcomesController < ApplicationController
             }
         end
         user = {"type": "FeatureCollection", "features":  user_location}
-
+        
         Midpoint.all.each do |p|
             target_location << {
                 "id": "#{p.poi}",
@@ -58,10 +68,8 @@ class WelcomesController < ApplicationController
             }
         end
         target = {"type": "FeatureCollection", "features":  target_location}
-        # push json into variable
         bundle << user
         bundle << target
-        # pass variable back to front end
         render :json => ActiveSupport::JSON.encode(bundle)
     end
 end
