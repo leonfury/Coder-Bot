@@ -6,12 +6,25 @@
 
 <h1> Home Page </h1> 
 <hr>
+<h1> Search </h1>
+
+<%= form_with url: root_path, method: "get", local: true do %>
+<select id="filter_options" class="form-control_2">
+    <option value=""> All </option>
+    <% User.select(:lang).map(&:lang).uniq.each do |s| %>
+        <option value="<%= s %>"><%= s %></option>
+    <% end %>
+</select>
+
+<!-- <%= submit_tag("Search By Code Language", id:"code_filter", class:"search-btn btn-primary") %> -->
+<% end %>
+<hr>
 <div class="row">
     <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
     <div class="col-4">
         <div id="meet_point">
             
-
+            
         </div>
         <div id="route_detail"> 
             <h1>Description</h1>
@@ -37,10 +50,17 @@ $(document).on('turbolinks:load', function(){
         bearing: 0, //bearings adjust latitude baseline
     });
 
-    map.on("load", () => {
+
+    function ajaxCall() {
+        console.log('ajax call executed');
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        key = $('#filter_options').val();
+        let search = {"word": key}
+        search["authenticity_token"] = AUTH_TOKEN;
         $.ajax({
             url: "/map",
             method: "POST",
+            data: search,
             dataType: "JSON",
             success: function(response){
                 map.addSource('testmap', {
@@ -56,7 +76,7 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
+                        'circle-radius': 3,
                         'circle-color': 'rgba(255,0,0,1)' // pin color
                     },
                 }); 
@@ -115,19 +135,99 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
 
+                map.getSource('testmap')._data.features.forEach(function(marker) {
+                    let pin_url;
+                    switch (marker.properties.lang) {
+                        case "ruby": 
+                            pin_url = 'url(/assets/pin_ruby.gif)'
+                            break;
+                        case "javascript":
+                            pin_url = 'url(/assets/pin_js.gif)'
+                            break;
+                        case "python":
+                            pin_url = 'url(/assets/pin_python.gif)'
+                            break;
+                        case "css":
+                            pin_url = 'url(/assets/pin_hypercss.gif)'
+                            break;
+                    }
+                    let el = document.createElement('div');
+                    el.className = 'marker';
+                    el.style.backgroundImage = pin_url;
+                    // add marker to map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .addTo(map);
+                });
+
+
             //-----------------------------------------------------------------
             },
             error: function(error){
                 console.log(error);
             }
         });
+    }
+
+    map.on("load", () => {
+        console.log('map load start');
+        console.log(map.getLayer('testmap'));
+        console.log(map.getSource('testmap'));
+        ajaxCall();
+
+        if (map.getLayer(`testmap`) != true) {
+            console.log('map ajax call')
+        }
+        console.log(map.getLayer('testmap'));
+        console.log(map.getSource('testmap'));
+        console.log('map load end');
     });
+
+    // $('#code_filter').click(() => {
+
+
+    //     if (map.getLayer('testmap')){
+    //         map.removeLayer('testmap');
+    //     }
+
+    //     if (map.getSource('testmap')){
+    //         map.removeSource('testmap');
+    //     }
+
+    //     if (map.getLayer('destination')){
+    //         map.removeLayer('destination');
+    //     }
+
+    //     if (map.getSource('destination')){
+    //         map.removeSource('destination');
+    //     }
+
+    //     if (map.getLayer('3d-buildings')){
+    //         map.removeLayer('3d-buildings');
+    //     }
+
+    //     if (map.getSource('3d-buildings')){
+    //         map.removeSource('3d-buildings');
+    //     }
+
+
+    //     ajaxCall();
+    // });
+
 
     map.on('mouseenter', 'destination', function(e) { //action, name
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
         var coordinates = e.features[0].geometry.coordinates.slice();
         var name = e.features[0].properties.name;
+
+
+
+        let el = document.createElement('div');
+                    el.className = 'marker';
+                    
+                    el.style.backgroundImage = pin_url;
+                    
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -148,6 +248,10 @@ $(document).on('turbolinks:load', function(){
         popup.remove();
         let feature = e.features[0];
         let end_point = feature.geometry.coordinates.slice(); //end point
+
+
+        
+                    
 
         map.flyTo({
             center: end_point,

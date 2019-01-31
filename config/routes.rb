@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
     get "/sign_up" => "clearance/users#new", as: "sign_up"
     get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+    
+    get "/map_filter" => "welcomes#map", as: "map_filter"
     post "/map" => "welcomes#map", as: "map"
     root 'welcomes#index'
 

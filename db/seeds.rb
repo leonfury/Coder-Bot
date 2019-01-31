@@ -82,16 +82,9 @@ i = User.last.id
     i += 1
 }
 
-
-
-2.times {
-    User.all.each do  |u|
-        Codelang.create(
-            user_id: u.id,
-            lang: ['ruby', 'javascript', 'python', 'rust', 'c'].sample,
-        )
-    end
-}
+User.all.each do  |u|
+    u.update(lang: ['ruby', 'javascript', 'python', 'css'].sample)
+end
 
 Midpoint.create(
     name: 'KLCC Outdoor Plaza',
