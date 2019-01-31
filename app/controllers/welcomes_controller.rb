@@ -17,21 +17,21 @@ class WelcomesController < ApplicationController
     
     def map
         bundle, user_location, target_location = [], [], []
-        User.all.each do |p|
+        User.all.each do |u|
             user_location << {
                 "id": "poi.1580547980092", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "#{p.username} \n #{p.longtitude}, #{p.latitude}", #
+                    "description": "#{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.codelangs[0].lang}, #{u.codelangs[1].lang}", #
                     "landmark": true,
                     "category": "college, university, building"
                 },
                 "text": "Next Academy",
                 "place_name": "Next Academy, Kuala Lumpur, 60000, Malaysia",
-                "center": [p.longtitude, p.latitude], #
+                "center": [u.longtitude, u.latitude], #
                 "geometry": {
-                    "coordinates": [p.longtitude, p.latitude], #
+                    "coordinates": [u.longtitude, u.latitude], #
                     "type": "Point"
                 }
             }
