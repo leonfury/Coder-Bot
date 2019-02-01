@@ -14,3 +14,360 @@
         </tr>
     <% end %>
 </table>
+
+<div id="map_content" class="row">
+        <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
+        <div class="col-4">
+            <div id="meet_point">
+            </div>
+            <div id="route_detail"> 
+                <h1>Description</h1>
+            </div>
+        </div>
+
+</div>
+
+<script>
+$(document).on('turbolinks:load', function(){
+//-----------------------------------------------------------------------------
+// MAPBOX SCRIPT START
+    let nos_routes = 0; //for clear_routes
+    var center_calc = `${<%= @center %>}`;
+    center_calc = center_calc.split(',');
+    let center_cor = [parseFloat(center_calc[0]), parseFloat(center_calc[1])];
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: center_cor, // kuala lumpur //to be dynamic
+        zoom: center_calc[2],
+        pitch: 45, //pitch adjusts view from above
+        bearing: 0, //bearings adjust latitude baseline
+    });
+
+    map.on("load", () => {
+        $.ajax({
+            url: "/event_map",
+            method: "POST",
+            data: {"event_id": "<%= @event.id %>"},
+            dataType: "JSON",
+            success: function(response){
+                console.log(response);
+
+                map.addSource('testmap', {
+                    type: 'geojson',
+                    data: response[0]
+                }); 
+                
+                map.addLayer({
+                    'id': 'testmap',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'testmap',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 3,
+                        'circle-color': 'rgba(255,0,0,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('destination', {
+                    type: 'geojson',
+                    data: response[1]
+                }); 
+
+                map.addLayer({
+                    'id': 'destination',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'destination',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(0,255,0,1)' // pin color
+                    },
+                }); 
+
+                //-----------------------------------------------------------------
+                var layers = map.getStyle().layers;
+                var labelLayerId;
+                for (var i = 0; i < layers.length; i++) {
+                    if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                        labelLayerId = layers[i].id;
+                        break;
+                    }
+                }
+
+                map.addLayer({
+                    'id': '3d-buildings',
+                    'source': 'composite',
+                    'source-layer': 'building',
+                    'filter': ['==', 'extrude', 'true'],
+                    'type': 'fill-extrusion',
+                    'minzoom': 15,
+                    'paint': {
+                        'fill-extrusion-color': '#aaa',
+
+                        // use an 'interpolate' expression to add a smooth transition effect to the
+                        // buildings as the user zooms in
+                        'fill-extrusion-height': [
+                            "interpolate", ["linear"], ["zoom"],
+                            15, 0,
+                            15.05, ["get", "height"]
+                        ],
+                        'fill-extrusion-base': [
+                            "interpolate", ["linear"], ["zoom"],
+                            15, 0,
+                            15.05, ["get", "min_height"]
+                        ],
+                        'fill-extrusion-opacity': .6
+                    }
+                }, labelLayerId);
+
+                map.getSource('testmap')._data.features.forEach(function(marker) {
+                    let pin_url;
+                    switch (marker.properties.lang) {
+                        case "ruby": 
+                            pin_url = 'url(/assets/pin_ruby.gif)'
+                            break;
+                        case "javascript":
+                            pin_url = 'url(/assets/pin_js.gif)'
+                            break;
+                        case "python":
+                            pin_url = 'url(/assets/pin_python.gif)'
+                            break;
+                        case "css":
+                            pin_url = 'url(/assets/pin_hypercss.gif)'
+                            break;
+                    }
+                    let el = document.createElement('div');
+                    el.className = 'marker';
+                    el.style.backgroundImage = pin_url;
+                    // add marker to map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .addTo(map);
+                });
+
+                var toggleableLayerIds = [ 'Ruby', 'Python', 'JavaScript', 'HTML-CSS' ];
+
+                for (var i = 0; i < toggleableLayerIds.length; i++) {
+                    var id = toggleableLayerIds[i];
+
+                    var link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'active';
+                    link.textContent = id;
+
+                    link.onclick = function (e) {
+                        var clickedLayer = this.textContent;
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+                        if (visibility === 'visible') {
+                            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                            this.className = '';
+                        } else {
+                            this.className = 'active';
+                            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                        }
+                    };
+
+                    var layers = document.getElementById('menu');
+                    layers.appendChild(link);
+                }
+            //-----------------------------------------------------------------success call end
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+
+    map.on('mouseenter', 'destination', function(e) { //action, name
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var name = e.features[0].properties.name;
+
+
+
+        let el = document.createElement('div');
+                    el.className = 'marker';
+                    
+                    el.style.backgroundImage = pin_url;
+                    
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(name)
+            .addTo(map);
+    });
+
+    map.on('click', 'destination', function(e) {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+        let feature = e.features[0];
+        let end_point = feature.geometry.coordinates.slice(); //end point
+
+        map.flyTo({
+            center: end_point,
+            zoom: 18,
+        });
+
+        let query = map.getSource('testmap')._options.data.features;
+        $('#route_detail p').remove(); //clears all previous detail
+        $('#meet_point p').remove(); //clear previos detail
+        clear_routes(nos_routes); //clears all previous route
+        nos_routes = query.length; //for clear_routes use on next click
+
+        for (let i = 0; i < query.length; i++) { // get all routes to point to target location
+            let start_point = query[i].center;
+            getRoute(start_point, end_point, query[i], feature, i);
+        }
+        
+        let properties = feature.properties
+        let new_p = document.createElement('p');
+        new_p.innerHTML = `${properties.name} <br> Description: ${properties.description} <br> Category: ${properties.category} <br> Address: ${properties.address}`;
+        $('#meet_point').append(new_p);
+    });
+
+    
+    function clear_routes(n) { //removes all existing map routes
+        for (let i = 0; i < n; i++) {
+            if (map.getSource(`route_${i}`)) {
+                map.removeLayer(`route_${i}`);
+                map.removeSource(`route_${i}`);
+            }
+        }
+    }
+
+    function clear_all_layer() { //removes all layers
+        if (map.getSource(`testmap`)) {
+            map.removeLayer(`testmap`);
+            map.removeSource(`testmap`);
+        }
+        // if (map.getSource(`destination`)) {
+        //     map.removeLayer(`destination`);
+        //     map.removeSource(`destination`);
+        // }
+        // if (map.getLayer(`3d-buildings`)) {
+        //     map.removeLayer(`3d-buildings`);
+        // }
+    }
+
+    function getRoute(start, end, start_loc, end_loc, i) {
+        // make a directions request using cycling profile
+        // an arbitrary start will always be the same
+        // only the end or destination will change
+   
+        var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + mapboxgl.accessToken;
+        // make an XHR request https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+        var req = new XMLHttpRequest();
+        req.responseType = 'json';
+        req.open('GET', url, true);
+        req.onload = function() {
+            var data = req.response.routes[0];
+            let trip_duration = data.duration;
+            let trip_distance = data.distance;
+            var route = data.geometry.coordinates;
+            var geojson = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: route
+                }
+            };
+            map.addLayer({ //setting routes
+                id: `route_${i}`,
+                type: 'line',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                        type: 'LineString',
+                        coordinates: geojson
+                        }
+                    }
+                },
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#3887be',
+                    'line-width': 5,
+                    'line-opacity': 0.75
+                }
+            });
+            map.getSource(`route_${i}`).setData(geojson);
+            // if the route already exists on the map, reset it using setData
+            // add turn instructions here at the end
+            //write to description
+            let new_p = document.createElement('p');
+            new_p.innerHTML = `From: ${start_loc.properties.description} <br> To:${end_loc.properties.description} <br> ${parseFloat(trip_duration / 60).toFixed(1)} minutes <br> Distance: ${parseFloat(trip_distance / 1000).toFixed(1)} km`;
+            $('#route_detail').append(new_p);
+        };
+        req.send();
+
+        
+    } //get route function end
+
+    //------------------ Display
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'testmap', function(e) { //action, name
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+
+    map.on('click', 'testmap', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('click', function() { //remove popup when click anywhere on the map
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+// MAPBOX SCRIPT END
+//-------------------------------------------------------------------------------------
+}) //turbolinks end
+
+</script>

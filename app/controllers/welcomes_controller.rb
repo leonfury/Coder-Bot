@@ -17,73 +17,13 @@ class WelcomesController < ApplicationController
         @Locresults = Midpoint.all
     end
     
-    def show
-        bundle, user_location, target_location = [], [], []
-        # byebug
-        @users = User.all
-        if params[:word] != nil && params[:word] != ""
-            @users = @users.where(lang: params[:word]);
-        end
-
-        @users.each do |u|
-            user_location << {
-                "id": "poi.1580547980092", #get from database
-                "type": "Feature",
-                "relevance": 1,
-                "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
-                        <br> #{u.username} 
-                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
-                        <br> User ID: #<span class='user_id'>#{u.id}</span>
-                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
-                    "landmark": true,
-                    "category": "college, university, building",
-                    "iconSize": [60, 60],
-                    "lang": "#{u.lang}",
-                },
-                "text": "Next Academy",
-                "place_name": "Next Academy, Kuala Lumpur, 60000, Malaysia",
-                "center": [u.longtitude, u.latitude], #
-                "geometry": {
-                    "coordinates": [u.longtitude, u.latitude], #
-                    "type": "Point"
-                }
-            }
-        end
-        user = {"type": "FeatureCollection", "features":  user_location}
-        
-        Midpoint.all.each do |p|
-            target_location << {
-                "id": "#{p.poi}",
-                "type": "Feature",
-                "relevance": 1,
-                "properties": {
-                    "name": "#{p.name}", #
-                    "address": "#{p.address}",
-                    "description": "#{p.description}", #
-                    "category": "#{p.category}",
-                    "landmark": true,
-                },
-                "center": [p.longtitude, p.latitude], #
-                "geometry": {
-                    "coordinates": [p.longtitude, p.latitude], #
-                    "type": "Point",
-                }
-            }
-        end
-        target = {"type": "FeatureCollection", "features":  target_location}
-        bundle << user
-        bundle << target
-        render :json => ActiveSupport::JSON.encode(bundle)
-    end
+   
 
     def map
         @users = User.all
         bundle, user_ruby, user_python, user_js, user_css = [], [], [], [], []
         @users.where(lang: 'ruby').each do |u|
             user_ruby << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
@@ -97,6 +37,7 @@ class WelcomesController < ApplicationController
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -109,7 +50,6 @@ class WelcomesController < ApplicationController
         
         @users.where(lang: 'python').each do |u|
             user_python << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
@@ -123,6 +63,7 @@ class WelcomesController < ApplicationController
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -135,7 +76,6 @@ class WelcomesController < ApplicationController
         
         @users.where(lang: 'javascript').each do |u|
             user_js << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
@@ -146,9 +86,11 @@ class WelcomesController < ApplicationController
                         <br> User ID: #<span class='user_id'>#{u.id}</span>
                         <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
+                    "poi": "#{u.poi}",
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -161,7 +103,6 @@ class WelcomesController < ApplicationController
         
         @users.where(lang: 'css').each do |u|
             user_css << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
@@ -175,6 +116,7 @@ class WelcomesController < ApplicationController
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {

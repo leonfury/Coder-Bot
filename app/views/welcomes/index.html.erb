@@ -161,10 +161,10 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
 
-                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby.gif)') });
-                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python.gif)') });
-                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js.gif)') });
-                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss.gif)') });
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
@@ -188,7 +188,6 @@ $(document).on('turbolinks:load', function(){
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
-
 
     function mapPopup(e) {
         // Change the cursor style as a UI indicator.
@@ -219,10 +218,31 @@ $(document).on('turbolinks:load', function(){
                 $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
             }
         } 
-
+        // map.getSource('Ruby')._data.features.forEach(function(marker)
         $('.colab-btn').on('click', () => {
+            let poi = e.features[0].properties.poi;
+            let user_lang = $('.user_lang')[0].textContent;
+            let url_pin;
             $('.colab-btn').attr('disabled', 'disabled');
-            user_lang = $('.user_lang')[0].textContent;
+
+            switch (user_lang) {
+                case " ruby ":
+                    console.log('true');
+                    url_pin = "url(/assets/pin_ruby.gif)";
+                    break;
+                case " python ":
+                    url_pin = 'url(/assets/pin_python.gif)';
+                    break;
+                case " javascript ":
+                    url_pin = 'url(/assets/pin_js.gif)';
+                    break;
+                case " css ":
+                    url_pin = 'url(/assets/pin_hypercss.gif)';
+                    break;
+            }
+            
+            $(`.${poi}`)[0].style.backgroundImage = url_pin;
+
             let new_p = document.createElement('p');
             new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
             $('#shortlist').append(new_p);
@@ -230,10 +250,11 @@ $(document).on('turbolinks:load', function(){
     }
 
     function mapMarker(marker, lang, marker_img) {
+        let coord = marker.geometry.coordinates;
         let el = document.createElement('div');
-        el.className = `marker ${lang}`;
+        el.className = `marker ${lang} ${marker.properties.poi}`;
         el.style.backgroundImage = marker_img;
-        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
     }
 
     var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
