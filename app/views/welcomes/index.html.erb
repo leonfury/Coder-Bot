@@ -3,8 +3,14 @@
 <% elsif signed_in? == false %>
     <%=link_to "Sign in", sign_in_path, method: :get, class: "nav-link" %>
 <%end%>
-
-<h1> Home Page </h1> 
+<% if signed_in? %>
+    <p> Current User ID: #<%= current_user.id %> </p>
+    <p> Current Event ID: #<%= current_user.events.last.id if current_user.events.last %> </p>
+<% end %>
+    <h1> Home Page </h1> 
+<% if signed_in? %>
+    <%= button_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"btn btn-primary ml-2" %>
+<% end %>
 <hr>
 <!-- mapbox search bar start -->
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>

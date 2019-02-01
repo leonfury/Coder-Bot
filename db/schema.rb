@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 2019_01_31_234137) do
     t.bigint "user_id"
     t.bigint "midpoint_id"
     t.text "remark"
-    t.datetime "event_time"
+    t.date "event_date"
+    t.time "event_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["midpoint_id"], name: "index_events_on_midpoint_id"
