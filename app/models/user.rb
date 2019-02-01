@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    belongs_to :event
+    has_many :events
     belongs_to :invite
 	include Clearance::User
 

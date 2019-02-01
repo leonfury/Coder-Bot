@@ -4,7 +4,8 @@ class CreateEvents < ActiveRecord::Migration[5.2]
             t.belongs_to :user
             t.belongs_to :midpoint
             t.text :remark
-            t.datetime :event_time
+            t.date :event_date
+            t.time :event_time
             t.timestamps
         end
     end

@@ -24,6 +24,17 @@
 </head>
 
 <body>
+    <div id="flash" >
+        <% flash.each do |key, value| %>
+            <% if key == "success" %>
+                <div class="text-dark text-center font-weight-bold bg-success flash <%= key %>"><%= value %></div>
+            <% elsif key == "error" %>
+                <div class="text-dark text-center font-weight-bold bg-danger flash <%= key %>"><%= value %></div>
+            <% else %>
+                <div class="text-dark text-center font-weight-bold bg-warning flash <%= key %>"><%= value %></div>
+            <% end %>
+        <% end %>
+    </div>
     <%= yield %>
 
     <div id="demo">
