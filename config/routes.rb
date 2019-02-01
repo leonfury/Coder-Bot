@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :passwords, controller: "clearance/passwords", only: [:create, :new]
     resource :session, controller: "clearance/sessions", only: [:create]
 
+    resource :profiles, only: [:create, :new, :show]
+    resource :maps, only: [:create, :new, :show]
     
     resources :users, only: [:create] do
         resource :event, only: [:new, :create]
@@ -21,7 +23,7 @@ Rails.application.routes.draw do
     get "/event_remote" => "events#event_remote"
     post "/event_map" => "events#event_map", as: "event_map"
 
-    post "/map" => "welcomes#map", as: "map"
+    post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
     post "/invite_colabs" => "invites#create_colabs", as: "invite_colabs"
     root 'welcomes#index'
@@ -30,5 +32,7 @@ Rails.application.routes.draw do
 	Clearance.configure do |config|
     	config.routes = false
     end
+
+    get "/redirect" => "welcomes#redirect", as: "login_redirect"
 
 end

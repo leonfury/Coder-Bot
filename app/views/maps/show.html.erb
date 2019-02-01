@@ -1,126 +1,28 @@
+!-- mapbox search bar start -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!-- mapbox search bar end -->
 
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>CoderBot</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/full-slider.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  </head>
-
-  <body>
-
-
-    <header>
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-          <!-- Slide One - Set the background image for this slide in the line below -->
-          <div class="carousel-item active" style="background-image: url('https://images.pexels.com/photos/358502/pexels-photo-358502.jpeg?cs=srgb&dl=architecture-buildings-business-358502.jpg&fm=jpg')" id="photo">
-          </div>
-          <div class="content">
-            <div class="carousel-caption d-none d-md-block">
-              <img src="https://i.ibb.co/Wc8gpL9/coderbot-logo.png" width="471" height="351" >
-
-              <h3>Sign In or Sign Up</h3>
-              <p>Find coders in your area</p>
-              <button id="opener2" class="btn btn-primary ml-2">Sign In</button>
-              <button id="opener" class="btn btn-primary ml-2">Sign Up</button>
-
-              <div id="dialog" class="hidden" title="Sign Up Form">
- <iframe src="/sign_up" height="400" width="600"></iframe>
-</div>
- <div id="dialog2" class="hidden" title="Sign In">
- <iframe src="/sign_in" height="400" width="600"></iframe>
-</div>
-</div>
-            
-              
-            </div>
-          </div>
-          
-    </header>
-
-
-
-    <!-- Page Content -->
-    <section class="py-5">
-      <div class="container">
-        <h1>Full Slider by Start Bootstrap</h1>
-        <p>The background images for the slider are set directly in the HTML using inline CSS. The rest of the styles for this template are contained within the
-          <code>full-slider.css</code>
-          file.</p>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; CoderBot 2019</p>
-      </div>
-      <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<div>
-    <div id="shortlist"></div>
-    <button id="meet_colab_btn"> Meet Them! </button>
-</div>
-
+<nav id="menu"></nav>
+<div id='map' class="w-100" style='height: 80vh;'></div>
 
 <script>
- $( function() {
-    $( "#dialog" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
+$(document).on('turbolinks:load', function(){
+//-----------------------------------------------------------------------------
+// MAPBOX SCRIPT START
+    let nos_routes = 0; //for clear_routes
+    var center_calc = `${<%= @center %>}`;
+    center_calc = center_calc.split(',');
+    let center_cor = [parseFloat(center_calc[0]), parseFloat(center_calc[1])];
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: center_cor, // kuala lumpur //to be dynamic
+        zoom: center_calc[2],
+        pitch: 45, //pitch adjusts view from above
+        bearing: 0, //bearings adjust latitude baseline
     });
-
-     $( "#dialog2" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
-
-    $( "#opener" ).on( "click", function() {
-      $( "#dialog" ).dialog( "open" );
-    });
-     $( "#opener2" ).on( "click", function() {
-      $( "#dialog2" ).dialog( "open" );
-    });
-  } );
-
 
     map.addControl(new MapboxGeocoder({
         accessToken: mapboxgl.accessToken
@@ -131,6 +33,8 @@
             method: "POST",
             dataType: "JSON",
             success: function(response){
+                console.log(response);
+
                 map.addSource('Ruby', {
                     type: 'geojson',
                     data: response[0]
@@ -239,16 +143,35 @@
                     }
                 }, labelLayerId);
 
-                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
-                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
-                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
-                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby.gif)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python.gif)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js.gif)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss.gif)') });
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
                 console.log(error);
             }
         });
+    });
+
+    //------------------ Display
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'Ruby', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'Python', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'Java-Script', function(e) {mapPopup(e)});
+    map.on('mouseenter', 'HTML-CSS', function(e) {mapPopup(e)});
+
+    map.on('click', function() { //remove popup when click anywhere on the map
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+
     function mapPopup(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -268,53 +191,13 @@
         popup.setLngLat(coordinates)
             .setHTML(description)
             .addTo(map);
-
-        let query = $('#shortlist .user_id');
-        let user_id = $('.user_id')[0].textContent;
-        
-
-        for (let i = 0; i < query.length; i++) {
-            if (user_id == query[i].textContent) {
-                $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
-            }
-        } 
-        // map.getSource('Ruby')._data.features.forEach(function(marker)
-        $('.colab-btn').on('click', () => {
-            let poi = e.features[0].properties.poi;
-            let user_lang = $('.user_lang')[0].textContent;
-            let url_pin;
-            $('.colab-btn').attr('disabled', 'disabled');
-
-            switch (user_lang) {
-                case " ruby ":
-                    console.log('true');
-                    url_pin = "url(/assets/pin_ruby.gif)";
-                    break;
-                case " python ":
-                    url_pin = 'url(/assets/pin_python.gif)';
-                    break;
-                case " javascript ":
-                    url_pin = 'url(/assets/pin_js.gif)';
-                    break;
-                case " css ":
-                    url_pin = 'url(/assets/pin_hypercss.gif)';
-                    break;
-            }
-            
-            $(`.${poi}`)[0].style.backgroundImage = url_pin;
-
-            let new_p = document.createElement('p');
-            new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
-            $('#shortlist').append(new_p);
-        })
     }
 
     function mapMarker(marker, lang, marker_img) {
-        let coord = marker.geometry.coordinates;
         let el = document.createElement('div');
-        el.className = `marker ${lang} ${marker.properties.poi}`;
+        el.className = `marker ${lang}`;
         el.style.backgroundImage = marker_img;
-        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
+        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
     }
 
     var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
@@ -340,43 +223,12 @@
                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             }
         };
+
         var layers = document.getElementById('menu');
         layers.appendChild(link);
     }
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
-    
-    $('#meet_colab_btn').on('click', () => {
-        let colabs = [];
-        let query = $('#shortlist p .user_id');
-        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-        
-        for (let i = 0; i < query.length; i++) {
-            colabs.push(query[i].textContent);
-        }
-
-        let checkout = {};
-        checkout["colaborators"] = colabs;
-        checkout["authenticity_token"] = AUTH_TOKEN;
-        
-        $.ajax({
-            url: "/invite_colabs",
-            method: "POST",
-            data: checkout,
-            dataType: "JSON",
-            success: function(){
-                console.log('success');    
-                window.location = "/event_remote";
-            },
-            error: function(error){
-                console.log('error');
-                console.log(error);
-            }
-        });
-    })
-    
-
 }) //turbolinks end
 
 </script>
-

@@ -1,8 +1,9 @@
 <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
+<div class="form">
 <h1>Enter your information here</h1>
 
 
-<div>
+
     <%= form_with model: @user do |l| %>
         <%= l.label "username" %>
         <%= l.text_field :username %>
@@ -33,7 +34,7 @@
     <input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
 </div>
 
-<div id="map" style="width:500px; height:500px;"></div>
+<!-- <div id="map" style="width:500px; height:500px;"></div>
 
 <script>
 	function getCoordinates(){
@@ -70,3 +71,4 @@
         });
     }
 </script>
+ -->

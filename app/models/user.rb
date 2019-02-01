@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_many :events
+
 	include Clearance::User
 
  has_many :authentications, dependent: :destroy
