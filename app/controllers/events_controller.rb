@@ -4,7 +4,6 @@ class EventsController < ApplicationController
     end
 
     def create
-        byebug
         event = Event.new(event_params)
         event.user = current_user
         event.midpoint = Midpoint.first
@@ -12,9 +11,18 @@ class EventsController < ApplicationController
         if event.save 
             flash[:success] = "SUCCESS >>> New Event Created Sucessfully"
         else
-            flash[:error] = "ERROR >>> Event Creation Fail"
+            flash[:error] = "ERROR >>> Event Creation Fail #{event.errors.full_messages}"
         end
         redirect_to root_path
+    end
+
+    def show
+        @event = Event.find(params[:id])
+        @colabs = @event.invites
+    end
+
+    def event_remote
+        redirect_to event_path(current_user.events.last.id)
     end
 
     private

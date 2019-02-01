@@ -1,0 +1,16 @@
+<h1> Event Show Page </h1>
+<p> Event ID: <%= @event.id %> </p>
+<p> Event Leader:  <%= @event.user.id %> </p>
+<p> Event Members :  <%= @colabs.count %> </p>
+<table>
+    <tr>
+        <th> Colab ID </th>
+        <th> Colab Lang </th>
+    </tr>
+    <% @colabs.each do |c| %>
+        <tr>
+            <td> <%= c.user.id %> </td>
+            <td> <%= c.user.lang %> </td>
+        </tr>
+    <% end %>
+</table>
