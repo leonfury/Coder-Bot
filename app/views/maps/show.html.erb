@@ -1,10 +1,30 @@
-!-- mapbox search bar start -->
+<% if signed_in? %>
+    <%=link_to "Sign out", sign_out_path, method: :delete, class: "nav-link" %>
+<% elsif signed_in? == false %>
+    <%=link_to "Sign in", sign_in_path, method: :get, class: "nav-link" %>
+<%end%>
+<% if signed_in? %>
+    <p> Current User ID: #<%= current_user.id %> </p>
+    <p> Current Event ID: #<%= current_user.events.last.id if current_user.events.last %> </p>
+<% end %>
+    <h1> Home Page </h1> 
+<% if signed_in? %>
+    <%= button_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"btn btn-primary ml-2" %>
+<% end %>
+<hr>
+<!-- mapbox search bar start -->
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- mapbox search bar end -->
 
 <nav id="menu"></nav>
 <div id='map' class="w-100" style='height: 80vh;'></div>
+
+<div>
+    <div id="shortlist"></div>
+    <button id="meet_colab_btn"> Meet Them! </button>
+</div>
+
 
 <script>
 $(document).on('turbolinks:load', function(){
@@ -23,7 +43,6 @@ $(document).on('turbolinks:load', function(){
         pitch: 45, //pitch adjusts view from above
         bearing: 0, //bearings adjust latitude baseline
     });
-
     map.addControl(new MapboxGeocoder({
         accessToken: mapboxgl.accessToken
     }));
@@ -33,8 +52,6 @@ $(document).on('turbolinks:load', function(){
             method: "POST",
             dataType: "JSON",
             success: function(response){
-                console.log(response);
-
                 map.addSource('Ruby', {
                     type: 'geojson',
                     data: response[0]
@@ -52,7 +69,6 @@ $(document).on('turbolinks:load', function(){
                         'circle-color': 'rgba(255,0,0,1)' // pin color
                     },
                 }); 
-
                 map.addSource('Python', {
                     type: 'geojson',
                     data: response[1]
@@ -70,7 +86,6 @@ $(document).on('turbolinks:load', function(){
                         'circle-color': 'rgba(0,255,0,1)' // pin color
                     },
                 }); 
-
                 map.addSource('Java-Script', {
                     type: 'geojson',
                     data: response[2]
@@ -88,7 +103,6 @@ $(document).on('turbolinks:load', function(){
                         'circle-color': 'rgba(0,0,255,1)' // pin color
                     },
                 }); 
-
                 map.addSource('HTML-CSS', {
                     type: 'geojson',
                     data: response[3]
@@ -106,7 +120,6 @@ $(document).on('turbolinks:load', function(){
                         'circle-color': 'rgba(100,100,100,1)' // pin color
                     },
                 }); 
-
                 //-----------------------------------------------------------------
                 var layers = map.getStyle().layers;
                 var labelLayerId;
@@ -116,7 +129,6 @@ $(document).on('turbolinks:load', function(){
                         break;
                     }
                 }
-
                 map.addLayer({
                     'id': '3d-buildings',
                     'source': 'composite',
@@ -126,7 +138,6 @@ $(document).on('turbolinks:load', function(){
                     'minzoom': 15,
                     'paint': {
                         'fill-extrusion-color': '#aaa',
-
                         // use an 'interpolate' expression to add a smooth transition effect to the
                         // buildings as the user zooms in
                         'fill-extrusion-height': [
@@ -142,11 +153,10 @@ $(document).on('turbolinks:load', function(){
                         'fill-extrusion-opacity': .6
                     }
                 }, labelLayerId);
-
-                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby.gif)') });
-                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python.gif)') });
-                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js.gif)') });
-                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss.gif)') });
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
@@ -154,54 +164,79 @@ $(document).on('turbolinks:load', function(){
             }
         });
     });
-
     //------------------ Display
     var popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false
     });
-
     map.on('mouseenter', 'Ruby', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Python', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Java-Script', function(e) {mapPopup(e)});
     map.on('mouseenter', 'HTML-CSS', function(e) {mapPopup(e)});
-
     map.on('click', function() { //remove popup when click anywhere on the map
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
-
-
     function mapPopup(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
-
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.description;
-
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
-
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(coordinates)
             .setHTML(description)
             .addTo(map);
+        let query = $('#shortlist .user_id');
+        let user_id = $('.user_id')[0].textContent;
+        
+        for (let i = 0; i < query.length; i++) {
+            if (user_id == query[i].textContent) {
+                $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
+            }
+        } 
+        // map.getSource('Ruby')._data.features.forEach(function(marker)
+        $('.colab-btn').on('click', () => {
+            let poi = e.features[0].properties.poi;
+            let user_lang = $('.user_lang')[0].textContent;
+            let url_pin;
+            $('.colab-btn').attr('disabled', 'disabled');
+            switch (user_lang) {
+                case " ruby ":
+                    console.log('true');
+                    url_pin = "url(/assets/pin_ruby.gif)";
+                    break;
+                case " python ":
+                    url_pin = 'url(/assets/pin_python.gif)';
+                    break;
+                case " javascript ":
+                    url_pin = 'url(/assets/pin_js.gif)';
+                    break;
+                case " css ":
+                    url_pin = 'url(/assets/pin_hypercss.gif)';
+                    break;
+            }
+            
+            $(`.${poi}`)[0].style.backgroundImage = url_pin;
+            let new_p = document.createElement('p');
+            new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
+            $('#shortlist').append(new_p);
+        })
     }
-
     function mapMarker(marker, lang, marker_img) {
+        let coord = marker.geometry.coordinates;
         let el = document.createElement('div');
-        el.className = `marker ${lang}`;
+        el.className = `marker ${lang} ${marker.properties.poi}`;
         el.style.backgroundImage = marker_img;
-        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
     }
-
     var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
-
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
         var link = document.createElement('a');
@@ -223,12 +258,39 @@ $(document).on('turbolinks:load', function(){
                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             }
         };
-
         var layers = document.getElementById('menu');
         layers.appendChild(link);
     }
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
+    
+    $('#meet_colab_btn').on('click', () => {
+        let colabs = [];
+        let query = $('#shortlist p .user_id');
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        
+        for (let i = 0; i < query.length; i++) {
+            colabs.push(query[i].textContent);
+        }
+        let checkout = {};
+        checkout["colaborators"] = colabs;
+        checkout["authenticity_token"] = AUTH_TOKEN;
+        
+        $.ajax({
+            url: "/invite_colabs",
+            method: "POST",
+            data: checkout,
+            dataType: "JSON",
+            success: function(){
+                console.log('success');    
+                window.location = "/event_remote";
+            },
+            error: function(error){
+                console.log('error');
+                console.log(error);
+            }
+        });
+    })
+    
 }) //turbolinks end
-
 </script>
