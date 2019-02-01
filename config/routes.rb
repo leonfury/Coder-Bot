@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get "/sign_up" => "clearance/users#new", as: "sign_up"
     get "/auth/:provider/callback" => "sessions#create_from_omniauth"
     get "/event_remote" => "events#event_remote"
+    post "/event_map" => "events#event_map", as: "event_map"
 
     post "/map" => "welcomes#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
