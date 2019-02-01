@@ -31,7 +31,12 @@ class WelcomesController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -82,7 +87,12 @@ class WelcomesController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -103,7 +113,12 @@ class WelcomesController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -124,7 +139,12 @@ class WelcomesController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -145,7 +165,12 @@ class WelcomesController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],

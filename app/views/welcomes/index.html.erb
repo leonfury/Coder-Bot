@@ -20,6 +20,12 @@
 <nav id="menu"></nav>
 <div id='map' class="w-100" style='height: 80vh;'></div>
 
+<div>
+    <div id="shortlist"></div>
+    <button id="meet_colab_btn"> Meet Them! </button>
+</div>
+
+
 <script>
 $(document).on('turbolinks:load', function(){
 //-----------------------------------------------------------------------------
@@ -47,8 +53,6 @@ $(document).on('turbolinks:load', function(){
             method: "POST",
             dataType: "JSON",
             success: function(response){
-                console.log(response);
-
                 map.addSource('Ruby', {
                     type: 'geojson',
                     data: response[0]
@@ -205,6 +209,24 @@ $(document).on('turbolinks:load', function(){
         popup.setLngLat(coordinates)
             .setHTML(description)
             .addTo(map);
+
+        let query = $('#shortlist .user_id');
+        let user_id = $('.user_id')[0].textContent;
+        
+
+        for (let i = 0; i < query.length; i++) {
+            if (user_id == query[i].textContent) {
+                $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
+            }
+        } 
+
+        $('.colab-btn').on('click', () => {
+            $('.colab-btn').attr('disabled', 'disabled');
+            user_lang = $('.user_lang')[0].textContent;
+            let new_p = document.createElement('p');
+            new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
+            $('#shortlist').append(new_p);
+        })
     }
 
     function mapMarker(marker, lang, marker_img) {
@@ -237,12 +259,42 @@ $(document).on('turbolinks:load', function(){
                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             }
         };
-
         var layers = document.getElementById('menu');
         layers.appendChild(link);
     }
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
+    
+    $('#meet_colab_btn').on('click', () => {
+        let colabs = [];
+        let query = $('#shortlist p .user_id');
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        
+        for (let i = 0; i < query.length; i++) {
+            colabs.push(query[i].textContent);
+        }
+
+        let checkout = {};
+        checkout["colaborators"] = colabs;
+        checkout["authenticity_token"] = AUTH_TOKEN;
+        
+        $.ajax({
+            url: "/invite_colabs",
+            method: "POST",
+            data: checkout,
+            dataType: "JSON",
+            success: function(){
+                console.log('success');    
+                window.location = "/event_remote";
+            },
+            error: function(error){
+                console.log('error');
+                console.log(error);
+            }
+        });
+    })
+    
+
 }) //turbolinks end
 
 </script>
