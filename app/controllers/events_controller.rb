@@ -18,9 +18,7 @@ class EventsController < ApplicationController
 
     def show
         @event = Event.find(params[:id])
-        byebug
         @colabs = @event.invites
-
         @users = @colabs.joins(:user)
 
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f

@@ -25,15 +25,20 @@ class MapsController < ApplicationController
         bundle, user_ruby, user_python, user_js, user_css = [], [], [], [], []
         @users.where(lang: 'ruby').each do |u|
             user_ruby << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -46,15 +51,20 @@ class MapsController < ApplicationController
         
         @users.where(lang: 'python').each do |u|
             user_python << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -67,15 +77,21 @@ class MapsController < ApplicationController
         
         @users.where(lang: 'javascript').each do |u|
             user_js << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
+                    "poi": "#{u.poi}",
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
@@ -88,15 +104,20 @@ class MapsController < ApplicationController
         
         @users.where(lang: 'css').each do |u|
             user_css << {
-                "id": "", #get from database
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> <br> #{u.username} <br> Coordinates: #{u.longtitude}, #{u.latitude} <br> Languages #{u.lang}", #
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        <br> #{u.username} 
+                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
+                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>
+                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "poi": "#{u.poi}",
                 },
                 "center": [u.longtitude, u.latitude], #
                 "geometry": {
