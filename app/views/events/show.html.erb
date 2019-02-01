@@ -16,15 +16,14 @@
 </table>
 
 <div id="map_content" class="row">
-        <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
-        <div class="col-4">
-            <div id="meet_point">
-            </div>
-            <div id="route_detail"> 
-                <h1>Description</h1>
-            </div>
+    <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
+    <div class="col-4">
+        <div id="meet_point">
         </div>
-
+        <div id="route_detail"> 
+            <h1>Description</h1>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -54,21 +53,21 @@ $(document).on('turbolinks:load', function(){
             success: function(response){
                 console.log(response);
 
-                map.addSource('testmap', {
+                map.addSource('colabs', {
                     type: 'geojson',
                     data: response[0]
                 }); 
                 
                 map.addLayer({
-                    'id': 'testmap',
+                    'id': 'colabs',
                     'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
-                    'source': 'testmap',
+                    'source': 'colabs',
                     'layout': {
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 3,
-                        'circle-color': 'rgba(255,0,0,1)' // pin color
+                        'circle-radius': 20,
+                        'circle-color': 'rgba(255,0,0,0)' // pin color
                     },
                 }); 
 
@@ -86,7 +85,7 @@ $(document).on('turbolinks:load', function(){
                     },
                     'paint': {
                         'circle-radius': 10,
-                        'circle-color': 'rgba(0,255,0,1)' // pin color
+                        'circle-color': 'rgba(0,255,0,0)' // pin color
                     },
                 }); 
 
@@ -126,7 +125,7 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
 
-                map.getSource('testmap')._data.features.forEach(function(marker) {
+                map.getSource('colabs')._data.features.forEach(function(marker) {
                     let pin_url;
                     switch (marker.properties.lang) {
                         case "ruby": 
@@ -146,40 +145,19 @@ $(document).on('turbolinks:load', function(){
                     el.className = 'marker';
                     el.style.backgroundImage = pin_url;
                     // add marker to map
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .addTo(map);
+                    new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
                 });
 
-                var toggleableLayerIds = [ 'Ruby', 'Python', 'JavaScript', 'HTML-CSS' ];
+                map.getSource('destination')._data.features.forEach(function(marker) {
+                    let el = document.createElement('div');
+                    el.className = 'marker';
+                    el.style.backgroundImage = 'url(/assets/pointer.gif)';
+                    new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+                    $('.marker').css('height', '50px');
+                    $('.marker').css('left', '16px');
+                });
 
-                for (var i = 0; i < toggleableLayerIds.length; i++) {
-                    var id = toggleableLayerIds[i];
-
-                    var link = document.createElement('a');
-                    link.href = '#';
-                    link.className = 'active';
-                    link.textContent = id;
-
-                    link.onclick = function (e) {
-                        var clickedLayer = this.textContent;
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-                        if (visibility === 'visible') {
-                            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                            this.className = '';
-                        } else {
-                            this.className = 'active';
-                            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-                        }
-                    };
-
-                    var layers = document.getElementById('menu');
-                    layers.appendChild(link);
-                }
+              
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
@@ -194,26 +172,13 @@ $(document).on('turbolinks:load', function(){
         var coordinates = e.features[0].geometry.coordinates.slice();
         var name = e.features[0].properties.name;
 
-
-
-        let el = document.createElement('div');
-                    el.className = 'marker';
-                    
-                    el.style.backgroundImage = pin_url;
-                    
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(name)
-            .addTo(map);
+        popup.setLngLat(coordinates).setHTML(name).addTo(map);
     });
 
     map.on('click', 'destination', function(e) {
@@ -227,7 +192,7 @@ $(document).on('turbolinks:load', function(){
             zoom: 18,
         });
 
-        let query = map.getSource('testmap')._options.data.features;
+        let query = map.getSource('colabs')._options.data.features;
         $('#route_detail p').remove(); //clears all previous detail
         $('#meet_point p').remove(); //clear previos detail
         clear_routes(nos_routes); //clears all previous route
@@ -255,9 +220,9 @@ $(document).on('turbolinks:load', function(){
     }
 
     function clear_all_layer() { //removes all layers
-        if (map.getSource(`testmap`)) {
-            map.removeLayer(`testmap`);
-            map.removeSource(`testmap`);
+        if (map.getSource(`colabs`)) {
+            map.removeLayer(`colabs`);
+            map.removeSource(`colabs`);
         }
         // if (map.getSource(`destination`)) {
         //     map.removeLayer(`destination`);
@@ -334,8 +299,9 @@ $(document).on('turbolinks:load', function(){
         closeOnClick: false
     });
 
-    map.on('mouseenter', 'testmap', function(e) { //action, name
+    map.on('mouseenter', 'colabs', function(e) { //action, name
         // Change the cursor style as a UI indicator.
+        console.log('colab mouse enter');
         map.getCanvas().style.cursor = 'pointer';
 
         var coordinates = e.features[0].geometry.coordinates.slice();
@@ -356,7 +322,7 @@ $(document).on('turbolinks:load', function(){
     });
 
 
-    map.on('click', 'testmap', function() {
+    map.on('click', 'colabs', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });

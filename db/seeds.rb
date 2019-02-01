@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'faker'
+
 User.delete_all
 Midpoint.delete_all
 Event.delete_all
@@ -73,11 +75,11 @@ User.create(
 )
 
 i = User.last.id
-50.times {
+70.times {
     User.create(
-        username: "user#{i}",
-        first_name: "user",
-        last_name: "#{i}",
+        username: Faker::FunnyName.name,
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
         email: "user#{i}@mail.com",
         password: "123",
         address: "-",
@@ -122,4 +124,20 @@ Midpoint.create(
     poi: 'poi.1580547980092',
     category: 'college, university, building',
 )
+
+
+30.times {
+    Midpoint.create(
+        name: Faker::Company.name,
+        address: Faker::Address.street_address,
+        description: Faker::TvShows::GameOfThrones.quote,
+        longtitude: rand(101.4318908..101.7506561),
+        latitude: rand(3.0014384..3.209542),
+        category: ['coffee', 'workspace', 'eventspace', 'cafe'].sample,
+    )
+    p "Midpoint created"
+}
+
+
+
 p "Midpoint creation complete"
