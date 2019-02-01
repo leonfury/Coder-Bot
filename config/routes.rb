@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :passwords, controller: "clearance/passwords", only: [:create, :new]
     resource :session, controller: "clearance/sessions", only: [:create]
 
+    resource :profiles, only: [:create, :new, :show]
+    resource :maps, only: [:create, :new, :show]
     
     resources :users, only: [:create] do
         resource :event, only: [:new, :create]
@@ -20,7 +22,7 @@ Rails.application.routes.draw do
     get "/auth/:provider/callback" => "sessions#create_from_omniauth"
     
 
-    post "/map" => "welcomes#map", as: "map"
+    post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
     root 'welcomes#index'
 
@@ -28,5 +30,7 @@ Rails.application.routes.draw do
 	Clearance.configure do |config|
     	config.routes = false
     end
+
+    get "/redirect" => "welcomes#redirect", as: "login_redirect"
 
 end

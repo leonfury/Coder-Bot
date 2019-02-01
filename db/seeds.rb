@@ -8,7 +8,6 @@
 
 User.delete_all
 Midpoint.delete_all
-Codelang.delete_all
 
 User.create(
     username: 'user1',
