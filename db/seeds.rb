@@ -6,8 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'faker'
+
 User.delete_all
 Midpoint.delete_all
+Event.delete_all
+Invite.delete_all
 
 User.create(
     username: 'user1',
@@ -18,6 +22,7 @@ User.create(
     address: 'Desa Kiara Condominium',
     longtitude: 101.63043,
     latitude: 3.133894,
+    poi: "po_2"
 )
 
 User.create(
@@ -29,6 +34,7 @@ User.create(
     address: 'PV15',
     longtitude: 101.71627,
     latitude: 3.201563,
+    poi: "po_3"
 )
 
 User.create(
@@ -40,6 +46,7 @@ User.create(
     address: 'Casa Kiara',
     longtitude: 101.646255,
     latitude: 3.168957,
+    poi: "po_4"
 )
 
 
@@ -52,6 +59,7 @@ User.create(
     address: 'TTDI Ascencia',
     longtitude: 101.6278817,
     latitude: 3.1360686,
+    poi: "po_5"
 )
 
 User.create(
@@ -63,19 +71,21 @@ User.create(
     address: 'Semantan',
     longtitude: 101.6631873,
     latitude: 3.150991,
+    poi: "po_6"
 )
 
 i = User.last.id
-50.times {
+70.times {
     User.create(
-        username: "user#{i}",
-        first_name: "user",
-        last_name: "#{i}",
+        username: Faker::FunnyName.name,
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
         email: "user#{i}@mail.com",
         password: "123",
         address: "-",
         longtitude: rand(101.4318908..101.7506561),
         latitude: rand(3.0014384..3.209542),
+        poi: "poi_#{i}",
     )
     p "User#{i} created"
     i += 1
@@ -114,4 +124,21 @@ Midpoint.create(
     poi: 'poi.1580547980092',
     category: 'college, university, building',
 )
+
+
+30.times {
+    Midpoint.create(
+        name: Faker::Company.name,
+        address: Faker::Address.street_address,
+        description: Faker::TvShows::GameOfThrones.quote,
+        longtitude: rand(101.4318908..101.7506561),
+        latitude: rand(3.0014384..3.209542),
+        category: ['coffee', 'workspace', 'eventspace', 'cafe'].sample,
+    )
+    p "Midpoint created"
+}
+
+
+
 p "Midpoint creation complete"
+

@@ -81,6 +81,12 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<div>
+    <div id="shortlist"></div>
+    <button id="meet_colab_btn"> Meet Them! </button>
+</div>
+
+
 <script>
  $( function() {
     $( "#dialog" ).dialog({
@@ -94,6 +100,7 @@
         duration: 1000
       }
     });
+
      $( "#dialog2" ).dialog({
       autoOpen: false,
       show: {
@@ -114,4 +121,262 @@
     });
   } );
 
+
+    map.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+    }));
+    map.on("load", () => {
+        $.ajax({
+            url: "/map",
+            method: "POST",
+            dataType: "JSON",
+            success: function(response){
+                map.addSource('Ruby', {
+                    type: 'geojson',
+                    data: response[0]
+                }); 
+                
+                map.addLayer({
+                    'id': 'Ruby',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'Ruby',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(255,0,0,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('Python', {
+                    type: 'geojson',
+                    data: response[1]
+                }); 
+                
+                map.addLayer({
+                    'id': 'Python',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'Python',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(0,255,0,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('Java-Script', {
+                    type: 'geojson',
+                    data: response[2]
+                }); 
+                
+                map.addLayer({
+                    'id': 'Java-Script',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'Java-Script',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(0,0,255,1)' // pin color
+                    },
+                }); 
+
+                map.addSource('HTML-CSS', {
+                    type: 'geojson',
+                    data: response[3]
+                }); 
+                
+                map.addLayer({
+                    'id': 'HTML-CSS',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'HTML-CSS',
+                    'layout': {
+                    'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(100,100,100,1)' // pin color
+                    },
+                }); 
+
+                //-----------------------------------------------------------------
+                var layers = map.getStyle().layers;
+                var labelLayerId;
+                for (var i = 0; i < layers.length; i++) {
+                    if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                        labelLayerId = layers[i].id;
+                        break;
+                    }
+                }
+
+                map.addLayer({
+                    'id': '3d-buildings',
+                    'source': 'composite',
+                    'source-layer': 'building',
+                    'filter': ['==', 'extrude', 'true'],
+                    'type': 'fill-extrusion',
+                    'minzoom': 15,
+                    'paint': {
+                        'fill-extrusion-color': '#aaa',
+
+                        // use an 'interpolate' expression to add a smooth transition effect to the
+                        // buildings as the user zooms in
+                        'fill-extrusion-height': [
+                            "interpolate", ["linear"], ["zoom"],
+                            15, 0,
+                            15.05, ["get", "height"]
+                        ],
+                        'fill-extrusion-base': [
+                            "interpolate", ["linear"], ["zoom"],
+                            15, 0,
+                            15.05, ["get", "min_height"]
+                        ],
+                        'fill-extrusion-opacity': .6
+                    }
+                }, labelLayerId);
+
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
+            //-----------------------------------------------------------------success call end
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    function mapPopup(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+
+        let query = $('#shortlist .user_id');
+        let user_id = $('.user_id')[0].textContent;
+        
+
+        for (let i = 0; i < query.length; i++) {
+            if (user_id == query[i].textContent) {
+                $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
+            }
+        } 
+        // map.getSource('Ruby')._data.features.forEach(function(marker)
+        $('.colab-btn').on('click', () => {
+            let poi = e.features[0].properties.poi;
+            let user_lang = $('.user_lang')[0].textContent;
+            let url_pin;
+            $('.colab-btn').attr('disabled', 'disabled');
+
+            switch (user_lang) {
+                case " ruby ":
+                    console.log('true');
+                    url_pin = "url(/assets/pin_ruby.gif)";
+                    break;
+                case " python ":
+                    url_pin = 'url(/assets/pin_python.gif)';
+                    break;
+                case " javascript ":
+                    url_pin = 'url(/assets/pin_js.gif)';
+                    break;
+                case " css ":
+                    url_pin = 'url(/assets/pin_hypercss.gif)';
+                    break;
+            }
+            
+            $(`.${poi}`)[0].style.backgroundImage = url_pin;
+
+            let new_p = document.createElement('p');
+            new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
+            $('#shortlist').append(new_p);
+        })
+    }
+
+    function mapMarker(marker, lang, marker_img) {
+        let coord = marker.geometry.coordinates;
+        let el = document.createElement('div');
+        el.className = `marker ${lang} ${marker.properties.poi}`;
+        el.style.backgroundImage = marker_img;
+        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
+    }
+
+    var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+        link.textContent = id;
+        link.onclick = function (e) {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                $(`.${clickedLayer}`).addClass('d-none');
+                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
+            } else {
+                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+                $(`.${clickedLayer}`).removeClass('d-none');
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+// MAPBOX SCRIPT END
+//-------------------------------------------------------------------------------------
+    
+    $('#meet_colab_btn').on('click', () => {
+        let colabs = [];
+        let query = $('#shortlist p .user_id');
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        
+        for (let i = 0; i < query.length; i++) {
+            colabs.push(query[i].textContent);
+        }
+
+        let checkout = {};
+        checkout["colaborators"] = colabs;
+        checkout["authenticity_token"] = AUTH_TOKEN;
+        
+        $.ajax({
+            url: "/invite_colabs",
+            method: "POST",
+            data: checkout,
+            dataType: "JSON",
+            success: function(){
+                console.log('success');    
+                window.location = "/event_remote";
+            },
+            error: function(error){
+                console.log('error');
+                console.log(error);
+            }
+        });
+    })
+    
+
+}) //turbolinks end
+
 </script>
+
