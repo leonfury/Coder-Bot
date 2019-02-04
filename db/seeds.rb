@@ -12,6 +12,11 @@ User.delete_all
 Midpoint.delete_all
 Event.delete_all
 Invite.delete_all
+ActiveRecord::Base.connection.reset_pk_sequence!(:users);
+ActiveRecord::Base.connection.reset_pk_sequence!(:midpoints);
+ActiveRecord::Base.connection.reset_pk_sequence!(:events);
+ActiveRecord::Base.connection.reset_pk_sequence!(:invites);
+
 
 User.create(
     username: 'user1',
@@ -22,7 +27,7 @@ User.create(
     address: 'Desa Kiara Condominium',
     longtitude: 101.63043,
     latitude: 3.133894,
-    poi: "po_2"
+    poi: "po_1"
 )
 
 User.create(
@@ -34,7 +39,7 @@ User.create(
     address: 'PV15',
     longtitude: 101.71627,
     latitude: 3.201563,
-    poi: "po_3"
+    poi: "po_2"
 )
 
 User.create(
@@ -46,7 +51,7 @@ User.create(
     address: 'Casa Kiara',
     longtitude: 101.646255,
     latitude: 3.168957,
-    poi: "po_4"
+    poi: "po_3"
 )
 
 
@@ -59,7 +64,7 @@ User.create(
     address: 'TTDI Ascencia',
     longtitude: 101.6278817,
     latitude: 3.1360686,
-    poi: "po_5"
+    poi: "po_4"
 )
 
 User.create(
@@ -71,23 +76,25 @@ User.create(
     address: 'Semantan',
     longtitude: 101.6631873,
     latitude: 3.150991,
-    poi: "po_6"
+    poi: "po_5"
 )
 
 i = User.last.id
-70.times {
+100.times {
     User.create(
         username: Faker::FunnyName.name,
         first_name: Faker::Name.first_name,
         last_name: Faker::Name.last_name,
-        email: "user#{i}@mail.com",
+        email: "user#{i+1}@mail.com",
         password: "123",
         address: "-",
-        longtitude: rand(101.4318908..101.7506561),
-        latitude: rand(3.0014384..3.209542),
-        poi: "poi_#{i}",
+        # longtitude: rand(101.4318908..101.7506561),
+        # latitude: rand(3.0014384..3.209542),
+        longtitude: rand(101.4318908..103.7506561),
+        latitude: rand(2.0014384..3.809542),
+        poi: "poi_#{i+1}",
     )
-    p "User#{i} created"
+    p "User#{i+1} created"
     i += 1
 }
 
@@ -125,20 +132,15 @@ Midpoint.create(
     category: 'college, university, building',
 )
 
-
-30.times {
+50.times {
     Midpoint.create(
         name: Faker::Company.name,
         address: Faker::Address.street_address,
         description: Faker::TvShows::GameOfThrones.quote,
-        longtitude: rand(101.4318908..101.7506561),
-        latitude: rand(3.0014384..3.209542),
+        longtitude: rand(101.4318908..103.7506561),
+        latitude: rand(2.0014384..3.809542),
         category: ['coffee', 'workspace', 'eventspace', 'cafe'].sample,
     )
     p "Midpoint created"
 }
-
-
-
 p "Midpoint creation complete"
-

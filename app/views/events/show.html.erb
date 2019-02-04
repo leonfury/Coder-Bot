@@ -15,6 +15,7 @@
     <% end %>
 </table>
 
+<nav id="menu"></nav>
 <div id="map_content" class="row">
     <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
     <div class="col-4">
@@ -89,6 +90,26 @@ $(document).on('turbolinks:load', function(){
                     },
                 }); 
 
+
+                map.addSource('midpoint_all', {
+                    type: 'geojson',
+                    data: response[2]
+                }); 
+
+                map.addLayer({
+                    'id': 'midpoint_all',
+                    'type': 'circle', //fill, line, symbol, circle, heatmap, fill-extrusion, raster, hillshade, background
+                    'source': 'midpoint_all',
+                    'layout': {
+                    'visibility': 'none'
+                    },
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': 'rgba(0,255,0,10)' // pin color
+                    },
+                }); 
+
+             
                 //-----------------------------------------------------------------
                 var layers = map.getStyle().layers;
                 var labelLayerId;
@@ -156,7 +177,7 @@ $(document).on('turbolinks:load', function(){
                     $('.marker').css('height', '50px');
                     $('.marker').css('left', '16px');
                 });
-
+                
               
             //-----------------------------------------------------------------success call end
             },
@@ -209,7 +230,32 @@ $(document).on('turbolinks:load', function(){
         $('#meet_point').append(new_p);
     });
 
-    
+    var toggleableLayerIds = [ 'midpoint_all'];
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'mr-3 ml-2 mb-2 btn btn-light';
+        link.textContent = id;
+        link.onclick = function (e) {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                $(`.${clickedLayer}`).addClass('d-none');
+                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
+            } else {
+                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+                $(`.${clickedLayer}`).removeClass('d-none');
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+
     function clear_routes(n) { //removes all existing map routes
         for (let i = 0; i < n; i++) {
             if (map.getSource(`route_${i}`)) {
@@ -224,13 +270,6 @@ $(document).on('turbolinks:load', function(){
             map.removeLayer(`colabs`);
             map.removeSource(`colabs`);
         }
-        // if (map.getSource(`destination`)) {
-        //     map.removeLayer(`destination`);
-        //     map.removeSource(`destination`);
-        // }
-        // if (map.getLayer(`3d-buildings`)) {
-        //     map.removeLayer(`3d-buildings`);
-        // }
     }
 
     function getRoute(start, end, start_loc, end_loc, i) {
