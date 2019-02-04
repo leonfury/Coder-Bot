@@ -24,38 +24,70 @@
 </head>
 
 <body>
-        <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">CoderBot</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
+                
+        <div class="mobile_view_hide">
             <% if signed_in? %>
-    <%=link_to "Sign out", sign_out_path, method: :delete, class: "nav-link" %>
-<% elsif signed_in? == false %>
-    <%=link_to "Sign in", sign_in_path, method: :get, class: "nav-link" %>
-<%end%>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
+                <%= link_to "Home", root_path, class:"navbar-brand ml-3" %>
+                <%= link_to "Map", maps_path, class:"navbar-brand ml-3" %>
+                <%= link_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"navbar-brand ml-3" %>
+                <%= link_to "Temp", root_path, class:"navbar-brand ml-3" %>
+            <% else %>
+                <%= link_to "Home", root_path, class:"navbar-brand ml-5 home_btn" %>
+            <% end %>
         </div>
-      </div>
+        
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav desk_view_hide">
+                <% if signed_in? %>
+                    <%= link_to "Home", root_path, class:"navbar-brand" %>
+                    <%= link_to "Map", maps_path, class:"navbar-brand" %>
+                    <%= link_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"navbar-brand" %>
+                    <%= link_to "Temp", root_path, class:"navbar-brand" %>
+                <% else %>
+                    <%= link_to "Home", root_path, class:"navbar-brand home_btn" %>
+                <% end %>
+
+                <% if signed_in? %>
+                    <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: #<%= current_user.id %> <%= current_user.username %> </span>
+                <% else %>
+                    <% if Clearance.configuration.allow_sign_up? %>
+                        <%= link_to t(".sign_up"), root_path, method: :get, remote: true, class:"navbar-brand mr-5 sign_up_btn" %>
+                    <% end %>
+                    <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
+                <% end %>
+            </div>
+        </div>   
+        
+        <div class="mobile_view_hide">
+            <% if signed_in? %>
+            <span class="mr-3 text-light"> Signed in as: #<%= current_user.id %> <%= current_user.username %> | </span>
+                <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>
+            <% else %>
+                <% if Clearance.configuration.allow_sign_up? %>
+                    <%= link_to t(".sign_up"), root_path, method: :get, remote: true, class:"navbar-brand mr-5 sign_up_btn" %>
+                <% end %>
+                <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
+            <% end %>
+        </div>
     </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div id="flash" >
         <% flash.each do |key, value| %>
@@ -68,13 +100,14 @@
             <% end %>
         <% end %>
     </div>
-    <div class="mt-5 pt-3">
+    <div class="">
         <%= yield %>
     </div>
+<!--
     <div id="demo">
         <p id="image" onmouseover="animateScript()" onmouseout="stopAnimate()">
         </p>
     </div>
-
+-->    
 </body>
 </html>

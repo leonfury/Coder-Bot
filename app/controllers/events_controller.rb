@@ -80,8 +80,8 @@ class EventsController < ApplicationController
         lng_arr = DescriptiveStatistics::Stats.new([])
         lat_arr = DescriptiveStatistics::Stats.new([])
         colabs.each do |i|
-            lng_arr << i.user.longtitude
-            lat_arr << i.user.latitude
+            lng_arr << i.user.longtitude.to_f
+            lat_arr << i.user.latitude.to_f
         end
         lng_arr = lng_arr.sort
         lat_arr = lat_arr.sort
@@ -91,26 +91,24 @@ class EventsController < ApplicationController
         
         #take SD limit of 0.06
         #what is the radius?
-        s_d_limit = 0.06
+        s_d_limit = 0.2
         lng_arr_length = lng_arr.length
         colabs = colabs.joins(:user)
         
-        # byebug
+        
         while lng_s_d > s_d_limit
             lng_arr = eval_lower(lng_arr)
             if lng_arr.length < lng_arr_length
-                colabs = colabs.where("longtitude != ?", colabs.minimum(:longtitude).to_f)
+                colabs = colabs.where("longtitude != ?", colabs.minimum(:longtitude).to_s)
                 lng_arr_length = lng_arr.length
             end
-            byebug
+            
             lng_arr = eval_upper(lng_arr)
             if lng_arr.length < lng_arr_length
-                colabs = colabs.where("longtitude != ?", colabs.maximum(:longtitude).to_f)
+                colabs = colabs.where("longtitude != ?", colabs.maximum(:longtitude).to_s)
                 lng_arr_length = lng_arr.length
             end
-
             lng_s_d = s_d(lng_arr)
-            # byebug
         end
 
         # only search within radius

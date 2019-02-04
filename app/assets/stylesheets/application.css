@@ -14,7 +14,16 @@
  *= require_self
  */
  /* mapbox */
-body { margin:0; padding:0; }
+body { margin:0; padding:0; position:relative;}
+
+@media (min-width: 992px) {
+    .desk_view_hide {display: none !important;}
+}
+
+
+@media (max-width: 992px) {
+    .mobile_view_hide {display: none !important;}
+}
 
  /* robot animation */
 #image {
@@ -23,6 +32,49 @@ body { margin:0; padding:0; }
     background: url('https://i.ibb.co/JmRG2gV/coderbot.png') 0px 0px;
 }
 
+/* map page gui */
+#menu {
+    position: relative !important;
+    top: 85px !important;
+    z-index: 3;
+    float: right;
+}
+
+.mapboxgl-ctrl-top-right {
+    width: 480px !important;
+    padding-bottom: 10px;
+    border-bottom-left-radius: 10px !important;
+    background-color:#343a40;
+    opacity: 0.8;
+}
+
+.mapboxgl-ctrl-geocoder {
+    position: relative !important;
+    margin-top: 100px !important;
+    max-width: 100% !important;
+    width: 455px !important;
+    z-index: 3;
+}
+
+#sidebar_map {
+    height: auto;
+    max-height: 75vh;
+    position: absolute;
+    top: 190px;
+    right: 0px;
+    width: 480px;
+    background-color:#343a40;
+    border-bottom-left-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+    opacity: 0.8;
+    overflow-y: auto;
+}
+
+#shortlist {
+    overflow-y: auto;
+}
+
+/* mapbox */
 .marker {
     display: block;
     border: none;
