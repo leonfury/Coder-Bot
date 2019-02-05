@@ -86,6 +86,31 @@ body { margin:0; padding:0; position:relative;}
     font-size: 16px !important;
 }
 
+/* event show page gui */
+.menu_event_pg {
+    position: relative !important;
+    top: 85px !important;
+    z-index: 3;
+    float: right;
+}
+
+#event_description {
+    position: absolute;
+    height: auto;
+    max-height: 100vh;
+    width: 480px;
+    top: 0px;
+    right: 0px;
+    padding-top: 80px !important;
+    border-bottom-left-radius: 10px !important;
+    background-color:#343a40;
+    opacity: 0.8;
+    overflow-y: auto;
+    clear: both;
+    font-color: white !important;
+}
+
+
 /* mapbox */
 .marker {
     display: block;

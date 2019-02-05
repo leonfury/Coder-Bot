@@ -1,33 +1,65 @@
-<h1> Event Show Page </h1>
-<p> Event ID: <%= @event.id %> </p>
-<p> Event Leader:  <%= @event.user.id %> </p>
-<p> Event Members :  <%= @colabs.count %> </p>
-<table>
-    <tr>
-        <th> Colab ID </th>
-        <th> Colab Lang </th>
-    </tr>
-    <% @colabs.each do |c| %>
-        <tr>
-            <td> <%= c.user.id %> </td>
-            <td> <%= c.user.lang %> </td>
-        </tr>
-    <% end %>
-</table>
 
-<nav id="menu"></nav>
-<div id="map_content" class="row">
-    <div id='map' class="col-8 w-100" style='height: 1000px;'></div>
-    <div class="col-4">
-        <div id="meet_point">
+
+<div id='map' class="w-100" style='height: 100vh;'></div>
+
+<div id="event_description" class="text-white p-2 m-0">
+    <div id="view_route" class="">
+        <nav id="menu_event_pg"></nav>
+        <div class="m-1 mb-3 p-3 border-primary border rounded bg-dark">
+            Project Description:
+            <br><%= @event.remark %>
+            <br>
+            <br> Total Collaborators: <%= @event.invites.count %>
+            <br> Meeting Location: 
+                <% if @event.midpoint_id != 1 %>
+                    <%= @event.midpoint.name %>
+                <% else %>
+                    <span class="text-danger"> TBC </span>
+                <% end %>
+            <br> Meeting Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
         </div>
-        <div id="route_detail"> 
-            <h1>Description</h1>
+                
+        <div class="">
+            <div id="meet_point">
+            </div>
+            <div id="route_detail"> 
+                <h1>Description</h1>
+            </div>
         </div>
+    </div>
+
+
+    <div id="view_colab" class="ml-2 d-none">
+        <h4> Collaborators </h4>
+        <% if @event.invites.count != 0 %>
+            <% @event.invites.each do |i| %> 
+                <div>
+                    <%= i.user.id %>
+                    <%= i.user.lang %>
+                </div>
+            <% end %>
+        <% end %>
     </div>
 </div>
 
 <script>
+
+
+function afterLoad() {
+    var link = document.createElement('a');
+    link.className = 'mr-3 ml-2 mb-2 btn btn-primary';
+    link.id = "view_colab_btn";
+    link.textContent = 'View Collaborators';
+    var layers = document.getElementById('menu_event_pg');
+    layers.append(link);
+
+    $('#view_colab_btn').on('click', () => {
+        console.log('test');
+        $('#view_route').addClass('d-none');
+        $('#view_colab').removeClass('d-none');
+    });
+}
+
 $(document).on('turbolinks:load', function(){
 //-----------------------------------------------------------------------------
 // MAPBOX SCRIPT START
@@ -52,8 +84,6 @@ $(document).on('turbolinks:load', function(){
             data: {"event_id": "<%= @event.id %>"},
             dataType: "JSON",
             success: function(response){
-                console.log(response);
-
                 map.addSource('colabs', {
                     type: 'geojson',
                     data: response[0]
@@ -175,10 +205,36 @@ $(document).on('turbolinks:load', function(){
                     el.style.backgroundImage = 'url(/assets/pointer.gif)';
                     new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
                     $('.marker').css('height', '50px');
-                    $('.marker').css('left', '16px');
+                    $('.marker').css('left', '');
                 });
-                
-              
+
+                if ($('#menu_event_pg')[0].children.length < 1) {
+                    var toggleableLayerIds = [ 'midpoint_all'];
+                    for (var i = 0; i < toggleableLayerIds.length; i++) {
+                        var link = document.createElement('a');
+                        link.href = '#';
+                        link.className = 'mr-3 ml-2 mb-2 btn btn-light';
+                        link.textContent = 'Show All Meeting Points';
+                        link.onclick = function (e) {
+                            var clickedLayer = 'midpoint_all';
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+                            if (visibility === 'visible') {
+                                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                                $(`.${clickedLayer}`).addClass('d-none');
+                                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
+                            } else {
+                                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
+                                $(`.${clickedLayer}`).removeClass('d-none');
+                                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                            }
+                        };
+                        var layers = document.getElementById('menu_event_pg');
+                        layers.append(link);
+                    }
+                }
+                afterLoad();
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
@@ -229,32 +285,6 @@ $(document).on('turbolinks:load', function(){
         new_p.innerHTML = `${properties.name} <br> Description: ${properties.description} <br> Category: ${properties.category} <br> Address: ${properties.address}`;
         $('#meet_point').append(new_p);
     });
-
-    var toggleableLayerIds = [ 'midpoint_all'];
-    for (var i = 0; i < toggleableLayerIds.length; i++) {
-        var id = toggleableLayerIds[i];
-        var link = document.createElement('a');
-        link.href = '#';
-        link.className = 'mr-3 ml-2 mb-2 btn btn-light';
-        link.textContent = id;
-        link.onclick = function (e) {
-            var clickedLayer = this.textContent;
-            e.preventDefault();
-            e.stopPropagation();
-            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-            if (visibility === 'visible') {
-                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                $(`.${clickedLayer}`).addClass('d-none');
-                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
-            } else {
-                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
-                $(`.${clickedLayer}`).removeClass('d-none');
-                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-            }
-        };
-        var layers = document.getElementById('menu');
-        layers.appendChild(link);
-    }
 
     function clear_routes(n) { //removes all existing map routes
         for (let i = 0; i < n; i++) {
