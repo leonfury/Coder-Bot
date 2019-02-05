@@ -34,7 +34,6 @@
             <% if signed_in? %>
                 <%= link_to "Home", root_path, class:"navbar-brand ml-3" %>
                 <%= link_to "Map", maps_path, class:"navbar-brand ml-3" %>
-                <%= link_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"navbar-brand ml-3" %>
                 <%= link_to "Temp", root_path, class:"navbar-brand ml-3" %>
             <% else %>
                 <%= link_to "Home", root_path, class:"navbar-brand ml-5 home_btn" %>
@@ -46,7 +45,6 @@
                 <% if signed_in? %>
                     <%= link_to "Home", root_path, class:"navbar-brand" %>
                     <%= link_to "Map", maps_path, class:"navbar-brand" %>
-                    <%= link_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"navbar-brand" %>
                     <%= link_to "Temp", root_path, class:"navbar-brand" %>
                 <% else %>
                     <%= link_to "Home", root_path, class:"navbar-brand home_btn" %>

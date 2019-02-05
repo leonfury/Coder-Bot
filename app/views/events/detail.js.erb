@@ -1,0 +1,38 @@
+$("#event_details").html("<%= escape_javascript(render partial: 'events/detail') %>"); 
+
+
+// maps > show
+$('.back_btn').on('click', () => {
+    $('#event_status').removeClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
+});
+
+$('#meet_colab_btn').on('click', () => {
+    let colabs = [];
+    let query = $('#shortlist p .user_id');
+    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+    
+    for (let i = 0; i < query.length; i++) {
+        colabs.push(query[i].textContent);
+    }
+    let checkout = {};
+    checkout["colaborators"] = colabs;
+    checkout["authenticity_token"] = AUTH_TOKEN;
+    
+    $.ajax({
+        url: "/invite_colabs",
+        method: "POST",
+        data: checkout,
+        dataType: "JSON",
+        success: function(){
+            console.log('success');    
+            window.location = "/event_remote";
+        },
+        error: function(error){
+            console.log('error');
+            console.log(error);
+        }
+    });
+})

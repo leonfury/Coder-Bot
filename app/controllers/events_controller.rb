@@ -15,7 +15,9 @@ class EventsController < ApplicationController
         else
             flash[:error] = "ERROR >>> Event Creation Fail #{event.errors.full_messages}"
         end
-        redirect_to root_path
+        respond_to do |format|  
+            format.js
+        end
     end
 
     def show
@@ -36,7 +38,13 @@ class EventsController < ApplicationController
         end
         @center = [ longtitude_tot / 2, latitude_tot / 2 , zoom]
         @Locresults = Midpoint.all
+    end
 
+    def detail
+        @event = Event.find(params[:id])
+        respond_to do |format|  
+            format.js
+        end
     end
 
     def event_map

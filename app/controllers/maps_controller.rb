@@ -2,7 +2,7 @@ class MapsController < ApplicationController
 
     def show
         @users = User.all
-
+        @event = Event.last
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
         latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
         longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f

@@ -8,12 +8,12 @@
 
 <div id="sidebar_map" class="d-none">
     <div id="event_status" class="row p-0 m-3 justify-content-between">
-        <p class="ml-3 mr-3 mt-2 text-white">Total Events: <span id="user_event_count">0</span> </p>
+        <p class="ml-3 mr-3 mt-2 text-white">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
         <div class="ml-3 mr-3 "> 
-            <button type="button" id="view_event_btn" class="btn btn-primary">View My Events</button>
+            <button type="button" id="view_event_btn" class="btn btn-primary active">View My Events</button>
         </div>
         <div class="ml-3 mr-3 "> 
-            <button type="button" id="new_event_btn" class="btn btn-primary">New Event</button>
+            <button type="button" id="new_event_btn" class="btn btn-primary active">New Event</button>
         </div>
     </div>
 
@@ -22,19 +22,13 @@
     </div>
 
     <div id="event_list" class="m-3 text-white d-none">
-        EVENT LIST LOOP
+        <%= render partial: "events/list" %>
     </div>
 
-    <div id="event_details" class="m-3 text-white d-none"></div>
-    
-    <div class="p-2 text-right col-4 d-none">
-        <p class="float-left text-white mt-2 ml-2"><span id="colab_count"> 0 </span> Collaborators  </p>
-        <button id="meet_colab_btn" class="btn btn-primary"> Meet Them! </button>
+    <div id="event_details" class="m-3 text-white d-none">
+        <%= render partial: "events/detail" %>
     </div>
-    <hr>
-    <div id="shortlist"></div>
 </div>
-
 
 <script>
 // jquery script
@@ -42,20 +36,37 @@ $('#new_event_btn').on('click', () => {
     $('#event_status').addClass('d-none');
     $('#event_list').addClass('d-none');
     $('#event_create').removeClass('d-none');
+    $('#event_details').addClass('d-none');
 });
 
 $('#view_event_btn').on('click', () => {
     $('#event_status').addClass('d-none');
     $('#event_list').removeClass('d-none');
     $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
 });
 
-$('#back_btn').on('click', () => {
+$('.back_btn').on('click', () => { //sync detail
     $('#event_status').removeClass('d-none');
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
 });
 
+$('.event_list_items').on('click', () => {
+    $('#event_status').addClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').removeClass('d-none');
+});
+
+$('#create_event_btn').on('click', () => {
+    $('#user_event_count')[0].textContent = parseInt($('#user_event_count')[0].textContent) + 1
+    $('#event_status').removeClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
+});
 
 $(document).on('turbolinks:load', function(){
 //-----------------------------------------------------------------------------
@@ -291,6 +302,7 @@ $(document).on('turbolinks:load', function(){
             let new_p = document.createElement('p');
             new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
             $('#shortlist').append(new_p);
+            $('#meet_colab_btn').prop("disabled", false);
         })
     }
     function mapMarker(marker, lang, marker_img) {
@@ -304,32 +316,34 @@ $(document).on('turbolinks:load', function(){
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
     
-    $('#meet_colab_btn').on('click', () => {
-        let colabs = [];
-        let query = $('#shortlist p .user_id');
-        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-        
-        for (let i = 0; i < query.length; i++) {
-            colabs.push(query[i].textContent);
-        }
-        let checkout = {};
-        checkout["colaborators"] = colabs;
-        checkout["authenticity_token"] = AUTH_TOKEN;
-        
-        $.ajax({
-            url: "/invite_colabs",
-            method: "POST",
-            data: checkout,
-            dataType: "JSON",
-            success: function(){
-                console.log('success');    
-                window.location = "/event_remote";
-            },
-            error: function(error){
-                console.log('error');
-                console.log(error);
+    $('#meet_colab_btn').on('click', () => {  //sync detail
+        if  ($('#meet_colab_btn')[0].disabled == false) {
+            let colabs = [];
+            let query = $('#shortlist p .user_id');
+            var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+            
+            for (let i = 0; i < query.length; i++) {
+                colabs.push(query[i].textContent);
             }
-        });
+            let checkout = {};
+            checkout["colaborators"] = colabs;
+            checkout["authenticity_token"] = AUTH_TOKEN;
+            
+            $.ajax({
+                url: "/invite_colabs",
+                method: "POST",
+                data: checkout,
+                dataType: "JSON",
+                success: function(){
+                    console.log('success');    
+                    window.location = "/event_remote";
+                },
+                error: function(error){
+                    console.log('error');
+                    console.log(error);
+                }
+            });
+        }
     })
     
 }) //turbolinks end

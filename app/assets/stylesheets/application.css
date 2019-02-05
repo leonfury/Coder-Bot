@@ -54,6 +54,7 @@ body { margin:0; padding:0; position:relative;}
     max-width: 100% !important;
     width: 455px !important;
     z-index: 3;
+    clear: both;
 }
 
 #sidebar_map {
@@ -68,10 +69,21 @@ body { margin:0; padding:0; position:relative;}
     border-top-left-radius: 10px !important;
     opacity: 0.8;
     overflow-y: auto;
+    clear: both;
 }
 
 #shortlist {
     overflow-y: auto;
+}
+
+.event_list_items {
+    font-size: 16px !important;
+}
+
+.event_list_items:hover {
+    background-color: black !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
 }
 
 /* mapbox */

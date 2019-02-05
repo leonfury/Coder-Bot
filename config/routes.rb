@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get "/auth/:provider/callback" => "sessions#create_from_omniauth"
     get "/event_remote" => "events#event_remote"
     post "/event_map" => "events#event_map", as: "event_map"
+    get "/event_detail/:id" => "events#detail", as: "event_detail"
 
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"

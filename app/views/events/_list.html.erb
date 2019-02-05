@@ -1,0 +1,23 @@
+<h4>My Event List</h4>
+<% events = Event.where(user: current_user) %>
+<% if events.count == 0  %>
+    You have no events!
+<% else %>
+
+    <% events.order("created_at DESC").each do |e| %>
+        <a id="event_<%= e.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/event_detail/<%= e.id %>" data-remote="true">
+            Project Description: 
+            <br><%= e.remark %>
+            <br>
+            <br> Total Collaborators: <%= e.invites.count %>
+            <br> Meeting Location: 
+                <% if e.midpoint_id != 1 %>
+                    <%= e.midpoint.name %>
+                <% else %>
+                    <span class="text-danger"> TBC </span>
+                <% end %>
+            <br> Meeting Time: <%= e.event_date.strftime("%d %b %Y, %A") %> <%= e.event_time.strftime("%H:%M %p") %>
+        </a>
+    <% end %>
+<% end %>
+<button type="button" class="back_btn btn btn-danger mr-2">Back</button>
