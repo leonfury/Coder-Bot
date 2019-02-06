@@ -5,32 +5,26 @@
 <div id="event_description" class="text-white p-2 m-0">
     <div id="view_route" class="">
         <nav id="menu_event_pg"></nav>
-        <div class="m-1 mb-3 p-3 border-primary border rounded bg-dark">
-            Project Description:
-            <br><%= @event.remark %>
-            <br>
-            <br> Total Collaborators: <%= @event.invites.count %>
-            <br> Meeting Location: 
-                <% if @event.midpoint_id != 1 %>
-                    <%= @event.midpoint.name %>
-                <% else %>
-                    <span class="text-danger"> TBC </span>
-                <% end %>
-            <br> Meeting Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
+        <div id="meetpoint" class="m-1 mb-3 p-3 border-primary border rounded bg-dark">
+           <%= render partial: "events/meetpoint" %>
         </div>
                 
         <div class="">
-            <div id="meet_point">
+            <div id="meet_point" class="ml-2">
             </div>
-            <div id="route_detail"> 
-                <h1>Description</h1>
+            <div id="route_detail" class="ml-2"> 
             </div>
         </div>
     </div>
 
 
     <div id="view_colab" class="ml-2 d-none">
-        <h4> Collaborators </h4>
+        <h4> 
+            <% if @event.invites.count != 0 %>
+                <%= @event.invites.count %>
+            <% end %>
+            Collaborators
+         </h4>
         <% if @event.invites.count != 0 %>
             <% @event.invites.each do |i| %> 
                 <div>
@@ -39,11 +33,15 @@
                 </div>
             <% end %>
         <% end %>
+        <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
     </div>
 </div>
 
 <script>
-
+$('.back_btn').on('click', () => { //sync detail
+    $('#view_colab').addClass('d-none');
+    $('#view_route').removeClass('d-none');
+});
 
 function afterLoad() {
     var link = document.createElement('a');
@@ -54,7 +52,6 @@ function afterLoad() {
     layers.append(link);
 
     $('#view_colab_btn').on('click', () => {
-        console.log('test');
         $('#view_route').addClass('d-none');
         $('#view_colab').removeClass('d-none');
     });
@@ -243,7 +240,52 @@ $(document).on('turbolinks:load', function(){
         });
     });
 
-    map.on('mouseenter', 'destination', function(e) { //action, name
+    //------------------ Display
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'colabs', function(e) { //action, name
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+    
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        console.log(coordinates);
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+    });
+
+    map.on('click', 'colabs', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('mouseenter', 'destination', function(e) { mouseEnterDes(e) });
+    map.on('mouseenter', 'midpoint_all', function(e) { mouseEnterDes(e) });
+
+    map.on('click', 'destination', function(e) { mouseClickDes(e) });
+    map.on('click', 'midpoint_all', function(e) { mouseClickDes(e) });
+
+    map.on('click', function() { //remove popup when click anywhere on the map
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------
+    function mouseEnterDes(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
         var coordinates = e.features[0].geometry.coordinates.slice();
@@ -256,9 +298,9 @@ $(document).on('turbolinks:load', function(){
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(coordinates).setHTML(name).addTo(map);
-    });
+    }
 
-    map.on('click', 'destination', function(e) {
+    function mouseClickDes(e) {
         map.getCanvas().style.cursor = '';
         popup.remove();
         let feature = e.features[0];
@@ -278,13 +320,16 @@ $(document).on('turbolinks:load', function(){
         for (let i = 0; i < query.length; i++) { // get all routes to point to target location
             let start_point = query[i].center;
             getRoute(start_point, end_point, query[i], feature, i);
+//-------------------------------------------------------------------------------------------
+            
+//-------------------------------------------------------------------------------------------
         }
         
         let properties = feature.properties
         let new_p = document.createElement('p');
-        new_p.innerHTML = `${properties.name} <br> Description: ${properties.description} <br> Category: ${properties.category} <br> Address: ${properties.address}`;
+        new_p.innerHTML = `<h4>Meeting Point</h4>${properties.name} <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br> Description: ${properties.description} <br> Address: ${properties.address}<br> Category: ${properties.category} <br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button><hr style="background-color: white;"></form>`;
         $('#meet_point').append(new_p);
-    });
+    }
 
     function clear_routes(n) { //removes all existing map routes
         for (let i = 0; i < n; i++) {
@@ -354,52 +399,23 @@ $(document).on('turbolinks:load', function(){
             // add turn instructions here at the end
             //write to description
             let new_p = document.createElement('p');
-            new_p.innerHTML = `From: ${start_loc.properties.description} <br> To:${end_loc.properties.description} <br> ${parseFloat(trip_duration / 60).toFixed(1)} minutes <br> Distance: ${parseFloat(trip_distance / 1000).toFixed(1)} km`;
-            $('#route_detail').append(new_p);
+
+            var dist = parseFloat(trip_distance / 1000).toFixed(1);
+            var text_class;
+            if (dist > 100) { text_class = "text-danger"; }
+            var jour_det = `Journey: <span class="journey_detail ${text_class}">${parseFloat(trip_duration / 60).toFixed(1)} minutes across <span class="journey_dist">${dist}</span> km </span>`;
+            new_p.innerHTML = `${start_loc.properties.username} // ${start_loc.properties.user_mail} <br>${jour_det}`;
+            // $('#route_detail').append(new_p);
+
+
+            if (dist > 100) { text_class = "exceed_range"; }
+            let el = document.createElement('div');
+            el.className = `map_journey_detail ${text_class}`;
+            el.innerHTML = `<span class="">${parseFloat(trip_duration / 60).toFixed(1)} mins across <span class="journey_dist">${dist}</span> km </span>`;
+            new mapboxgl.Marker(el).setLngLat(start).addTo(map);
         };
         req.send();
-
-        
     } //get route function end
-
-    //------------------ Display
-    var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
-
-    map.on('mouseenter', 'colabs', function(e) { //action, name
-        // Change the cursor style as a UI indicator.
-        console.log('colab mouse enter');
-        map.getCanvas().style.cursor = 'pointer';
-
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var description = e.features[0].properties.description;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-    });
-
-
-    map.on('click', 'colabs', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
-
-    map.on('click', function() { //remove popup when click anywhere on the map
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
 
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------

@@ -7,32 +7,85 @@ $('.back_btn').on('click', () => {
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').addClass('d-none');
+    
+    var check = $('#shortlist .user_id');
+    for (let i = 0; i < check.length; i++) {
+        var user_lang = $('#shortlist .user_lang')[i].textContent;
+        var url_pin;
+        $('.colab-btn').removeAttr('disabled');
+        switch (user_lang) {
+            case "ruby":
+                url_pin = "url(/assets/pin_ruby_static.png)";
+                break;
+            case "python":
+
+                url_pin = 'url(/assets/pin_python_static.png)';
+                break;
+            case "javascript":
+
+                url_pin = 'url(/assets/pin_js_static.png)';
+                break;
+            case "css":
+                url_pin = 'url(/assets/pin_hypercss_static.png)';
+                break;
+        }
+        $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;
+    }
+
+
 });
 
-$('#meet_colab_btn').on('click', () => {
-    let colabs = [];
-    let query = $('#shortlist p .user_id');
-    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-    
-    for (let i = 0; i < query.length; i++) {
-        colabs.push(query[i].textContent);
-    }
-    let checkout = {};
-    checkout["colaborators"] = colabs;
-    checkout["authenticity_token"] = AUTH_TOKEN;
-    
-    $.ajax({
-        url: "/invite_colabs",
-        method: "POST",
-        data: checkout,
-        dataType: "JSON",
-        success: function(){
-            console.log('success');    
-            window.location = "/event_remote";
-        },
-        error: function(error){
-            console.log('error');
-            console.log(error);
+$('#meet_colab_btn').on('click', () => {  //sync detail
+    if  ($('#meet_colab_btn')[0].disabled == false) {
+        let colabs = [];
+        let query = $('#shortlist p .user_id');
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        let event_id = $('.event_detail_page')[0].id;
+        for (let i = 0; i < query.length; i++) {
+            colabs.push(query[i].textContent);
         }
-    });
+        let checkout = {};
+        checkout["colaborators"] = colabs;
+        checkout["authenticity_token"] = AUTH_TOKEN;
+        checkout["event_id"] = event_id;
+        
+        $.ajax({
+            url: "/invite_colabs",
+            method: "POST",
+            data: checkout,
+            dataType: "JSON",
+            success: function(){
+                console.log('success');    
+                window.location = `/events/${event_id}`;
+            },
+            error: function(error){
+                console.log('error');
+                console.log(error);
+            }
+        });
+    }
 })
+
+
+var check = $('#shortlist .user_id');
+for (let i = 0; i < check.length; i++) {
+    
+    var user_lang = $('#shortlist .user_lang')[i].textContent;
+    var url_pin;
+    $('.colab-btn').attr('disabled', 'disabled');
+    switch (user_lang) {
+        case "ruby":
+            url_pin = "url(/assets/pin_ruby.gif)";
+            break;
+        case "python":
+            url_pin = 'url(/assets/pin_python.gif)';
+            break;
+        case "javascript":
+            url_pin = 'url(/assets/pin_js.gif)';
+            break;
+        case "css":
+            url_pin = 'url(/assets/pin_hypercss.gif)';
+            break;
+    }
+    $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;
+}

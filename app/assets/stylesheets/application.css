@@ -110,6 +110,21 @@ body { margin:0; padding:0; position:relative;}
     font-color: white !important;
 }
 
+.map_journey_detail {
+    border: 1px solid red;
+    border-radius: 10px;
+    font-size: 12px;
+    background-color: white;
+    padding: 5px;
+    margin-bottom: 20px;
+    top: -45px;
+}
+
+.exceed_range {
+    background-color: red;
+    color: white;
+}
+
 
 /* mapbox */
 .marker {

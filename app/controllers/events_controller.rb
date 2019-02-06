@@ -20,6 +20,21 @@ class EventsController < ApplicationController
         end
     end
 
+    def meetpoint 
+        @event = Event.find(params[:event_id])
+        @event.update(midpoint_id: params[:id])
+        respond_to do |format|  
+            format.js
+        end
+    end
+
+    def detail
+        @event = Event.find(params[:id])
+        respond_to do |format|  
+            format.js
+        end
+    end
+
     def show
         @event = Event.find(params[:id])
         @colabs = @event.invites
@@ -40,12 +55,6 @@ class EventsController < ApplicationController
         @Locresults = Midpoint.all
     end
 
-    def detail
-        @event = Event.find(params[:id])
-        respond_to do |format|  
-            format.js
-        end
-    end
 
     def event_map
         bundle, user_location, target_location, midpoint_all_location = [], [], [], []
@@ -63,12 +72,13 @@ class EventsController < ApplicationController
                         <br> #{u.username} 
                         <br> Coordinates: #{u.longtitude}, #{u.latitude} 
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
-                        <br> User ID: #<span class='user_id'>#{u.id}</span>
-                        <br><button id='#{u.id}' class='colab-btn'>Collaborate!</button>", #
+                        <br> User ID: #<span class='user_id'>#{u.id}</span>", #print to div
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
                     "lang": "#{u.lang}",
+                    "username": "#{u.username}",
+                    "user_mail": "#{u.email}",
                 },
                 "text": "Next Academy",
                 "place_name": "Next Academy, Kuala Lumpur, 60000, Malaysia",
@@ -81,7 +91,6 @@ class EventsController < ApplicationController
         end
         user = {"type": "FeatureCollection", "features":  user_location}
     
-
         #detect outlier
         #remove outlier
         #using SD as limit
@@ -139,6 +148,7 @@ class EventsController < ApplicationController
                     "description": "#{p.description}", #
                     "category": "#{p.category}",
                     "landmark": true,
+                    "midpoint_id": "#{p.id}",
                 },
                 "center": [p.longtitude, p.latitude], #
                 "geometry": {
@@ -161,6 +171,7 @@ class EventsController < ApplicationController
                     "description": "#{p.description}", #
                     "category": "#{p.category}",
                     "landmark": true,
+                    "midpoint_id": "#{p.id}",
                 },
                 "center": [p.longtitude, p.latitude], #
                 "geometry": {
@@ -175,10 +186,6 @@ class EventsController < ApplicationController
         bundle << target
         bundle << midpoint_all
         render :json => ActiveSupport::JSON.encode(bundle)
-    end
-
-    def event_remote
-        redirect_to event_path(current_user.events.last.id)
     end
 
     private

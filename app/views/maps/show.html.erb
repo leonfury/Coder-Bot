@@ -51,6 +51,8 @@ $('.back_btn').on('click', () => { //sync detail
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').addClass('d-none');
+
+    //deactivate markers
 });
 
 $('.event_list_items').on('click', () => {
@@ -58,6 +60,8 @@ $('.event_list_items').on('click', () => {
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').removeClass('d-none');
+
+    //change marker
 });
 
 $('#create_event_btn').on('click', () => {
@@ -244,14 +248,25 @@ $(document).on('turbolinks:load', function(){
         closeButton: false,
         closeOnClick: false
     });
+
     map.on('mouseenter', 'Ruby', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Python', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Java-Script', function(e) {mapPopup(e)});
     map.on('mouseenter', 'HTML-CSS', function(e) {mapPopup(e)});
+
     map.on('click', function() { //remove popup when click anywhere on the map
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
+
+    function mapMarker(marker, lang, marker_img) {
+        let coord = marker.geometry.coordinates;
+        let el = document.createElement('div');
+        el.className = `marker ${lang} ${marker.properties.poi}`;
+        el.style.backgroundImage = marker_img;
+        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
+    }
+
     function mapPopup(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -265,9 +280,7 @@ $(document).on('turbolinks:load', function(){
         }
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
         let query = $('#shortlist .user_id');
         let user_id = $('.user_id')[0].textContent;
         
@@ -276,6 +289,7 @@ $(document).on('turbolinks:load', function(){
                 $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
             }
         } 
+
         // map.getSource('Ruby')._data.features.forEach(function(marker)
         $('.colab-btn').on('click', () => {
             let poi = e.features[0].properties.poi;
@@ -284,7 +298,6 @@ $(document).on('turbolinks:load', function(){
             $('.colab-btn').attr('disabled', 'disabled');
             switch (user_lang) {
                 case " ruby ":
-                    console.log('true');
                     url_pin = "url(/assets/pin_ruby.gif)";
                     break;
                 case " python ":
@@ -298,6 +311,7 @@ $(document).on('turbolinks:load', function(){
                     break;
             }
             
+            $('#colab_count')[0].textContent = parseInt($('#colab_count')[0].textContent) + 1;
             $(`.${poi}`)[0].style.backgroundImage = url_pin;
             let new_p = document.createElement('p');
             new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
@@ -305,13 +319,8 @@ $(document).on('turbolinks:load', function(){
             $('#meet_colab_btn').prop("disabled", false);
         })
     }
-    function mapMarker(marker, lang, marker_img) {
-        let coord = marker.geometry.coordinates;
-        let el = document.createElement('div');
-        el.className = `marker ${lang} ${marker.properties.poi}`;
-        el.style.backgroundImage = marker_img;
-        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
-    }
+
+ 
 
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
@@ -321,13 +330,15 @@ $(document).on('turbolinks:load', function(){
             let colabs = [];
             let query = $('#shortlist p .user_id');
             var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-            
+            let event_id = $('.event_detail_page')[0].id;
+            console.log(event_id);
             for (let i = 0; i < query.length; i++) {
                 colabs.push(query[i].textContent);
             }
             let checkout = {};
             checkout["colaborators"] = colabs;
             checkout["authenticity_token"] = AUTH_TOKEN;
+            checkout["event_id"] = event_id;
             
             $.ajax({
                 url: "/invite_colabs",
@@ -336,7 +347,7 @@ $(document).on('turbolinks:load', function(){
                 dataType: "JSON",
                 success: function(){
                     console.log('success');    
-                    window.location = "/event_remote";
+                    window.location = `/events/${event_id}`;
                 },
                 error: function(error){
                     console.log('error');
