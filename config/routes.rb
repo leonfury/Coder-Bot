@@ -20,8 +20,9 @@ Rails.application.routes.draw do
     delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
     get "/sign_up" => "clearance/users#new", as: "sign_up"
     get "/auth/:provider/callback" => "sessions#create_from_omniauth"
-    get "/event_remote" => "events#event_remote"
     post "/event_map" => "events#event_map", as: "event_map"
+    get "/event_detail/:id" => "events#detail", as: "event_detail"
+    post "/event/:event_id/midpoint/:id" => "events#meetpoint", as:"set_meetpoint"
 
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"

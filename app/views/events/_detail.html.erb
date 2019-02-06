@@ -1,0 +1,36 @@
+<div class="p-2 text-right">
+
+    <p class="float-left text-white mt-2 ml-2"><span id="colab_count"> 0 </span> New Collaborators  </p>
+    <a href="/events/<%= @event.id %>" class="btn btn-primary mr-2" target="_blank"> View Event </a>
+    <button id="meet_colab_btn" class="btn btn-primary" disabled="true"> Send Invite! </button>
+</div>
+
+        
+    
+<div id="<%= @event.id %>" class="event_detail_page m-1 mb-3 p-3 border-primary border rounded bg-dark">
+    Project Description:
+    <br><%= @event.remark %>
+    <br>
+    <br> Existing Collaborators: <%= @event.invites.count %>
+    <br> Meeting Location: 
+        <% if @event.midpoint_id != 1 %>
+            <%= @event.midpoint.name %>
+        <% else %>
+            <span class="text-danger"> TBC </span>
+        <% end %>
+    <br> Meeting Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
+</div>
+<div id="shortlist" class="ml-2">
+    <h4> Collaborators </h4>
+    <% if @event.invites.count != 0 %>
+        <% @event.invites.each do |i| %>
+            
+            <div>
+                <span class="user_id"><%= i.user.id %></span>
+                <span class="user_lang"><%= i.user.lang %></span>
+            </div>
+        <% end %>
+    <% end %>
+</div>
+
+<button type="button" class="back_btn btn btn-danger mr-2">Back</button>

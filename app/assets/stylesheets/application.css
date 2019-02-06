@@ -14,7 +14,16 @@
  *= require_self
  */
  /* mapbox */
-body { margin:0; padding:0; }
+body { margin:0; padding:0; position:relative;}
+
+@media (min-width: 992px) {
+    .desk_view_hide {display: none !important;}
+}
+
+
+@media (max-width: 992px) {
+    .mobile_view_hide {display: none !important;}
+}
 
  /* robot animation */
 #image {
@@ -23,6 +32,101 @@ body { margin:0; padding:0; }
     background: url('https://i.ibb.co/JmRG2gV/coderbot.png') 0px 0px;
 }
 
+/* map page gui */
+#menu {
+    position: relative !important;
+    top: 85px !important;
+    z-index: 3;
+    float: right;
+}
+
+.mapboxgl-ctrl-top-right {
+    width: 480px !important;
+    padding-bottom: 10px;
+    border-bottom-left-radius: 10px !important;
+    background-color:#343a40;
+    opacity: 0.8;
+}
+
+.mapboxgl-ctrl-geocoder {
+    position: relative !important;
+    margin-top: 100px !important;
+    max-width: 100% !important;
+    width: 455px !important;
+    z-index: 3;
+    clear: both;
+}
+
+#sidebar_map {
+    height: auto;
+    max-height: 75vh;
+    position: absolute;
+    top: 190px;
+    right: 0px;
+    width: 480px;
+    background-color:#343a40;
+    border-bottom-left-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+    opacity: 0.8;
+    overflow-y: auto;
+    clear: both;
+}
+
+#shortlist {
+    overflow-y: auto;
+}
+
+.event_list_items {
+    font-size: 16px !important;
+}
+
+.event_list_items:hover {
+    background-color: black !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+}
+
+/* event show page gui */
+.menu_event_pg {
+    position: relative !important;
+    top: 85px !important;
+    z-index: 3;
+    float: right;
+}
+
+#event_description {
+    position: absolute;
+    height: auto;
+    max-height: 100vh;
+    width: 480px;
+    top: 0px;
+    right: 0px;
+    padding-top: 80px !important;
+    border-bottom-left-radius: 10px !important;
+    background-color:#343a40;
+    opacity: 0.8;
+    overflow-y: auto;
+    clear: both;
+    font-color: white !important;
+}
+
+.map_journey_detail {
+    border: 1px solid red;
+    border-radius: 10px;
+    font-size: 12px;
+    background-color: white;
+    padding: 5px;
+    margin-bottom: 20px;
+    top: -45px;
+}
+
+.exceed_range {
+    background-color: red;
+    color: white;
+}
+
+
+/* mapbox */
 .marker {
     display: block;
     border: none;

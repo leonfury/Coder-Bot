@@ -2,7 +2,7 @@ class MapsController < ApplicationController
 
     def show
         @users = User.all
-
+        @event = Event.last
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
         latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
         longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f
@@ -18,9 +18,7 @@ class MapsController < ApplicationController
         @Locresults = Midpoint.all
     end
     
-
-
-    def map
+    def map #main map displays all users
         @users = User.all
         bundle, user_ruby, user_python, user_js, user_css = [], [], [], [], []
         @users.where(lang: 'ruby').each do |u|
@@ -128,12 +126,10 @@ class MapsController < ApplicationController
         end
         css = {"type": "FeatureCollection", "features":  user_css}
         
-        
         bundle << ruby
         bundle << python
         bundle << js
         bundle << css
-        
         render :json => ActiveSupport::JSON.encode(bundle)
     end
 

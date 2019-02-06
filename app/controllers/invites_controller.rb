@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
         colabs = params[:colaborators]
         colabs.each do |u|
             Invite.create(
-                event: current_user.events.last,
+                event_id: params[:event_id], #
                 user_id: u,
             )
         end

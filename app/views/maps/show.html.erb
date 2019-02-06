@@ -1,32 +1,77 @@
-<% if signed_in? %>
-    <%=link_to "Sign out", sign_out_path, method: :delete, class: "nav-link" %>
-<% elsif signed_in? == false %>
-    <%=link_to "Sign in", sign_in_path, method: :get, class: "nav-link" %>
-<%end%>
-<% if signed_in? %>
-    <p> Current User ID: #<%= current_user.id %> </p>
-    <p> Current Event ID: #<%= current_user.events.last.id if current_user.events.last %> </p>
-<% end %>
-    <h1> Home Page </h1> 
-<% if signed_in? %>
-    <%= button_to "Create Event", new_user_event_path(current_user.id), method: "get", class:"btn btn-primary ml-2" %>
-<% end %>
-<hr>
 <!-- mapbox search bar start -->
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- mapbox search bar end -->
 
 <nav id="menu"></nav>
-<div id='map' class="w-100" style='height: 80vh;'></div>
+<div id='map' class="w-100" style='height: 95vh;'></div>
 
-<div>
-    <div id="shortlist"></div>
-    <button id="meet_colab_btn"> Meet Them! </button>
+<div id="sidebar_map" class="d-none">
+    <div id="event_status" class="row p-0 m-3 justify-content-between">
+        <p class="ml-3 mr-3 mt-2 text-white">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
+        <div class="ml-3 mr-3 "> 
+            <button type="button" id="view_event_btn" class="btn btn-primary active">View My Events</button>
+        </div>
+        <div class="ml-3 mr-3 "> 
+            <button type="button" id="new_event_btn" class="btn btn-primary active">New Event</button>
+        </div>
+    </div>
+
+    <div id="event_create" class="m-3 text-white d-none">
+        <%= render partial: "events/new" %>
+    </div>
+
+    <div id="event_list" class="m-3 text-white d-none">
+        <%= render partial: "events/list" %>
+    </div>
+
+    <div id="event_details" class="m-3 text-white d-none">
+        <%= render partial: "events/detail" %>
+    </div>
 </div>
 
-
 <script>
+// jquery script
+$('#new_event_btn').on('click', () => {
+    $('#event_status').addClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').removeClass('d-none');
+    $('#event_details').addClass('d-none');
+});
+
+$('#view_event_btn').on('click', () => {
+    $('#event_status').addClass('d-none');
+    $('#event_list').removeClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
+});
+
+$('.back_btn').on('click', () => { //sync detail
+    $('#event_status').removeClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
+
+    //deactivate markers
+});
+
+$('.event_list_items').on('click', () => {
+    $('#event_status').addClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').removeClass('d-none');
+
+    //change marker
+});
+
+$('#create_event_btn').on('click', () => {
+    $('#user_event_count')[0].textContent = parseInt($('#user_event_count')[0].textContent) + 1
+    $('#event_status').removeClass('d-none');
+    $('#event_list').addClass('d-none');
+    $('#event_create').addClass('d-none');
+    $('#event_details').addClass('d-none');
+});
+
 $(document).on('turbolinks:load', function(){
 //-----------------------------------------------------------------------------
 // MAPBOX SCRIPT START
@@ -43,10 +88,8 @@ $(document).on('turbolinks:load', function(){
         pitch: 45, //pitch adjusts view from above
         bearing: 0, //bearings adjust latitude baseline
     });
-    map.addControl(new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken
-    }));
     map.on("load", () => {
+        console.log('------------------------------');
         $.ajax({
             url: "/map",
             method: "POST",
@@ -153,13 +196,49 @@ $(document).on('turbolinks:load', function(){
                         'fill-extrusion-opacity': .6
                     }
                 }, labelLayerId);
+                // add marker
                 map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
                 map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
                 map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
                 map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
+
+                // toggle menu
+                var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
+                for (var i = 0; i < toggleableLayerIds.length; i++) {
+                    var id = toggleableLayerIds[i];
+                    var link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'active mr-3 ml-3 btn btn-primary';
+                    link.textContent = id;
+                    link.onclick = function (e) {
+                        var clickedLayer = this.textContent;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+                        if (visibility === 'visible') {
+                            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                            $(`.${clickedLayer}`).addClass('d-none');
+                            this.className = 'mr-3 ml-3 btn btn-light';
+                        } else {
+                            this.className = 'active mr-3 ml-3 btn btn-primary';
+                            $(`.${clickedLayer}`).removeClass('d-none');
+                            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                        }
+                    };
+                    var layers = document.getElementById('menu');
+                    layers.appendChild(link);
+                }
+
+                // search bar
+                map.addControl(new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken
+                }));
+                
+                $('#sidebar_map').removeClass('d-none');
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
+                console.log('error in ajax call');
                 console.log(error);
             }
         });
@@ -169,14 +248,25 @@ $(document).on('turbolinks:load', function(){
         closeButton: false,
         closeOnClick: false
     });
+
     map.on('mouseenter', 'Ruby', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Python', function(e) {mapPopup(e)});
     map.on('mouseenter', 'Java-Script', function(e) {mapPopup(e)});
     map.on('mouseenter', 'HTML-CSS', function(e) {mapPopup(e)});
+
     map.on('click', function() { //remove popup when click anywhere on the map
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
+
+    function mapMarker(marker, lang, marker_img) {
+        let coord = marker.geometry.coordinates;
+        let el = document.createElement('div');
+        el.className = `marker ${lang} ${marker.properties.poi}`;
+        el.style.backgroundImage = marker_img;
+        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
+    }
+
     function mapPopup(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -190,9 +280,7 @@ $(document).on('turbolinks:load', function(){
         }
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
         let query = $('#shortlist .user_id');
         let user_id = $('.user_id')[0].textContent;
         
@@ -201,6 +289,7 @@ $(document).on('turbolinks:load', function(){
                 $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
             }
         } 
+
         // map.getSource('Ruby')._data.features.forEach(function(marker)
         $('.colab-btn').on('click', () => {
             let poi = e.features[0].properties.poi;
@@ -209,7 +298,6 @@ $(document).on('turbolinks:load', function(){
             $('.colab-btn').attr('disabled', 'disabled');
             switch (user_lang) {
                 case " ruby ":
-                    console.log('true');
                     url_pin = "url(/assets/pin_ruby.gif)";
                     break;
                 case " python ":
@@ -223,73 +311,50 @@ $(document).on('turbolinks:load', function(){
                     break;
             }
             
+            $('#colab_count')[0].textContent = parseInt($('#colab_count')[0].textContent) + 1;
             $(`.${poi}`)[0].style.backgroundImage = url_pin;
             let new_p = document.createElement('p');
             new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
             $('#shortlist').append(new_p);
+            $('#meet_colab_btn').prop("disabled", false);
         })
     }
-    function mapMarker(marker, lang, marker_img) {
-        let coord = marker.geometry.coordinates;
-        let el = document.createElement('div');
-        el.className = `marker ${lang} ${marker.properties.poi}`;
-        el.style.backgroundImage = marker_img;
-        new mapboxgl.Marker(el).setLngLat(coord).addTo(map);
-    }
-    var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
-    for (var i = 0; i < toggleableLayerIds.length; i++) {
-        var id = toggleableLayerIds[i];
-        var link = document.createElement('a');
-        link.href = '#';
-        link.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
-        link.textContent = id;
-        link.onclick = function (e) {
-            var clickedLayer = this.textContent;
-            e.preventDefault();
-            e.stopPropagation();
-            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-            if (visibility === 'visible') {
-                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                $(`.${clickedLayer}`).addClass('d-none');
-                this.className = 'mr-3 ml-2 mb-2 btn btn-light';
-            } else {
-                this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
-                $(`.${clickedLayer}`).removeClass('d-none');
-                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-            }
-        };
-        var layers = document.getElementById('menu');
-        layers.appendChild(link);
-    }
+
+ 
+
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
     
-    $('#meet_colab_btn').on('click', () => {
-        let colabs = [];
-        let query = $('#shortlist p .user_id');
-        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-        
-        for (let i = 0; i < query.length; i++) {
-            colabs.push(query[i].textContent);
-        }
-        let checkout = {};
-        checkout["colaborators"] = colabs;
-        checkout["authenticity_token"] = AUTH_TOKEN;
-        
-        $.ajax({
-            url: "/invite_colabs",
-            method: "POST",
-            data: checkout,
-            dataType: "JSON",
-            success: function(){
-                console.log('success');    
-                window.location = "/event_remote";
-            },
-            error: function(error){
-                console.log('error');
-                console.log(error);
+    $('#meet_colab_btn').on('click', () => {  //sync detail
+        if  ($('#meet_colab_btn')[0].disabled == false) {
+            let colabs = [];
+            let query = $('#shortlist p .user_id');
+            var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+            let event_id = $('.event_detail_page')[0].id;
+            console.log(event_id);
+            for (let i = 0; i < query.length; i++) {
+                colabs.push(query[i].textContent);
             }
-        });
+            let checkout = {};
+            checkout["colaborators"] = colabs;
+            checkout["authenticity_token"] = AUTH_TOKEN;
+            checkout["event_id"] = event_id;
+            
+            $.ajax({
+                url: "/invite_colabs",
+                method: "POST",
+                data: checkout,
+                dataType: "JSON",
+                success: function(){
+                    console.log('success');    
+                    window.location = `/events/${event_id}`;
+                },
+                error: function(error){
+                    console.log('error');
+                    console.log(error);
+                }
+            });
+        }
     })
     
 }) //turbolinks end
