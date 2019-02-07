@@ -75,16 +75,16 @@ for (let i = 0; i < check.length; i++) {
     $('.colab-btn').attr('disabled', 'disabled');
     switch (user_lang) {
         case "ruby":
-            url_pin = "url(/assets/pin_ruby.gif)";
+            url_pin = "url(/assets/selected_user_ruby.gif)";
             break;
         case "python":
-            url_pin = 'url(/assets/pin_python.gif)';
+            url_pin = 'url(/assets/selected_user_python.gif)';
             break;
         case "javascript":
-            url_pin = 'url(/assets/pin_js.gif)';
+            url_pin = 'url(/assets/selected_user_js.gif)';
             break;
         case "css":
-            url_pin = 'url(/assets/pin_hypercss.gif)';
+            url_pin = 'url(/assets/selected_user_hypercss.gif)';
             break;
     }
     $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;

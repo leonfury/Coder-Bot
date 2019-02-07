@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     end
     
     resources :events, only: [:show]
+    resources :events, only: [:show]
+    resources :admin, only: [:index]
+    resources :midpoints, only: [:create]
 
     get "/sign_in" => "clearance/sessions#new", as: "sign_in"
     delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
@@ -23,6 +26,8 @@ Rails.application.routes.draw do
     post "/event_map" => "events#event_map", as: "event_map"
     get "/event_detail/:id" => "events#detail", as: "event_detail"
     post "/event/:event_id/midpoint/:id" => "events#meetpoint", as:"set_meetpoint"
+    get "/meeting" => "invites#new", as: "meeting"
+    post "/meeting_map" => "invites#map", as: "meeting_map"
 
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"

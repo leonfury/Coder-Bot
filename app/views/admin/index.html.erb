@@ -1,0 +1,101 @@
+<script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
+<div id="map" style="height:100vh;"></div>
+        
+<pre id='info' class="w-100 text-center" style="z-index: 5; bottom: 0px; position: absolute;"></pre>
+<div id="event_description" class="text-white p-2">
+    <h4> Create New Meeting Point </h4>
+    <%= form_with url: midpoints_path, scope: "midpoint" do |m| %>
+        <div class="text-white w-100">
+            
+                <%= m.label "Location Name" %>
+                <br>
+                <%= m.text_field :name, class:"w-100" %>
+            
+            
+                <%= m.label "Address" %>
+                <br>
+                <%= m.text_area :address, class:"w-100", rows:"5" %>
+                <span><%= m.text_field :longtitude, readonly: true %>
+                <%= m.text_field :latitude, readonly: true  %></span>
+                <br>
+                <%= m.label "Description" %>
+                <br>
+                <%= m.text_area :description, class:"w-100", rows:"5" %>
+            
+            
+                <%= m.label "Category" %>
+                <br>
+                <%= m.text_field :category, class:"w-100" %>
+                <br>
+                <br>
+                <%= m.submit "submit", class:"btn btn-primary kill_map" %>
+            
+            <%= m.hidden_field :poi %>
+            
+        </div>    
+    <% end %>
+</div>
+    
+
+    
+<script>
+    $('.marker').remove();
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+    });
+
+    map.on("load", () => {
+        // map.eachLayer(function (layer) {
+        //     map.removeLayer(layer);
+        // });
+
+        map.on('mousemove', function (e) {
+            document.getElementById('info').innerHTML =
+            // e.point is the x, y coordinates of the mousemove event relative
+            // to the top-left corner of the map
+            // JSON.stringify(e.point) + '<br />' +
+            // e.lngLat is the longitude, latitude geographical position of the event
+            'Coordinates ' + JSON.stringify(e.lngLat);
+        });
+        $('.kill_map').on('click', () => { map.remove(); })
+    });
+
+    var marker = 0;
+
+    $('#midpoint_address').on('keyup', () => {
+        getCoordinates();showMap();
+    })
+
+    function getCoordinates(){
+        var getAddress = document.getElementById('midpoint_address').value;
+		var test = client.geocodeForward(getAddress, function(err, data, res){
+			var coordinates = data.features[0].center;
+			$('#midpoint_longtitude')[0].value = coordinates[0];
+			$('#midpoint_latitude')[0].value = coordinates[1];
+			$('#midpoint_longtitude').value = coordinates[0];
+			$('#midpoint_latitude').value = coordinates[1];
+			$('#midpoint_poi')[0].value = data.features[0].id
+		});
+    }
+
+    function showMap(){
+        console.log(marker);
+        if (marker) {
+            marker.remove();
+        }
+        var address = document.getElementById('midpoint_address').value;
+        var test = client.geocodeForward(address, function(err, data, res) {
+            var coordinates = data.features[0].center;
+            marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+            map.flyTo({
+                center: coordinates,
+                zoom: 18,
+            });
+        });
+
+    }
+</script>
+ 

@@ -8,14 +8,17 @@
 
 require 'faker'
 
+
 User.delete_all
 Midpoint.delete_all
 Event.delete_all
 Invite.delete_all
+Hotel.delete_all
 ActiveRecord::Base.connection.reset_pk_sequence!(:users);
 ActiveRecord::Base.connection.reset_pk_sequence!(:midpoints);
 ActiveRecord::Base.connection.reset_pk_sequence!(:events);
 ActiveRecord::Base.connection.reset_pk_sequence!(:invites);
+ActiveRecord::Base.connection.reset_pk_sequence!(:hotels);
 
 
 User.create(
@@ -103,6 +106,16 @@ User.all.each do  |u|
 end
 
 Midpoint.create(
+    name: '-',
+    address: '-',
+    description: '',
+    longtitude: 0,
+    latitude: 0,
+    poi: 'poi.0',
+    category: '-',
+)
+
+Midpoint.create(
     name: 'KLCC Outdoor Plaza',
     address: 'KLCC Outdoor Plaza, Infront Suria KLCC, Kuala Lumpur, 50450, Malaysia',
     description: '',
@@ -144,3 +157,22 @@ Midpoint.create(
     p "Midpoint created"
 }
 p "Midpoint creation complete"
+
+
+
+# School
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'kl_hotel.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+csv.each do |row|
+    h = Hotel.new
+    h.hotel_name = row['name']
+    h.star = row['stars']
+    h.price = row['price']
+    h.city = row['city']
+    h.address = row['address']
+    h.link = row['url']
+    h.longtitude = row['longtitude']
+    h.latitude = row['latitude']
+    h.save
+    puts "#{h.hotel_name} saved"
+end
