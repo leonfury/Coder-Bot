@@ -31,7 +31,7 @@
 </div>
 
 <div id = 'rubybot_container'>
-    <%= image_tag("rubybot_motion.gif", class: "rubybot") %>
+    <%= image_tag("coderbot_motion.gif", class: "rubybot") %>
 </div>
 
 <script>
@@ -76,8 +76,10 @@ $(document).on('turbolinks:load', function(){
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: center_cor, // kuala lumpur //to be dynamic
-        zoom: center_calc[2],
+        // center: center_cor, // kuala lumpur //to be dynamic
+        center: [108.649, 5.509],
+        zoom: 6,
+        // zoom: center_calc[2],
         pitch: 45, //pitch adjusts view from above
         bearing: 0, //bearings adjust latitude baseline
     });
@@ -228,6 +230,10 @@ $(document).on('turbolinks:load', function(){
                 }));
                 
                 $('#sidebar_map').removeClass('d-none');
+                $('.kill_map').on('click', () => { 
+                    $('.marker').remove();
+                    map.remove();
+                })
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
