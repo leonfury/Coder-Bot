@@ -192,10 +192,10 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
                 // add marker
-                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(/assets/pin_ruby_static.png)') });
-                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(/assets/pin_python_static.png)') });
-                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(/assets/pin_js_static.png)') });
-                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(/assets/pin_hypercss_static.png)') });
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby_static-4f5071d00e18eea02127144ab38149682be771ce27149d95d31049ca7dbd9874.png)') });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python_static-4932cb2e4ac95fda030825e3aa75ca02249a7efdc9c669eb630bd889658bce80.png)') });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js_static-72f3d4ea62d21ebde3b0b30858c55bc4b23c3040429bcfd996d9f9bddc21c10d.png)') });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss_static-7680c066eb225d23acdc13c7aa4646198a412f397c1d8fb220b79c282a397d08.png)') });
 
                 // toggle menu
                 var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
@@ -295,16 +295,16 @@ $(document).on('turbolinks:load', function(){
             $('.colab-btn').attr('disabled', 'disabled');
             switch (user_lang) {
                 case " ruby ":
-                    url_pin = "url(/assets/pin_ruby.gif)";
+                    url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby-2facb68414521576ff9345e34c248b2fab39888a157bdef5c36c97d5a78a3ccf.gif)";
                     break;
                 case " python ":
-                    url_pin = 'url(/assets/pin_python.gif)';
+                    url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python-4057585d43531c540df81a94c4c9baaa24f49f1c4723f4339fc2f2c3fa67c5d2.gif)';
                     break;
                 case " javascript ":
-                    url_pin = 'url(/assets/pin_js.gif)';
+                    url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js-59b89cbee8572126b342daa1409f49b396524ee80a1543166f1a1943787e194f.gif)';
                     break;
                 case " css ":
-                    url_pin = 'url(/assets/pin_hypercss.gif)';
+                    url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss-8c6f2261d1e9eee252ab52e4d9c090aae0c7dc9ccc4924c13cf4fc811e1d6ba0.gif)';
                     break;
             }
             
