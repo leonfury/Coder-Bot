@@ -1,0 +1,76 @@
+<div>
+<h3>Enter your information here</h3>
+
+
+
+    <%= form_with url: users_path, scope: "user" do |l| %>
+        <%= l.label "username" %>
+        <%= l.text_field :username %>
+        <br>
+        <%= l.label "first name" %>
+        <%= l.text_field :first_name %>
+        <br>
+        <%= l.label "last name" %>
+        <%= l.text_field :last_name %>
+        <br>
+        <%= l.label "password" %>
+        <%= l.password_field :password %>
+        <br>
+        <%= l.label "email" %>
+        <%= l.text_field :email %>
+        <br>
+        <%= l.label "address" %>
+        <%= l.text_field :address %>
+        <br>
+        <%= l.label "longtitude" %>
+        <%= l.text_field :longtitude, readonly: true %>
+        <br>
+        <%= l.label "latitude" %>
+        <%= l.text_field :latitude, readonly: true  %>
+        
+        <%= l.hidden_field :poi %>
+        <%= l.submit "submit" %>
+    <% end %>
+    <input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
+
+
+
+    <div id="map" style="width:500px; height:500px;" class="col-6"></div>
+
+</div>
+<script>
+    function getCoordinates(){
+        getAddress = document.getElementById('user_address').value;
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+        var client = new MapboxClient(mapboxgl.accessToken);
+        var test = client.geocodeForward(getAddress, function(err, data, res){
+            var coordinates = data.features[0].center;
+            $('#user_longtitude')[0].value = coordinates[0];
+            $('#user_latitude')[0].value = coordinates[1];
+            $('#user_longtitude').value = coordinates[0];
+            $('#user_latitude').value = coordinates[1];
+            $('#user_poi')[0].value = data.features[0].id
+        });
+    }
+    function showMap(){
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+        var client = new MapboxClient(mapboxgl.accessToken);
+        var address = document.getElementById('user_address').value;
+        var test = client.geocodeForward(address, function(err, data, res) {
+        // data is the geocoding result as parsed JSON
+        // res is the http response, including: status, headers and entity properties
+        var coordinates = data.features[0].center;
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v10',
+            center: coordinates,
+            zoom: 14
+        });
+        new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .addTo(map);
+        });
+    }
+</script>
+ 
+

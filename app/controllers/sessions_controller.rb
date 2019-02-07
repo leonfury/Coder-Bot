@@ -7,7 +7,7 @@ class SessionsController < Clearance::SessionsController
         if authentication.user
             user = authentication.user
             authentication.update_token(auth_hash)
-            @next = login_redirect_url
+            @next = map_path
             @notice = "Signed in!"
         # else: user logs in with OAuth for the first time
         else
@@ -18,5 +18,8 @@ class SessionsController < Clearance::SessionsController
         end
         sign_in(user)
         redirect_to @next, :notice => @notice
+    end
+
+    def destroy
     end
 end

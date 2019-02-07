@@ -8,12 +8,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <%# jquery %>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
     <%# Mapbox link start %>
     <meta charset='utf-8' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
+    <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,36 +31,21 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
                 
         <div class="mobile_view_hide">
             <% if signed_in? %>
 
+
                 <%= link_to "Home", root_path, class:"kill_map navbar-brand ml-3" %>
                 <%= link_to "Map", maps_path, class:"kill_map navbar-brand ml-3" %>
                 <%= link_to "Meetings", meeting_path, class:"kill_map navbar-brand ml-3" %>
+                <%= link_to "Profile", profiles_path, class:"navbar-brand ml-3" %>
                 <%= link_to "Admin", admin_index_path, class:"kill_map navbar-brand ml-3" %>
+
             <% else %>
                 <%= link_to "Home", root_path, class:"kill_map navbar-brand ml-5 home_btn" %>
             <% end %>
-        </div>
-        
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav desk_view_hide">
-                <% if signed_in? %>
-
-                    <%= link_to "Home", root_path, class:"kill_map navbar-brand" %>
-                    <%= link_to "Map", maps_path, class:"kill_map navbar-brand" %>
-                    <%= link_to "Meetings", meeting_path, class:"kill_map navbar-brand" %>
-                    <%= link_to "Admin", admin_index_path, class:"kill_map navbar-brand" %>
-
-                <% else %>
-                    <%= link_to "Home", root_path, class:"kill_map navbar-brand home_btn" %>
-                <% end %>
-
-                <% if signed_in? %>
+            <% if signed_in? %>
                     <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: #<%= current_user.id %> <%= current_user.username %> </span>
                 <% else %>
                     <% if Clearance.configuration.allow_sign_up? %>
@@ -63,34 +53,49 @@
                     <% end %>
                     <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
                 <% end %>
+        </div>
+        
+        <div class="" id="navbarNavAltMarkup">
+            <div class="navbar-nav desk_view_hide">
+                <% if signed_in? %>
+
+                <div class="icons" style="display: flex;">
+                        <li>
+                        <%= link_to root_path do %>
+                        <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui-16-512.png", size: "30x30" %>
+                        </li>
+                        <%end%>
+                        <li>
+                        <%= link_to maps_path do %>
+                        <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui3-14-512.png", size: "30x30", style: "display: inline"  %>
+                        </li>
+                        <%end%>
+                        <li>
+                        <%= link_to profiles_path do %>
+                        <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui2-03-512.png", size: "25x25" %>
+                        </li>
+                        <%end%>
+                        <li>
+                        <%= link_to sign_out_path, method: :delete do %>
+                        <%= image_tag "https://cdn2.iconfinder.com/data/icons/pictograms-3/512/18-512.png", size: "25x25" %>
+                        </li>
+                        <%end%>
+                    <%= link_to "Meetings", meeting_path, class:"kill_map navbar-brand" %>
+                    <%= link_to "Admin", admin_index_path, class:"kill_map navbar-brand" %>
+
+                </div>
+
+                <% else %>
+                    <%= link_to "Home", root_path, class:"kill_map navbar-brand home_btn" %>
+                <% end %>
+
+                
             </div>
         </div>   
         
-        <div class="mobile_view_hide">
-            <% if signed_in? %>
-            <span class="mr-3 text-light"> Signed in as: #<%= current_user.id %> <%= current_user.username %> | </span>
-                <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>
-            <% else %>
-                <% if Clearance.configuration.allow_sign_up? %>
-                    <%= link_to t(".sign_up"), root_path, method: :get, remote: true, class:"navbar-brand mr-5 sign_up_btn" %>
-                <% end %>
-                <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
-            <% end %>
+
         </div>
     </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div id="flash" >
         <% flash.each do |key, value| %>
