@@ -8,9 +8,8 @@ class UsersController <  Clearance::UsersController
         
         if user.save 
             p 'user info save'
-            byebug
             user.update(poi: "poi_#{user.id}")
-            redirect_to sign_in_path
+            redirect_to map_path
         else
             p 'failed to save listing'
             p user.errors.full_messages

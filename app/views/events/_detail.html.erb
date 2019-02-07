@@ -1,12 +1,12 @@
 <div class="p-2 text-right">
 
     <p class="float-left text-white mt-2 ml-2"><span id="colab_count"> 0 </span> New Collaborators  </p>
-    <a href="/events/<%= @event.id %>" class="btn btn-primary mr-2" target="_blank"> View Event </a>
+    <a href="/events/<%= @event.id if @event %>" class="btn btn-primary mr-2" target="_blank"> View Event </a>
     <button id="meet_colab_btn" class="btn btn-primary" disabled="true"> Send Invite! </button>
 </div>
 
         
-    
+<% if @event %>
 <div id="<%= @event.id %>" class="event_detail_page m-1 mb-3 p-3 border-primary border rounded bg-dark">
     Project Description:
     <br><%= @event.remark %>
@@ -32,5 +32,5 @@
         <% end %>
     <% end %>
 </div>
-
+<% end %>
 <button type="button" class="back_btn btn btn-danger mr-2">Back</button>

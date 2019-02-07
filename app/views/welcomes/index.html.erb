@@ -1,70 +1,92 @@
 
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>CoderBot</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/full-slider.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  </head> 
-
-  <body>
-
-
-    <header>
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
         <div class="carousel-inner" role="listbox">
           <!-- Slide One - Set the background image for this slide in the line below -->
           <div class="carousel-item active" style="background-image: url('https://images.pexels.com/photos/358502/pexels-photo-358502.jpeg?cs=srgb&dl=architecture-buildings-business-358502.jpg&fm=jpg')" id="photo">
           </div>
-          <div class="content">
             <div class="carousel-caption d-none d-md-block">
-              <img src="https://i.ibb.co/Wc8gpL9/coderbot-logo.png" width="471" height="351" >
-
+              <img src="https://i.ibb.co/Pg8dRZ5/ezgif-com-gif-maker-1.gif" width="471" height="351" >
               <h3>Sign In or Sign Up</h3>
               <p>Find coders in your area</p>
-              <button id="opener2" class="btn btn-primary ml-2">Sign In</button>
-              <button id="opener" class="btn btn-primary ml-2">Sign Up</button>
+            </div>
+      </div>
+    </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Sign In
+        </button>
 
-              <div id="dialog" class="hidden" title="Sign Up Form">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Sign In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <%= render partial: 'sessions/form' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
+          Sign Up
+          </button>
+          <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <%= render partial: 'users/form' %>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+
+             <!--  <button id="opener2" class="btn btn-primary ml-2">Sign In</button>
+              <button id="opener" class="btn btn-primary ml-2">Sign Up</button>  -->   
+
+
+
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- </div> -->
+<!-- </div> -->
+
+         
+          
+
+       <!--        <div id="dialog" class="hidden" title="Sign Up Form">
  <iframe src="/sign_up" height="400" width="600"></iframe>
 </div>
  <div id="dialog2" class="hidden" title="Sign In">
  <iframe src="/sign_in" height="400" width="600"></iframe>
 </div>
-</div>
+</div> -->
             
-              
-            </div>
-          </div>
-          
-    </header>
-
-
 
     <!-- Page Content -->
     <section class="py-5">
       <div class="container">
-        <h1>Full Slider by Start Bootstrap</h1>
-        <p>The background images for the slider are set directly in the HTML using inline CSS. The rest of the styles for this template are contained within the
-          <code>full-slider.css</code>
-          file.</p>
+        <h1>Automate networking with coders</h1>
+        <p>Coderbot is a social networking app designed specifically for coders.
+          <br>
+          Find, meet, and collaborate with coders in your area.
+          Sign in to start today.
+        </p>
       </div>
     </section>
 
@@ -76,44 +98,79 @@
       <!-- /.container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
 <script>
-$( function() {
-    $( "#dialog" ).dialog({
-        autoOpen: false,
-        show: {
-            effect: "blind",
-            duration: 1000
-        },
-        hide: {
-            effect: "explode",
-            duration: 1000
-        }
-    });
+// When the user clicks on <div>, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+function myFunction2() {
+  var popup = document.getElementById("myPopup2");
+  popup.classList.toggle("show");
+}
 
-    $( "#dialog2" ).dialog({
-        autoOpen: false,
-        show: {
-            effect: "blind",
-            duration: 1000
-        },
-        hide: {
-            effect: "explode",
-            duration: 1000
-        }
+  function getCoordinates(){
+    getAddress = document.getElementById('user_address').value;
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var test = client.geocodeForward(getAddress, function(err, data, res){
+      var coordinates = data.features[0].center;
+      $('#user_longtitude')[0].value = coordinates[0];
+      $('#user_latitude')[0].value = coordinates[1];
+      $('#user_longtitude').value = coordinates[0];
+      $('#user_latitude').value = coordinates[1];
+      $('#user_poi')[0].value = data.features[0].id
     });
+  }
+    function showMap(){
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+        var client = new MapboxClient(mapboxgl.accessToken);
+        var address = document.getElementById('user_address').value;
+        var test = client.geocodeForward(address, function(err, data, res) {
+        // data is the geocoding result as parsed JSON
+        // res is the http response, including: status, headers and entity properties
+        var coordinates = data.features[0].center;
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v10',
+            center: coordinates,
+            zoom: 14
+        });
+        new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .addTo(map);
+        });
+    }
+ // $( function() {
+ //    $( "#dialog" ).dialog({
+ //      autoOpen: false,
+ //      show: {
+ //        effect: "blind",
+ //        duration: 1000
+ //      },
+ //      hide: {
+ //        effect: "explode",
+ //        duration: 1000
+ //      }
+ //    });
+ //     $( "#dialog2" ).dialog({
+ //      autoOpen: false,
+ //      show: {
+ //        effect: "blind",
+ //        duration: 1000
+ //      },
+ //      hide: {
+ //        effect: "explode",
+ //        duration: 1000
+ //      }
+ //    });
 
-    $( "#opener" ).on( "click", function() {
-        $( "#dialog" ).dialog( "open" );
-    });
+ //    $( "#opener" ).on( "click", function() {
+ //      $( "#dialog" ).dialog( "open" );
+ //    });
+ //     $( "#opener2" ).on( "click", function() {
+ //      $( "#dialog2" ).dialog( "open" );
+ //    });
+ //  } );
 
-    $( "#opener2" ).on( "click", function() {
-          $( "#dialog2" ).dialog( "open" );
-    });
-});
 </script>
-
