@@ -28,7 +28,7 @@
                 <%= m.text_field :category, class:"w-100" %>
                 <br>
                 <br>
-                <%= m.submit "submit", class:"btn btn-primary" %>
+                <%= m.submit "submit", class:"btn btn-primary kill_map" %>
             
             <%= m.hidden_field :poi %>
             
@@ -39,6 +39,7 @@
 
     
 <script>
+    $('.marker').remove();
     mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
     var client = new MapboxClient(mapboxgl.accessToken);
     var map = new mapboxgl.Map({
@@ -47,6 +48,10 @@
     });
 
     map.on("load", () => {
+        // map.eachLayer(function (layer) {
+        //     map.removeLayer(layer);
+        // });
+
         map.on('mousemove', function (e) {
             document.getElementById('info').innerHTML =
             // e.point is the x, y coordinates of the mousemove event relative
@@ -55,6 +60,7 @@
             // e.lngLat is the longitude, latitude geographical position of the event
             'Coordinates ' + JSON.stringify(e.lngLat);
         });
+        $('.kill_map').on('click', () => { map.remove(); })
     });
 
     var marker = 0;
