@@ -32,9 +32,10 @@
                 
         <div class="mobile_view_hide">
             <% if signed_in? %>
+
                 <%= link_to "Home", root_path, class:"kill_map navbar-brand ml-3" %>
                 <%= link_to "Map", maps_path, class:"kill_map navbar-brand ml-3" %>
-                <%= link_to "Meetings", root_path, class:"kill_map navbar-brand ml-3" %>
+                <%= link_to "Meetings", meeting_path, class:"kill_map navbar-brand ml-3" %>
                 <%= link_to "Admin", admin_index_path, class:"kill_map navbar-brand ml-3" %>
             <% else %>
                 <%= link_to "Home", root_path, class:"kill_map navbar-brand ml-5 home_btn" %>
@@ -44,10 +45,12 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav desk_view_hide">
                 <% if signed_in? %>
+
                     <%= link_to "Home", root_path, class:"kill_map navbar-brand" %>
                     <%= link_to "Map", maps_path, class:"kill_map navbar-brand" %>
-                    <%= link_to "Meetings", root_path, class:"kill_map navbar-brand" %>
+                    <%= link_to "Meetings", meeting_path, class:"kill_map navbar-brand" %>
                     <%= link_to "Admin", admin_index_path, class:"kill_map navbar-brand" %>
+
                 <% else %>
                     <%= link_to "Home", root_path, class:"kill_map navbar-brand home_btn" %>
                 <% end %>
