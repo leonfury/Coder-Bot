@@ -118,6 +118,7 @@ body { margin:0; padding:0; position:relative;}
     padding: 5px;
     margin-bottom: 20px;
     top: -45px;
+    width: 165px !important;
 }
 
 .exceed_range {
@@ -129,7 +130,7 @@ body { margin:0; padding:0; position:relative;}
 /* mapbox */
 .marker {
     display: block;
-    border: none;
+    border: none;display: block;
     border-radius: 50%;
     cursor: pointer;
     padding: 0;
