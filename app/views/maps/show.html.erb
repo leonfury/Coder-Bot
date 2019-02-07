@@ -3,8 +3,8 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- mapbox search bar end -->
 
+<div id='map' class="w-100" style='height: 100vh;'></div>
 <nav id="menu"></nav>
-<div id='map' class="w-100" style='height: 95vh;'></div>
 
 <div id="sidebar_map" class="d-none">
     <div id="event_status" class="row p-0 m-3 justify-content-between">
@@ -30,6 +30,10 @@
     </div>
 </div>
 
+<div id = 'rubybot_container'>
+    <%= image_tag("rubybot_motion.gif", class: "rubybot") %>
+</div>
+
 <script>
 // jquery script
 $('#new_event_btn').on('click', () => {
@@ -51,17 +55,6 @@ $('.back_btn').on('click', () => { //sync detail
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').addClass('d-none');
-
-    //deactivate markers
-});
-
-$('.event_list_items').on('click', () => {
-    $('#event_status').addClass('d-none');
-    $('#event_list').addClass('d-none');
-    $('#event_create').addClass('d-none');
-    $('#event_details').removeClass('d-none');
-
-    //change marker
 });
 
 $('#create_event_btn').on('click', () => {
@@ -108,8 +101,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(255,0,0,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(255,0,0,0)' // pin color
                     },
                 }); 
                 map.addSource('Python', {
@@ -125,8 +118,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(0,255,0,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(0,255,0,0)' // pin color
                     },
                 }); 
                 map.addSource('Java-Script', {
@@ -142,8 +135,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(0,0,255,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(0,0,255,0)' // pin color
                     },
                 }); 
                 map.addSource('HTML-CSS', {
@@ -159,8 +152,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(100,100,100,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(100,100,100,0)' // pin color
                     },
                 }); 
                 //-----------------------------------------------------------------

@@ -8,7 +8,6 @@ class UsersController <  Clearance::UsersController
         
         if user.save 
             p 'user info save'
-            byebug
             user.update(poi: "poi_#{user.id}")
             redirect_to sign_in_path
         else

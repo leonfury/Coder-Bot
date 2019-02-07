@@ -34,10 +34,10 @@ body { margin:0; padding:0; position:relative;}
 
 /* map page gui */
 #menu {
-    position: relative !important;
-    top: 85px !important;
+    position: absolute !important;
+    top: 83px !important;
+    right: 0px;
     z-index: 3;
-    float: right;
 }
 
 .mapboxgl-ctrl-top-right {
@@ -50,7 +50,7 @@ body { margin:0; padding:0; position:relative;}
 
 .mapboxgl-ctrl-geocoder {
     position: relative !important;
-    margin-top: 100px !important;
+    margin-top: 135px !important;
     max-width: 100% !important;
     width: 455px !important;
     z-index: 3;
@@ -119,6 +119,7 @@ body { margin:0; padding:0; position:relative;}
     margin-bottom: 20px;
     top: -45px;
     width: 165px !important;
+    text-align: center;
 }
 
 .exceed_range {
@@ -126,12 +127,11 @@ body { margin:0; padding:0; position:relative;}
     color: white;
 }
 
-
 /* mapbox */
 .marker {
     display: block;
     border: none;display: block;
-    border-radius: 50%;
+    
     cursor: pointer;
     padding: 0;
     width: 50px;
@@ -139,7 +139,7 @@ body { margin:0; padding:0; position:relative;}
 }
 
 .mapboxgl-popup-content {
-    /* background-color: black; */
+    
 }
 
 .carousel-item {
@@ -167,7 +167,6 @@ body { margin:0; padding:0; position:relative;}
     width: 600px !important;
     height: 500px !important ;
     background-color: #404040;
-
 }
 
 .form {
@@ -218,3 +217,23 @@ button:hover, a:hover {
 }
 
 
+/* dancing robot */
+#rubybot_container{
+    position: absolute;
+    bottom: 0px;
+    -webkit-animation:linear infinite alternate;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 20s;
+}     
+@-webkit-keyframes run {
+    /* 0% { left: 0;}
+    50%{ left : 100%;}
+    100%{ left: 0%;} */
+    from {left: 0%;}
+    to {left: 80%;}
+}
+
+img.rubybot{
+    height: 200px;
+    width: auto;
+}   

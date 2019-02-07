@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     end
     
     resources :events, only: [:show]
+    resources :events, only: [:show]
+    resources :admin, only: [:index]
+    resources :midpoints, only: [:create]
 
     get "/sign_in" => "clearance/sessions#new", as: "sign_in"
     delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"

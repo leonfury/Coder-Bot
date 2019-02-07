@@ -112,7 +112,7 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
+                        'circle-radius': 18,
                         'circle-color': 'rgba(0,255,0,0)' // pin color
                     },
                 }); 
@@ -131,8 +131,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'none'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(0,255,0,10)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(0,255,0,0)' // pin color
                     },
                 }); 
 
@@ -177,16 +177,16 @@ $(document).on('turbolinks:load', function(){
                     let pin_url;
                     switch (marker.properties.lang) {
                         case "ruby": 
-                            pin_url = 'url(/assets/pin_ruby.gif)'
+                            pin_url = 'url(/assets/selected_user_ruby.gif)'
                             break;
                         case "javascript":
-                            pin_url = 'url(/assets/pin_js.gif)'
+                            pin_url = 'url(/assets/selected_user_js.gif)'
                             break;
                         case "python":
-                            pin_url = 'url(/assets/pin_python.gif)'
+                            pin_url = 'url(/assets/selected_user_python.gif)'
                             break;
                         case "css":
-                            pin_url = 'url(/assets/pin_hypercss.gif)'
+                            pin_url = 'url(/assets/selected_user_hypercss.gif)'
                             break;
                     }
                     let el = document.createElement('div');
@@ -199,7 +199,16 @@ $(document).on('turbolinks:load', function(){
                 map.getSource('destination')._data.features.forEach(function(marker) {
                     let el = document.createElement('div');
                     el.className = 'marker';
-                    el.style.backgroundImage = 'url(/assets/pointer.gif)';
+                    el.style.backgroundImage = 'url(/assets/coderbot_head.gif)';
+                    new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+                    $('.marker').css('height', '50px');
+                    $('.marker').css('left', '');
+                });
+
+                map.getSource('midpoint_all')._data.features.forEach(function(marker) {
+                    let el = document.createElement('div');
+                    el.className = 'marker m_all d-none';
+                    el.style.backgroundImage = 'url(/assets/coderbot_head.gif)';
                     new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
                     $('.marker').css('height', '50px');
                     $('.marker').css('left', '');
@@ -221,10 +230,12 @@ $(document).on('turbolinks:load', function(){
                                 map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                                 $(`.${clickedLayer}`).addClass('d-none');
                                 this.className = 'mr-3 ml-2 mb-2 btn btn-light';
+                                $('.m_all').addClass('d-none');
                             } else {
                                 this.className = 'active mr-3 ml-2 mb-2 btn btn-primary';
                                 $(`.${clickedLayer}`).removeClass('d-none');
                                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                                $('.m_all').removeClass('d-none');
                             }
                         };
                         var layers = document.getElementById('menu_event_pg');
@@ -327,7 +338,7 @@ $(document).on('turbolinks:load', function(){
         
         let properties = feature.properties
         let new_p = document.createElement('p');
-        new_p.innerHTML = `<h4>Meeting Point</h4>${properties.name} <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br> Description: ${properties.description} <br> Address: ${properties.address}<br> Category: ${properties.category} <br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button><hr style="background-color: white;"></form>`;
+        new_p.innerHTML = `<h4>Meeting Point</h4>${properties.name} <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br> Description: ${properties.description} <br> Address: ${properties.address}<br> Category: ${properties.category} <br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button></form>`;
         $('#meet_point').append(new_p);
     }
 
