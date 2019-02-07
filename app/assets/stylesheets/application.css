@@ -131,7 +131,7 @@ body { margin:0; padding:0; position:relative;}
 .marker {
     display: block;
     border: none;display: block;
-    border-radius: 50%;
+    
     cursor: pointer;
     padding: 0;
     width: 50px;
