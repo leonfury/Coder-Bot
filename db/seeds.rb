@@ -7,19 +7,18 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'faker'
-Hotel.delete_all
-ActiveRecord::Base.connection.reset_pk_sequence!(:hotels);
-=begin
+
+
 User.delete_all
 Midpoint.delete_all
 Event.delete_all
 Invite.delete_all
 Hotel.delete_all
-ActiveRecord::Base.connection.reset_pk_sequence!(:hotels);
 ActiveRecord::Base.connection.reset_pk_sequence!(:users);
 ActiveRecord::Base.connection.reset_pk_sequence!(:midpoints);
 ActiveRecord::Base.connection.reset_pk_sequence!(:events);
 ActiveRecord::Base.connection.reset_pk_sequence!(:invites);
+ActiveRecord::Base.connection.reset_pk_sequence!(:hotels);
 
 
 User.create(
@@ -148,7 +147,7 @@ Midpoint.create(
     p "Midpoint created"
 }
 p "Midpoint creation complete"
-=end
+
 
 
 # School
