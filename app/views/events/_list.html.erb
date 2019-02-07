@@ -20,4 +20,14 @@
         </a>
     <% end %>
 <% end %>
+<br>
 <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
+
+<script>
+    $('.event_list_items').on('click', () => {
+        $('#event_status').addClass('d-none');
+        $('#event_list').addClass('d-none');
+        $('#event_create').addClass('d-none');
+        $('#event_details').removeClass('d-none');
+    });
+</script>

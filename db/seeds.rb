@@ -106,6 +106,16 @@ User.all.each do  |u|
 end
 
 Midpoint.create(
+    name: '-',
+    address: '-',
+    description: '',
+    longtitude: 0,
+    latitude: 0,
+    poi: 'poi.0',
+    category: '-',
+)
+
+Midpoint.create(
     name: 'KLCC Outdoor Plaza',
     address: 'KLCC Outdoor Plaza, Infront Suria KLCC, Kuala Lumpur, 50450, Malaysia',
     description: '',

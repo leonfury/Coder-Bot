@@ -106,12 +106,9 @@ class EventsController < ApplicationController
         lng_s_d = s_d(lng_arr)
         lat_s_d = s_d(lat_arr)
         
-        #take SD limit of 0.06
-        #what is the radius?
         s_d_limit = 0.2
         lng_arr_length = lng_arr.length
         colabs = colabs.joins(:user)
-        
         
         while lng_s_d > s_d_limit
             lng_arr = eval_lower(lng_arr)

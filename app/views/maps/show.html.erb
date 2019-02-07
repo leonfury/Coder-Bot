@@ -3,8 +3,8 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- mapbox search bar end -->
 
+<div id='map' class="w-100" style='height: 100vh;'></div>
 <nav id="menu"></nav>
-<div id='map' class="w-100" style='height: 95vh;'></div>
 
 <div id="sidebar_map" class="d-none">
     <div id="event_status" class="row p-0 m-3 justify-content-between">
@@ -30,6 +30,10 @@
     </div>
 </div>
 
+<div id = 'rubybot_container'>
+    <%= image_tag("coderbot_motion.gif", class: "rubybot") %>
+</div>
+
 <script>
 // jquery script
 $('#new_event_btn').on('click', () => {
@@ -51,17 +55,6 @@ $('.back_btn').on('click', () => { //sync detail
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').addClass('d-none');
-
-    //deactivate markers
-});
-
-$('.event_list_items').on('click', () => {
-    $('#event_status').addClass('d-none');
-    $('#event_list').addClass('d-none');
-    $('#event_create').addClass('d-none');
-    $('#event_details').removeClass('d-none');
-
-    //change marker
 });
 
 $('#create_event_btn').on('click', () => {
@@ -83,8 +76,10 @@ $(document).on('turbolinks:load', function(){
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: center_cor, // kuala lumpur //to be dynamic
-        zoom: center_calc[2],
+        // center: center_cor, // kuala lumpur //to be dynamic
+        center: [108.649, 5.509],
+        zoom: 6,
+        // zoom: center_calc[2],
         pitch: 45, //pitch adjusts view from above
         bearing: 0, //bearings adjust latitude baseline
     });
@@ -108,8 +103,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(255,0,0,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(255,0,0,0)' // pin color
                     },
                 }); 
                 map.addSource('Python', {
@@ -125,8 +120,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(0,255,0,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(0,255,0,0)' // pin color
                     },
                 }); 
                 map.addSource('Java-Script', {
@@ -142,8 +137,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(0,0,255,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(0,0,255,0)' // pin color
                     },
                 }); 
                 map.addSource('HTML-CSS', {
@@ -159,8 +154,8 @@ $(document).on('turbolinks:load', function(){
                     'visibility': 'visible'
                     },
                     'paint': {
-                        'circle-radius': 10,
-                        'circle-color': 'rgba(100,100,100,1)' // pin color
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(100,100,100,0)' // pin color
                     },
                 }); 
                 //-----------------------------------------------------------------
@@ -235,6 +230,10 @@ $(document).on('turbolinks:load', function(){
                 }));
                 
                 $('#sidebar_map').removeClass('d-none');
+                $('.kill_map').on('click', () => { 
+                    $('.marker').remove();
+                    map.remove();
+                })
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
