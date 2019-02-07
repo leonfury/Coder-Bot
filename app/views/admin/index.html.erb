@@ -39,7 +39,6 @@
 
     
 <script>
-    $('.marker').remove();
     mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
     var client = new MapboxClient(mapboxgl.accessToken);
     var map = new mapboxgl.Map({
@@ -47,11 +46,13 @@
         style: 'mapbox://styles/mapbox/streets-v10',
     });
 
-    map.on("load", () => {
-        // map.eachLayer(function (layer) {
-        //     map.removeLayer(layer);
-        // });
+    $( document ).ready(function() {
+        console.log('document loaded');
+        $('.marker').remove();
+    });
 
+    map.on("load", () => {
+        console.log('map loaded');
         map.on('mousemove', function (e) {
             document.getElementById('info').innerHTML =
             // e.point is the x, y coordinates of the mousemove event relative

@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div id = 'rubybot_container'>
+<div id='rubybot_container' class="d-none">
     <%= image_tag("coderbot_motion.gif", class: "rubybot") %>
 </div>
 
@@ -230,10 +230,8 @@ $(document).on('turbolinks:load', function(){
                 }));
                 
                 $('#sidebar_map').removeClass('d-none');
-                $('.kill_map').on('click', () => { 
-                    $('.marker').remove();
-                    map.remove();
-                })
+                $('#rubybot_container').removeClass('d-none');
+
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
