@@ -1,0 +1,10 @@
+<h4> Events You've Been Invited To </h4>
+    <% @events.order("event_date ASC").each do |e| %>
+    <a id="event_<%= e.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= e.id %>" data-remote="true">
+        <%= e.remark %> 
+        <br> <%= e.midpoint.name %> 
+        <br> <%= e.event_time.strftime("%H%M") %> 
+        <br> <%= e.event_date.strftime("%d %b %Y, %A") %> 
+        <hr>
+    </a>
+<% end %>

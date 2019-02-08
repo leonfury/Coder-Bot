@@ -45,7 +45,7 @@ class EventsController < ApplicationController
         longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f
         latitude_dif = @users.maximum(:latitude).to_f - @users.minimum(:latitude).to_f
         # zoom = 0;
-        zoom = 12.8;
+        zoom = 12;
         if longtitude_dif > latitude_dif 
             # zoom = longtitude_dif * 45.614104674
         else

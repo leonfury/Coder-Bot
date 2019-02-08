@@ -1,0 +1,13 @@
+$("#event_details").html("<%= escape_javascript(render partial: 'invites/detail') %>"); 
+
+
+$('.back_btn').on('click', () => {
+    $('#event_list').removeClass('d-none');
+    $('#event_details').addClass('d-none');
+
+
+    if (map.getSource('meetpoint')) {
+        map.removeLayer('meetpoint');
+        map.removeSource('meetpoint');
+    }
+})
