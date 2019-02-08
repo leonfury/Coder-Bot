@@ -24,7 +24,7 @@ class InvitesController < ApplicationController
 
     def show
         @event = Event.find(params[:event_id])
-        limit = 0.03
+        limit = params[:dist].to_f * 0.009
         lng_min = @event.midpoint.longtitude.to_f - limit
         lng_max = @event.midpoint.longtitude.to_f + limit
         lat_min = @event.midpoint.latitude.to_f - limit

@@ -20,10 +20,27 @@
         <br>Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
     </div>
 
+    <div class="slidecontainer">
+        <h4>Hotels In The Area</h4>
+        <input type="range" min="1" max="25" value="2" class="slider" id="myRange">
+        <p>Search <span id="dist"></span> km radius</p>
+        <hr>
+    </div>
+      
+
+
 <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
 
 <script>
-    
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("dist");
+    output.innerHTML = slider.value;
+
+    // slider.oninput = function() {
+    //     output.innerHTML = this.value;
+    // }
+
+
     var coordinates = [<%= @event.midpoint.longtitude.to_f %>, <%= @event.midpoint.latitude.to_f %>];
 
 
@@ -68,6 +85,7 @@
             el.style.backgroundColor = "transnparent";
             el.style.height = "50px";
             el.style.width = "50px";
+            el.style.zIndex = "100";
 
             //add marker to map
             // coordinates = [hotel.latitude, hotel.longtitude]
@@ -78,11 +96,27 @@
             });
         });
 
+slider.oninput = function() {
+    output.innerHTML = this.value;
+    var dist = output.innerHTML
 
+    if (map.getSource(`show_hotel`)) {
+        map.removeLayer(`show_hotel`);
+        map.removeSource(`show_hotel`);
+    }
+
+    $('.hotel_layer').remove();
+    callMap(dist);
+ 
+}
+
+callMap(2);
+
+ function callMap (dist) {
     $.ajax({
         url: "/show_map",
         method: "POST",
-        data: {"event_id": <%= @event.id %> },
+        data: {"event_id": <%= @event.id %>, "dist": dist },
         dataType: "JSON",
         success: function(response){
             console.log(response[0])
@@ -106,16 +140,16 @@
 
             map.getSource('show_hotel')._data.features.forEach(function(marker) {
                 var el = document.createElement('div');
-                el.className = 'marker';
+                el.className = 'marker hotel_layer';
                 el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
                 el.style.height = '50px';
                 el.style.width = '50px';
-
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
         }
 
     })
+ }
 
     // pop up function
     
