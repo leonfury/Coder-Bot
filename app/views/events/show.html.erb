@@ -28,11 +28,19 @@
         <% if @event.invites.count != 0 %>
             <% @event.invites.each do |i| %> 
                 <div>
-                    <%= i.user.id %>
-                    <%= i.user.lang %>
+                        <%= i.user.username %>,
+                        <% lang = i.user.lang %>
+                        <span class="text-success">
+                            <%= "Ruby" if lang == "ruby" %>
+                            <%= "CSS" if lang == "css" %>
+                            <%= "Java-Script" if lang == "javascript" %>
+                            <%= "Python" if lang == "python" %>
+                            <%= ['Specialist', 'Master', 'Intermediate', 'Novice'].sample %>
+                        </span>
                 </div>
             <% end %>
         <% end %>
+        <br>
         <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
     </div>
 </div>
@@ -243,6 +251,28 @@ $(document).on('turbolinks:load', function(){
                     }
                 }
                 afterLoad();
+
+
+                <% if @event.midpoint_id != 1 %>
+                    console.log('true');                
+                    let query = map.getSource('colabs')._options.data.features;
+                    $('#route_detail p').remove(); //clears all previous detail
+                    $('#meet_point p').remove(); //clear previos detail
+                    clear_routes(nos_routes); //clears all previous route
+                    nos_routes = query.length; //for clear_routes use on next click
+                    var coordinates = [<%= @event.midpoint.longtitude %>, <%= @event.midpoint.latitude %>];
+                    for (let i = 0; i < query.length; i++) { // get all routes to point to target location
+                        let start_point = query[i].center;
+                        getRoute(start_point, coordinates, query[i], i);
+                    }
+                    
+                    map.flyTo({
+                        center: coordinates,
+                        zoom: 12,
+                    });
+
+                
+                <% end %>
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
@@ -312,6 +342,7 @@ $(document).on('turbolinks:load', function(){
     }
 
     function mouseClickDes(e) {
+        console.log(e);
         map.getCanvas().style.cursor = '';
         popup.remove();
         let feature = e.features[0];
@@ -330,10 +361,7 @@ $(document).on('turbolinks:load', function(){
 
         for (let i = 0; i < query.length; i++) { // get all routes to point to target location
             let start_point = query[i].center;
-            getRoute(start_point, end_point, query[i], feature, i);
-//-------------------------------------------------------------------------------------------
-            
-//-------------------------------------------------------------------------------------------
+            getRoute(start_point, end_point, query[i], i);
         }
         
         let properties = feature.properties
@@ -358,7 +386,7 @@ $(document).on('turbolinks:load', function(){
         }
     }
 
-    function getRoute(start, end, start_loc, end_loc, i) {
+    function getRoute(start, end, start_loc, i) {
         // make a directions request using cycling profile
         // an arbitrary start will always be the same
         // only the end or destination will change

@@ -237,6 +237,7 @@ $(document).on('turbolinks:load', function(){
                 
                 $('#sidebar_map').removeClass('d-none');
                 $('#rubybot_container').removeClass('d-none');
+                
 
             //-----------------------------------------------------------------success call end
             },
@@ -290,75 +291,54 @@ $(document).on('turbolinks:load', function(){
         for (let i = 0; i < query.length; i++) {
             if (user_id == query[i].textContent) {
                 $('.colab-btn').attr('disabled', 'disabled'); //change button state if user already selected
+                $('.colab-btn').addClass('btn-danger').removeClass('btn-primary')
             }
         } 
 
         // map.getSource('Ruby')._data.features.forEach(function(marker)
         $('.colab-btn').on('click', () => {
-            let poi = e.features[0].properties.poi;
-            let user_lang = $('.user_lang')[0].textContent;
-            let url_pin;
+            var poi = e.features[0].properties.poi;
+            var user_lang = $('.user_lang')[0].textContent;
+            var username = $('.username')[0].textContent;
+            var lang;
+            var url_pin;
             $('.colab-btn').attr('disabled', 'disabled');
+            $('.colab-btn').addClass('btn-danger');
             switch (user_lang) {
                 case " ruby ":
                     url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby-2facb68414521576ff9345e34c248b2fab39888a157bdef5c36c97d5a78a3ccf.gif)";
+                    lang = "Ruby";
                     break;
                 case " python ":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python-4057585d43531c540df81a94c4c9baaa24f49f1c4723f4339fc2f2c3fa67c5d2.gif)';
+                    lang = "Python";
                     break;
                 case " javascript ":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js-59b89cbee8572126b342daa1409f49b396524ee80a1543166f1a1943787e194f.gif)';
+                    lang = "Java-Script";
                     break;
                 case " css ":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss-8c6f2261d1e9eee252ab52e4d9c090aae0c7dc9ccc4924c13cf4fc811e1d6ba0.gif)';
+                    lang = "CSS";
                     break;
             }
             
+            var array = ['Specialist', 'Master', 'Intermediate', 'Novice']
+            
+
+
+            var title = lang + " " + array[Math.floor(Math.random() * array.length)];
+
             $('#colab_count')[0].textContent = parseInt($('#colab_count')[0].textContent) + 1;
             $(`.${poi}`)[0].style.backgroundImage = url_pin;
-            let new_p = document.createElement('p');
-            new_p.innerHTML = `<div><span class="user_id">${user_id}</span> <br> User Lang: ${user_lang}</div>`;
+            var new_p = document.createElement('span');
+            new_p.innerHTML = `<span class="user_id d-none">${user_id}</span> ${username}, ${title}<br>`;
             $('#shortlist').append(new_p);
             $('#meet_colab_btn').prop("disabled", false);
         })
     }
-
- 
-
 // MAPBOX SCRIPT END
 //-------------------------------------------------------------------------------------
-    
-    $('#meet_colab_btn').on('click', () => {  //sync detail
-        if  ($('#meet_colab_btn')[0].disabled == false) {
-            let colabs = [];
-            let query = $('#shortlist p .user_id');
-            var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-            let event_id = $('.event_detail_page')[0].id;
-            console.log(event_id);
-            for (let i = 0; i < query.length; i++) {
-                colabs.push(query[i].textContent);
-            }
-            let checkout = {};
-            checkout["colaborators"] = colabs;
-            checkout["authenticity_token"] = AUTH_TOKEN;
-            checkout["event_id"] = event_id;
-            
-            $.ajax({
-                url: "/invite_colabs",
-                method: "POST",
-                data: checkout,
-                dataType: "JSON",
-                success: function(){
-                    console.log('success');    
-                    window.location = `/events/${event_id}`;
-                },
-                error: function(error){
-                    console.log('error');
-                    console.log(error);
-                }
-            });
-        }
-    })
-    
+
 }) //turbolinks end
 </script>
