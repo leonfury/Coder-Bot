@@ -60,7 +60,7 @@ map.on("load", () => {
                 'type': 'circle',
                 'source': 'Hotel',
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': 'none'
                 },
                 'paint': {
                     'circle-radius': 18,
@@ -71,7 +71,7 @@ map.on("load", () => {
             map.getSource('Hotel')._data.features.forEach(function(marker) {
                 //create a DOM element for the marker
                 var el = document.createElement('div');
-                el.className = 'marker';
+                el.className = 'marker d-none';
                 el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
                 el.style.height = "50px";
                 el.style.width = "50px";
