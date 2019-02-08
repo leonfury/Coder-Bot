@@ -113,9 +113,41 @@
 
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
-
         }
+
     })
+
+    // pop up function
+    
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'show_hotel', function (e) {
+            popup.remove();
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+        console.log(coordinates)
+        console.log('hi')
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+    popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+
+        
+    map.on('click', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
 
 
 
