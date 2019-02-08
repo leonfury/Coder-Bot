@@ -62,7 +62,7 @@
             'visibility': 'visible'
         },
         'paint': {
-            'circle-radius': 30,
+            'circle-radius': 20,
             'circle-color': 'rgba(255,100,100,1)'
         }
     })
@@ -81,6 +81,34 @@
             new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
         });
  */
+
+    $.ajax({
+        url: "/show_map",
+        method: "POST",
+        data: {"event_id": <%= @event.id %> },
+        dataType: "JSON",
+        success: function(response){
+            console.log(response[0])
+            map.addSource('show_hotel', {
+                type: 'geojson',
+                data: response[0]
+            });
+
+            map.addLayer({
+                'id': 'show_hotel',
+                'type': 'circle',
+                'source': 'show_hotel',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'circle-radius': 18,
+                    'circle-color': 'rgba(255,0,0,1)'
+                }
+            })
+        }
+    })
+
 
 
 </script>
