@@ -7,6 +7,7 @@ $('.back_btn').on('click', () => {
     $('#event_list').addClass('d-none');
     $('#event_create').addClass('d-none');
     $('#event_details').addClass('d-none');
+    event_state = false;
     
     var check = $('#shortlist .user_id');
     for (let i = 0; i < check.length; i++) {
@@ -31,8 +32,6 @@ $('.back_btn').on('click', () => {
         }
         $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;
     }
-
-
 });
 
 $('#meet_colab_btn').on('click', () => {  //sync detail

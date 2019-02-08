@@ -38,6 +38,9 @@
 
 <script>
 // jquery script
+var event_state = false;
+
+
 $('#new_event_btn').on('click', () => {
     $('#event_status').addClass('d-none');
     $('#event_list').addClass('d-none');
@@ -86,7 +89,6 @@ $(document).on('turbolinks:load', function(){
         bearing: 0, //bearings adjust latitude baseline
     });
     map.on("load", () => {
-        console.log('------------------------------');
         $.ajax({
             url: "/map",
             method: "POST",
@@ -194,10 +196,10 @@ $(document).on('turbolinks:load', function(){
                     }
                 }, labelLayerId);
                 // add marker
-                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby_static-4f5071d00e18eea02127144ab38149682be771ce27149d95d31049ca7dbd9874.png)') });
-                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python_static-4932cb2e4ac95fda030825e3aa75ca02249a7efdc9c669eb630bd889658bce80.png)') });
-                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js_static-72f3d4ea62d21ebde3b0b30858c55bc4b23c3040429bcfd996d9f9bddc21c10d.png)') });
-                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss_static-7680c066eb225d23acdc13c7aa4646198a412f397c1d8fb220b79c282a397d08.png)') });
+                map.getSource('Ruby')._data.features.forEach(function(marker) { mapMarker(marker, 'Ruby', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby_static-4f5071d00e18eea02127144ab38149682be771ce27149d95d31049ca7dbd9874.png)',) });
+                map.getSource('Python')._data.features.forEach(function(marker) { mapMarker(marker, 'Python', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python_static-4932cb2e4ac95fda030825e3aa75ca02249a7efdc9c669eb630bd889658bce80.png)',) });
+                map.getSource('Java-Script')._data.features.forEach(function(marker) { mapMarker(marker, 'Java-Script', 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js_static-72f3d4ea62d21ebde3b0b30858c55bc4b23c3040429bcfd996d9f9bddc21c10d.png)',) });
+                map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss_static-7680c066eb225d23acdc13c7aa4646198a412f397c1d8fb220b79c282a397d08.png)',) });
 
                 // toggle menu
                 var toggleableLayerIds = [ 'Ruby', 'Python', 'JS', 'HTML-CSS' ];
@@ -242,7 +244,6 @@ $(document).on('turbolinks:load', function(){
             //-----------------------------------------------------------------success call end
             },
             error: function(error){
-                console.log('error in ajax call');
                 console.log(error);
             }
         });
@@ -285,6 +286,13 @@ $(document).on('turbolinks:load', function(){
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(coordinates).setHTML(description).addTo(map);
+        if (event_state == false) {
+            $('.colab-btn').addClass('d-none');
+        }
+        else {
+            $('.colab-btn').removeClass('d-none');
+        }
+
         let query = $('#shortlist .user_id');
         let user_id = $('.user_id')[0].textContent;
         
@@ -324,9 +332,6 @@ $(document).on('turbolinks:load', function(){
             }
             
             var array = ['Specialist', 'Master', 'Intermediate', 'Novice']
-            
-
-
             var title = lang + " " + array[Math.floor(Math.random() * array.length)];
 
             $('#colab_count')[0].textContent = parseInt($('#colab_count')[0].textContent) + 1;

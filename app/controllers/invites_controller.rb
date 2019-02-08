@@ -46,9 +46,9 @@ class InvitesController < ApplicationController
                         <br> Price: <span>#{h.price}</span>
                         <br> City: <span>#{h.city}</span>
                         <br> Address: <span>#{h.address}</span>",
-                    "landmark": true,
-                    "category": "building",
-                    "iconSize": [60, 60],
+                        "landmark": true,
+                        "category": "building",
+                        "iconSize": [60, 60],
                     },
                     "center": [h.longtitude, h.latitude],
                     "geometry":{
