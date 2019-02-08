@@ -7,7 +7,7 @@ class SessionsController < Clearance::SessionsController
         if authentication.user
             user = authentication.user
             authentication.update_token(auth_hash)
-            @next = map_path
+            @next = show_path
             @notice = "Signed in!"
         # else: user logs in with OAuth for the first time
         else
@@ -21,5 +21,7 @@ class SessionsController < Clearance::SessionsController
     end
 
     def destroy
+        sign_out
+        redirect_to url_after_destroy
     end
 end
