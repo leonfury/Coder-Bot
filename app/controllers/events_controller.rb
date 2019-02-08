@@ -187,11 +187,10 @@ class EventsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
                         <br> #{u.username} 
-                        <br> Coordinates: #{u.longtitude}, #{u.latitude} 
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
-                        <br> User ID: #<span class='user_id'>#{u.id}</span>", #print to div
+                        <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
