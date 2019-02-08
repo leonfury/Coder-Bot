@@ -2,7 +2,7 @@ class MapsController < ApplicationController
 
     def show
         @users = User.all
-        @event = Event.last
+        @event = Event.first ######################################################### TO FIX
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
         latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
         longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f
@@ -30,7 +30,6 @@ class MapsController < ApplicationController
                         <br><span class='username'>#{u.username} </span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br> User ID: #<span class='user_id'>#{u.id}</span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",

@@ -1,28 +1,119 @@
 <h4> Upcoming Meetings </h4>
+<% if @invites.count != 0 %>
+    <% @invites.each do |i| %>
+        <a id="event_<%= i.event.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= i.event.id %>" data-remote="true">
+            <h5>Project Description:</h5>
+            <%= i.event.remark %>   
+            <table class="text-white">
+                <tr><td><br></td></tr>
+                <tr>
+                    <td>Project Led By</td>
+                    <td><%= i.event.user.username %></td>
+                </tr>
 
-<% @invites.each do |i| %>
-    <a id="event_<%= i.event.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= i.event.id %>" data-remote="true">
-        <h5>Project Description:</h5>
-        <%= i.event.remark %>   
-        <table class="text-white">
-            <tr><td><br></td></tr>
-            <tr>
-                <td>Project Led By</td>
-                <td><%= i.event.user.username %></td>
-            </tr>
+                <tr>
+                    <td colspan="2">Meeting Details</td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td>Location</td>
+                    <td class="pr-2"><%= i.event.midpoint.name %> </td>
+                </tr>
+                <tr>
+                    <td>Time</td>
+                    <td><%= i.event.event_date.strftime("%d %b %Y, %A") %>, <%= i.event.event_time.strftime("%I:%M %p") %> </td>
+                </tr>
+            </table>
+        </a>
+    <% end %>
+<% else %>
+    <h5><strong> You have <span class="text-danger">NO upcoming meetings. :( </span></strong></h5>
+    <h5> Perhaps you don't have a good portfolio. :'( </h5>
+    <br>
+    <h4> Coderbot recommends you to attend <span class="text-primary"><strong>Next Academy's Full Stack Bootcamp </strong></span> to give your portfolio a BOOST! </h4>
 
-            <tr>
-                <td colspan="2">Meeting Details</td>
-            </tr>
-            <tr><td><br></td></tr>
-            <tr>
-                <td>Location</td>
-                <td class="pr-2"><%= i.event.midpoint.name %> </td>
-            </tr>
-            <tr>
-                <td>Time</td>
-                <td><%= i.event.event_date.strftime("%d %b %Y, %A") %>, <%= i.event.event_time.strftime("%I:%M %p") %> </td>
-            </tr>
-        </table>
-    </a>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v10', 
+            // style: 'mapbox://styles/mapbox/satellite-streets-v9', 
+            center: [101.6958, 3.1466],
+            zoom: 1,
+        });
+
+        map.on("load", () => {
+            console.log('run')
+            map.addSource('next_academy', {
+                type: 'geojson',
+                data: {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "revelance": 1,
+                        "properties": {
+                            "description": "next academy",
+                            "landmark": true,
+                            "category": "building",
+                            "iconSize": [60, 60],
+                        },
+                        "center": ["101.62993634", "3.1350717"],
+                        "geometry":{
+                            "coordinates": ["101.62993634", "3.1350717"],
+                            "type": "Point"
+                        }
+                    }]
+                }
+            });
+
+            map.addLayer({
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 15,
+                'paint': {
+                    'fill-extrusion-color': '#aaa',
+                    // use an 'interpolate' expression to add a smooth transition effect to the
+                    // buildings as the user zooms in
+                    'fill-extrusion-height': [
+                        "interpolate", ["linear"], ["zoom"],
+                        15, 0,
+                        15.05, ["get", "height"]
+                    ],
+                    'fill-extrusion-base': [
+                        "interpolate", ["linear"], ["zoom"],
+                        15, 0,
+                        15.05, ["get", "min_height"]
+                    ],
+                    'fill-extrusion-opacity': .6
+                }
+            });
+
+            setTimeout(() => {
+                map.flyTo({
+                    center: ["101.62993634", "3.1350717"],
+                    zoom: 18.5,
+                    pitch: 80,
+                    bearing: 145,
+                });
+                setTimeout(() => {
+                    map.addLayer({
+                        'id': 'next_academy',
+                        'type': 'circle',
+                        'source': 'next_academy',
+                        'layout': {
+                            'visibility': 'visible'
+                        },
+                        'paint': {
+                            'circle-radius': 18,
+                            'circle-color': 'rgba(255,0,0,1)'
+                        }
+                    })
+                }, 3500);
+            }, 7000);
+        })
+    </script>
 <% end %>
+
