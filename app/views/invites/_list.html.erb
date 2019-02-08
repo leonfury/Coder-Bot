@@ -1,10 +1,28 @@
-<h4> Events You've Been Invited To </h4>
-    <% @events.order("event_date ASC").each do |e| %>
-    <a id="event_<%= e.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= e.id %>" data-remote="true">
-        <%= e.remark %> 
-        <br> <%= e.midpoint.name %> 
-        <br> <%= e.event_time.strftime("%H%M") %> 
-        <br> <%= e.event_date.strftime("%d %b %Y, %A") %> 
-        <hr>
+<h4> Upcoming Meetings </h4>
+
+<% @invites.each do |i| %>
+    <a id="event_<%= i.event.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= i.event.id %>" data-remote="true">
+        <h5>Project Description:</h5>
+        <%= i.event.remark %>   
+        <table class="text-white">
+            <tr><td><br></td></tr>
+            <tr>
+                <td>Project Led By</td>
+                <td><%= i.event.user.username %></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">Meeting Details</td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr>
+                <td>Location</td>
+                <td class="pr-2"><%= i.event.midpoint.name %> </td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td><%= i.event.event_date.strftime("%d %b %Y, %A") %>, <%= i.event.event_time.strftime("%I:%M %p") %> </td>
+            </tr>
+        </table>
     </a>
 <% end %>

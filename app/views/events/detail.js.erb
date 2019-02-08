@@ -74,17 +74,17 @@ for (let i = 0; i < check.length; i++) {
     var url_pin;
     $('.colab-btn').attr('disabled', 'disabled');
     switch (user_lang) {
-        case " ruby ":
-            url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby-2facb68414521576ff9345e34c248b2fab39888a157bdef5c36c97d5a78a3ccf.gif)";
+        case "ruby":
+            url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_ruby-f9e7c67ae8ff82488b5c76c39acd3e59986b9da9bf3bc264ed8f5ee35f7ff1d4.gif)";
             break;
-        case " python ":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python-4057585d43531c540df81a94c4c9baaa24f49f1c4723f4339fc2f2c3fa67c5d2.gif)';
+        case "python":
+            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_js-fcfe1f683250bcfb04668263143e2b63e31eebfd2656c31ea6c3f7454c6af974.gif)';
             break;
-        case " javascript ":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js-59b89cbee8572126b342daa1409f49b396524ee80a1543166f1a1943787e194f.gif)';
+        case "javascript":
+            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_python-2944811398096b663838b230aa84d0f14c870609d07835bd8ce4e0c135e368bf.gif)';
             break;
-        case " css ":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss-8c6f2261d1e9eee252ab52e4d9c090aae0c7dc9ccc4924c13cf4fc811e1d6ba0.gif)';
+        case "css":
+            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_hypercss-41d9e7bc0d76d0daeaeb7d10ae12ebabd63dac5da3d0ee39bf34749649e1a593.gif)';
             break;
     }
     $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;

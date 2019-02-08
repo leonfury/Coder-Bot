@@ -29,8 +29,9 @@
             <% @event.invites.each do |i| %>
                 
                 <div>
-                    <span class="user_id"><%= i.user.id %></span>
-                    <span class="user_lang"><%= i.user.lang %></span>
+                    <span class="user_id d-none"><%= i.user.id %></span>
+                    <%= i.user.username %>, 
+                    <span class="user_lang"><%= i.user.lang %></span> specialist
                 </div>
             <% end %>
         <% end %>

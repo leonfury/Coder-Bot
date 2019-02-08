@@ -15,7 +15,7 @@
 <div id='map'></div>
 
 
-<div id="sidebar_map" class="d-none">
+<div id="sidebar_meeting" class="d-none">
     <div id="event_list" class="m-3 text-white">
         <%= render partial: "invites/list" %>
     </div>
@@ -80,7 +80,7 @@ map.on("load", () => {
                 // coordinates = [hotel.latitude, hotel.longtitude]
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
-            $('#sidebar_map').removeClass('d-none');
+            $('#sidebar_meeting').removeClass('d-none');
         },
         error: function(error){
             console.log(error);

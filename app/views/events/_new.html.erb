@@ -6,7 +6,7 @@
         </tr>
 
         <tr>
-            <td colspan="3"><%= form.text_area :remark, class:"form-control field_width", rows:"2", cols:"200" %> </td>
+            <td colspan="3"><%= form.text_area :remark, class:"form-control field_width", rows:"2", cols:"200", placeholder:'Enter project description here', value:nil %> </td>
         </tr>
 
         <tr>
@@ -20,9 +20,9 @@
         </tr>
 
         <tr>
-            <td><%= form.date_field :event_date, class:"form-control field_width", min: Date.today %> </td>
+            <td><%= form.date_field :event_date, class:"form-control field_width", min: Date.today, value:nil %> </td>
             <td></td>
-            <td><%= form.time_field :event_time, class:"form-control field_width" %> </td>
+            <td><%= form.time_field :event_time, class:"form-control field_width", value:nil %> </td>
         </tr>
         <td><br></td>
         <tr>
@@ -33,3 +33,9 @@
         </tr>
     </table>
 <% end %>
+
+
+<script>
+    $('#event_event_date')[0].value = null
+    $('#event_event_time')[0].value = null
+</script>

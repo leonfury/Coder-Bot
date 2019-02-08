@@ -11,8 +11,7 @@ class InvitesController < ApplicationController
     end
 
     def new
-        @events = Event.where(user: current_user)
-        
+        @invites = current_user.invites
     end
 
     def detail

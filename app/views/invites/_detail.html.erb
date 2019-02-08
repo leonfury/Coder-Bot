@@ -4,28 +4,21 @@
         Project Description:
         <br><%= @event.remark %>
         <br>
-        <br> Existing Collaborators: <%= @event.invites.count %>
-        <br> Meeting Location: 
+        <br> Project Led by: <%= @event.user.username %>
+        <br> Contact Email: <%= @event.user.email %>
+        <br> <%= @event.invites.count %> Collaborators
+        <br>
+        <br> Meeting Details: 
             <% if @event.midpoint_id != 1 %>
-                <%= @event.midpoint.name %>
+                <br>Location Address
+                <br><%= @event.midpoint.name %>
+                <br><%= @event.midpoint.address %>
             <% else %>
-                <span class="text-danger"> TBC </span>
+                <span class="text-danger"> To be Determined </span>
             <% end %>
-        <br> Meeting Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
+            <br>
+        <br>Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
     </div>
-    <div id="shortlist" class="ml-2">
-        <h4> Collaborators </h4>
-        <% if @event.invites.count != 0 %>
-            <% @event.invites.each do |i| %>
-                
-                <div>
-                    <span class="user_id"><%= i.user.id %></span>
-                    <span class="user_lang"><%= i.user.lang %></span>
-                </div>
-            <% end %>
-        <% end %>
-    </div>
-
 
 <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
 
