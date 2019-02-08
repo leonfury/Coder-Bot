@@ -22,13 +22,18 @@ body {
 
 
 
-@media (min-width: 992px) {
-    .desk_view_hide {display: none !important;}
+@media (min-width: 766px) {
+    .desk_view_hide {
+      display: none !important;
+      width: 0%!important;
+  }
 }
 
 
-@media (max-width: 992px) {
-    .mobile_view_hide {display: none !important;}
+@media (max-width: 765px) {
+    .mobile_view_hide {
+      display: none !important;
+      width: 0%!important;}
 }
 
  /* robot animation */
@@ -44,10 +49,11 @@ body {
     top: 83px !important;
     right: 0px;
     z-index: 3;
+    width: 375px;
 }
 
 .mapboxgl-ctrl-top-right {
-    width: 480px !important;
+    width: 375px !important;
     padding-bottom: 10px;
     border-bottom-left-radius: 10px !important;
     background-color:#343a40;
@@ -58,10 +64,11 @@ body {
     position: relative !important;
     margin-top: 135px !important;
     max-width: 100% !important;
-    width: 455px !important;
+    width: 350px !important;
     z-index: 3;
     clear: both;
 }
+
 
 #sidebar_map {
     height: auto;
@@ -69,7 +76,7 @@ body {
     position: absolute;
     top: 190px;
     right: 0px;
-    width: 480px;
+    width: 375px;
     background-color:#343a40;
     border-bottom-left-radius: 10px !important;
     border-top-left-radius: 10px !important;
@@ -104,7 +111,7 @@ body {
     position: absolute;
     height: auto;
     max-height: 100vh;
-    width: 480px;
+    width: 300px;
     top: 0px;
     right: 0px;
     padding-top: 80px !important;
@@ -149,7 +156,7 @@ body {
 }
 
 .carousel-item {
-  height: 100vh;
+  height: 93%;
   min-height: 300px;
   background: no-repeat center center scroll;
   -webkit-background-size: cover;
@@ -239,8 +246,9 @@ button:hover, a:hover {
   height: 60%;
 }
 
-.icons img{
-  margin-right: 70px;
+.icons {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* dancing robot */
@@ -264,3 +272,11 @@ img.rubybot{
     width: auto;
 }   
 
+input {
+  width: 275px !important;
+}
+
+.carousel-caption {
+  color: black !important;
+  font-weight: bold;
+}

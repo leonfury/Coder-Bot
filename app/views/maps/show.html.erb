@@ -1,31 +1,33 @@
 <!-- mapbox search bar start -->
+    <div class="search">
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css' type='text/css' />
+    </div>
 <!-- mapbox search bar end -->
 
 <div id='map' class="w-100" style='height: 100vh;'></div>
 <nav id="menu"></nav>
 
 <div id="sidebar_map" class="d-none">
-    <div id="event_status" class="row p-0 m-3 justify-content-between">
-        <p class="ml-3 mr-3 mt-2 text-white">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
-        <div class="ml-3 mr-3 "> 
-            <button type="button" id="view_event_btn" class="btn btn-primary active">View My Events</button>
+    <div id="event_status" class="row p-0 m-2 justify-content-between">
+        <p class="ml-1 mr-1 mt-1 text-white">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
+        <div class="ml-2 mr-2 "> 
+            <button type="button" id="view_event_btn" class="btn btn-primary active">View Events</button>
         </div>
-        <div class="ml-3 mr-3 "> 
+        <div class="ml-2 mr-2 "> 
             <button type="button" id="new_event_btn" class="btn btn-primary active">New Event</button>
         </div>
     </div>
 
-    <div id="event_create" class="m-3 text-white d-none">
+    <div id="event_create" class="m-2 text-white d-none">
         <%= render partial: "events/new" %>
     </div>
 
-    <div id="event_list" class="m-3 text-white d-none">
+    <div id="event_list" class="m-2 text-white d-none">
         <%= render partial: "events/list" %>
     </div>
 
-    <div id="event_details" class="m-3 text-white d-none">
+    <div id="event_details" class="m-2 text-white d-none">
         <%= render partial: "events/detail" %>
     </div>
 </div>
@@ -198,12 +200,12 @@ $(document).on('turbolinks:load', function(){
                 map.getSource('HTML-CSS')._data.features.forEach(function(marker) { mapMarker(marker, 'HTML-CSS','url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss_static-7680c066eb225d23acdc13c7aa4646198a412f397c1d8fb220b79c282a397d08.png)') });
 
                 // toggle menu
-                var toggleableLayerIds = [ 'Ruby', 'Python', 'Java-Script', 'HTML-CSS' ];
+                var toggleableLayerIds = [ 'Ruby', 'Python', 'JS', 'HTML-CSS' ];
                 for (var i = 0; i < toggleableLayerIds.length; i++) {
                     var id = toggleableLayerIds[i];
                     var link = document.createElement('a');
                     link.href = '#';
-                    link.className = 'active mr-3 ml-3 btn btn-primary';
+                    link.className = 'active mr-2 ml-2 btn btn-primary';
                     link.textContent = id;
                     link.onclick = function (e) {
                         var clickedLayer = this.textContent;
@@ -213,9 +215,9 @@ $(document).on('turbolinks:load', function(){
                         if (visibility === 'visible') {
                             map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                             $(`.${clickedLayer}`).addClass('d-none');
-                            this.className = 'mr-3 ml-3 btn btn-light';
+                            this.className = '.btn-sml mr-2 ml-2 btn btn-light';
                         } else {
-                            this.className = 'active mr-3 ml-3 btn btn-primary';
+                            this.className = 'active mr-2 ml-2 btn btn-primary';
                             $(`.${clickedLayer}`).removeClass('d-none');
                             map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
                         }

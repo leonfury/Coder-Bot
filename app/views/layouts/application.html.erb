@@ -33,60 +33,79 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark pt-3 pb-3">
                 
-        <div class="mobile_view_hide">
-            <% if signed_in? %>
-
+        <div class='w-100 mobile_view_hide'>
+            <ul class="nav nav-pills nav-fill">
+              <% if signed_in? %>
+              <li class="nav-item">
                 <%= link_to "Home", root_path, class:"navbar-brand ml-3" %>
-                <%#= link_to "Map", maps_path, class:"navbar-brand ml-3" %>
+              </li>
+              <li class="nav-item">
                 <a class="navbar-brand ml-3" href="/maps" onclick="location.replace('/maps')">Map</a>
-                <%#= link_to "Meetings", meeting_path, class:"navbar-brand ml-3" %>
+              </li>
+              <li class="nav-item">
                 <a class="navbar-brand ml-3" href="/meeting" onclick="location.replace('/meeting')">Meeting</a>
+              </li>
+              <li class="nav-item">
                 <%= link_to "Profile", profiles_path, class:"navbar-brand ml-3" %>
+              </li>
+              <li class="nav-item">
                 <a class="navbar-brand ml-3" href="/admin" onclick="location.replace('/admin')">Admin</a>
-            <% else %>
+              </li>
+              <% else %>
+              <li class="nav-item">
                 <%= link_to "Home", root_path, class:"navbar-brand ml-5 home_btn" %>
-            <% end %>
-            <% if signed_in? %>
-                    <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: #<%= current_user.id %> <%= current_user.username %> </span>
-                <% else %>
-                    <% if Clearance.configuration.allow_sign_up? %>
+              </li>
+              <% end %>
+              <% if signed_in? %>
+              <li class="nav-item">
+                <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: #<%= current_user.id %> <%= current_user.username %></span>
+              </li>
+              <% else %>
+              <li class='nav-item'>
+                <% if Clearance.configuration.allow_sign_up? %>
                         <%= link_to t(".sign_up"), root_path, method: :get, remote: true, class:"navbar-brand mr-5 sign_up_btn" %>
                     <% end %>
                     <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
-                <% end %>
+              </li>
+              <li class='nav-item'>
+
+              </li>
+              <% end %>
+            </ul>
         </div>
-        
-        <div class="" id="navbarNavAltMarkup">
-            <div class="navbar-nav desk_view_hide">
+
+        <div class="desk_view_hide w-100">
+            <div class="navbar-nav">
                 <% if signed_in? %>
 
-                <div class="icons" style="display: flex;">
-                        <li>
+                <!-- <div class="icons"> -->
+                    <ul class="nav nav-pills nav-fill">
+                      <li class="nav-item">
                         <%= link_to root_path do %>
                         <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui-16-512.png", size: "30x30" %>
-                        </li>
                         <%end%>
-                        <li>
+                      </li>
+                      <li class="nav-item">
                         <%= link_to maps_path do %>
                         <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui3-14-512.png", size: "30x30", style: "display: inline"  %>
-                        </li>
                         <%end%>
-                        <li>
+                      </li>
+                      <li class="nav-item">
                         <%= link_to profiles_path do %>
                         <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui2-03-512.png", size: "25x25" %>
-                        </li>
                         <%end%>
-                        <li>
+                      </li>
+                      <li class="nav-item">
                         <%= link_to sign_out_path, method: :delete do %>
                         <%= image_tag "https://cdn2.iconfinder.com/data/icons/pictograms-3/512/18-512.png", size: "25x25" %>
-                        </li>
+                      </li>
+                    </ul>
                         <%end%>
-                    <%= link_to "Meetings", meeting_path, class:"navbar-brand" %>
-                    <%= link_to "Admin", admin_index_path, class:"navbar-brand" %>
+                    
 
-                </div>
+                <!-- </div> -->
 
                 <% else %>
                     <%= link_to "Home", root_path, class:"navbar-brand home_btn" %>
@@ -95,9 +114,6 @@
                 
             </div>
         </div>   
-        
-
-        </div>
     </nav>
 
     <div id="flash" >
