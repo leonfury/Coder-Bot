@@ -11,6 +11,15 @@ class InvitesController < ApplicationController
     end
 
     def new
+        @events = Event.where(user: current_user)
+        
+    end
+
+    def detail
+        @event = Event.find(params[:id])
+        respond_to do |format|
+            format.js
+        end
     end
 
 

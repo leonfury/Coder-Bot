@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post "/event/:event_id/midpoint/:id" => "events#meetpoint", as:"set_meetpoint"
     get "/meeting" => "invites#new", as: "meeting"
     post "/meeting_map" => "invites#map", as: "meeting_map"
+    get "/invites_detail/:id" => "invites#detail"
 
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
