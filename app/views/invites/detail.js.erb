@@ -11,8 +11,12 @@ $('.back_btn').on('click', () => {
         map.removeSource('meetpoint');
         
     }
+
     if (map.getSource(`show_hotel`)) {
             map.removeLayer(`show_hotel`);
             map.removeSource(`show_hotel`);
-        }
+    }
+
+    $('.marker').remove()
+    
 })
