@@ -207,8 +207,12 @@ $(document).on('turbolinks:load', function(){
                     link.href = '#';
                     link.className = 'active mr-2 ml-2 btn btn-primary';
                     link.textContent = id;
+
                     link.onclick = function (e) {
                         var clickedLayer = this.textContent;
+                        if (this.textContent == "JS") {
+                            clickedLayer = "Java-Script"
+                        }
                         e.preventDefault();
                         e.stopPropagation();
                         var visibility = map.getLayoutProperty(clickedLayer, 'visibility');

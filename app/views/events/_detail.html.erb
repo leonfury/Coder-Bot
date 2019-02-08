@@ -30,8 +30,9 @@
                 
                 <div>
                     <span class="user_id d-none"><%= i.user.id %></span>
-                    <%= i.user.username %>, 
-                    <span class="user_lang"><%= i.user.lang %></span> specialist
+                    <span class="user_lang d-none"><%= i.user.lang %></span> specialist
+
+                    <%= i.user.username %>
                 </div>
             <% end %>
         <% end %>
