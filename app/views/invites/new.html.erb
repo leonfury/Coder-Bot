@@ -79,13 +79,29 @@ map.on("load", () => {
                 //add marker to map
                 // coordinates = [hotel.latitude, hotel.longtitude]
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
+
             });
+
+            
+
             $('#sidebar_meeting').removeClass('d-none');
+            
         },
         error: function(error){
             console.log(error);
         }
-    })
-})
+        
+    });
+    
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'places', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'places', function () {
+        map.getCanvas().style.cursor = '';
+    });
+});
 
 </script>

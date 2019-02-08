@@ -39,13 +39,13 @@ class InvitesController < ApplicationController
                     "type": "Feature",
                     "revelance": 1,
                     "properties": {
-                        "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                        "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
                         <br> #{h.hotel_name} 
                         <br> Coordinates: #{h.longtitude}, #{h.latitude} 
-                        <br> Star: #<span>#{h.star}</span>
-                        <br> Price: #<span>#{h.price}</span>
-                        <br> City: #<span>#{h.city}</span>
-                        <br> Address: #<span>#{h.address}</span>",
+                        <br> Star: <span>#{h.star}</span>
+                        <br> Price: <span>#{h.price}</span>
+                        <br> City: <span>#{h.city}</span>
+                        <br> Address: <span>#{h.address}</span>",
                     "landmark": true,
                     "category": "building",
                     "iconSize": [60, 60],
@@ -74,7 +74,7 @@ class InvitesController < ApplicationController
                 "type": "Feature",
                 "revelance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100'> 
+                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
                     <br> #{h.hotel_name} 
                     <br> Coordinates: #{h.longtitude}, #{h.latitude} 
                     <br> Star: #<span>#{h.star}</span>
