@@ -25,8 +25,40 @@
     </div>
 </div>
 
+<div id="next_academy" class="d-none">
+    <img src="https://www.nextacademy.com/img/nextacademy-white-logo.png" class="pb-5" style="height: 200px; position: absolute; top: 80px; left: 10px; z-index: 50;">
+    <div class="n_main-elements">
+        <div class="n_homepage-header">
 
 
+  
+            <h1 class="text-white text-bolder d-block" style="font-size: 60px;">
+                1,200 People from 57 Countries
+                <br/>Learned to Code & Sell Online With Us
+            </h1>
+            
+            <p class="next_academy_text text-white d-none d-md-block">Join our community of graduates who run multi-million dollar businesses, impact communities through social projects,<br /> and work at great companies like Google, Uber, AirAsia, Fave, Mindvalley</p>
+            
+            <p class="next_academy_text text-white d-block d-md-none">Join our graduate community who run multi-million dollar businesses, impact communities through social projects, and work at great companies like Google, Uber, AirAsia, Fave, Mindvalley</p>
+            <a href="https://www.nextacademy.com/" class="btn btn-success"><h1> APPLY NOW </h1> </a>
+        </div>
+      </div>
+  
+    <div class="n_video-container">
+        <video id="n_background-video" class="header-video" autoplay loop muted poster="https://www.nextacademy.com/img/video-placeholder-bg.jpg">
+            <source src="https://s3-ap-southeast-1.amazonaws.com/next-academy-site-videos/video-1511348280.mp4">
+        </video>
+    </div>
+
+    <div id="youtube-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-youtube">
+            <div class="modal-content embed-responsive embed-responsive-16by9">
+                <iframe id="yt-player" class="embed-responsive-item" data-youtube="https://www.youtube.com/embed/3qVb09Y0CZo"
+                frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 $('.event_list_items').on('click', () => {
     $('#event_list').addClass('d-none');
@@ -55,7 +87,6 @@ map.on("load", () => {
         method: "POST",
         dataType: "JSON",
         success: function(response){
-            console.log(response[0]);
             map.addSource('Hotel', {
                 type: 'geojson',
                 data: response[0]

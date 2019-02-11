@@ -36,7 +36,8 @@ class UsersController <  Clearance::UsersController
           :description,
           :lang, 
           :longtitude, 
-          :latitude, 
+          :latitude,
+          :avatar, 
           :poi
           )
     end

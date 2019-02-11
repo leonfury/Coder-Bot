@@ -111,6 +111,24 @@
                             'circle-color': 'rgba(255,0,0,1)'
                         }
                     })
+
+                    setTimeout(() => {
+                        map.flyTo({
+                            center: ["101.62993634", "3.1350717"],
+                            zoom: 5,
+                            pitch: 80,
+                            bearing: 145,
+                        });
+
+                        setTimeout(() => {
+                            $('#next_academy').removeClass('d-none');
+                            $('#map').addClass('d-none');
+                            $('#sidebar_meeting').addClass('d-none');
+                        }, 500)
+
+                    }, 10000)
+
+
                 }, 3500);
             }, 7000);
         })
