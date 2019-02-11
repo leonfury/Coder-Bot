@@ -96,6 +96,7 @@ i = User.last.id
         longtitude: rand(101.4318908..103.7506561),
         latitude: rand(2.0014384..3.809542),
         poi: "poi_#{i+1}",
+        avatar: Faker::Avatar.image,
     )
     p "User#{i+1} created"
     i += 1

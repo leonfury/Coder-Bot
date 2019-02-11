@@ -26,7 +26,7 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
+                    "description": "<img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
