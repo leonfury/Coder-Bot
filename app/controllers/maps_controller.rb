@@ -26,12 +26,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
+                    "description": "<div class='map_user_popup'><img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
                         <br> Description: <span class='description'>#{u.description}</span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
