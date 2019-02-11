@@ -355,7 +355,6 @@ input {
   }
 
 
-
 .new_form label{
     width: 30%;
     /* positions the label text beside the input */
@@ -364,5 +363,75 @@ input {
 .form-buttons input {
   text-align:center;
   margin-left: 15px;
+
+/* new design for welcome page */
+.welcome_full{
+  display: block;
+ }
+
+.welcome_mobile{
+  display: none;
+ }
+
+@media (max-width: 600px){
+  .welcome_full{
+   display: none;
+  }
+
+  .welcome_mobile{
+   display: block;
+  }
+}
+
+.carousel-caption {
+  top: 30%; 
+  margin: auto;
+}
+
+@media (max-width: 600px){
+  .carousel-caption {
+   position: absolute;
+   box-sizing: border-box;
+   top: 55%;
+   /* margin: auto; */
+   margin-right: 0;
+   margin-left: 0;
+   left: 0;
+   width: 100%;
+  }
+}
+
+#coderbot_logo {
+  width: 78%;
+}
+
+@media (max-width: 600px){
+  #coderbot_logo {
+   width: 98%;
+  }
+}
+
+.copyright {
+  color: white;
+  text-align: center;
+  font-size: 2.2vh;
+}
+
+@media (max-width: 600px){
+  .copyright {
+    font-size: 1.5vh;
+  }
+}
+
+.btn-primary {
+  font-weight: bold; 
+  font-size: 20px;
+}
+
+@media (max-width: 600px){
+  .btn-primary { 
+    font-size: 18px;
+  }
+
 }
 
