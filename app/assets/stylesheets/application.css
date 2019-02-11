@@ -19,7 +19,7 @@ body {
   padding:0; 
   /* margin-top: 60px; */
   position:relative;
-  background-color: gray !important;
+  background-color: #343a40 !important;
 }
 
 /* next academy */
@@ -448,18 +448,19 @@ input {
   .carousel-caption {
    position: absolute;
    box-sizing: border-box;
-   top: 55%;
+   top: 60% !important;
 /*    margin: auto; */
    margin-right: 0;
    margin-left: 0;
    left: 0;
    width: 100%;
+   height: 50%;
   }
 }
 
 @media (max-width: 600px){
   #coderbot_logo {
-   width: 98%;
+   width: 98% !important;
   }
 }
 
