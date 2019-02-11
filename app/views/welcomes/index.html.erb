@@ -52,7 +52,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <%= render partial: 'users/form' %>
+                <%= render partial: 'users/new' %>
               </div>
             </div>
           </div>
@@ -69,14 +69,6 @@
 
 <script>
 // When the user clicks on <div>, open the popup
-function myFunction() {
-  var popup = document.getElementById("myPopup");
-  popup.classList.toggle("show");
-}
-function myFunction2() {
-  var popup = document.getElementById("myPopup2");
-  popup.classList.toggle("show");
-}
 
   function getCoordinates(){
     getAddress = document.getElementById('user_address').value;
@@ -110,6 +102,7 @@ function myFunction2() {
             .addTo(map);
         });
     }
+   
  // $( function() {
  //    $( "#dialog" ).dialog({
  //      autoOpen: false,

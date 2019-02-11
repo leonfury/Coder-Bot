@@ -4,10 +4,10 @@ Rails.application.routes.draw do
     resources :passwords, controller: "clearance/passwords", only: [:create, :new]
     resource :session, controller: "clearance/sessions", only: [:create]
 
-    resource :profiles, only: [:create, :new, :show]
+    resource :profiles, only: [:create, :new, :show, :edit]
     resource :maps, only: [:create, :new, :show]
     
-    resources :users, only: [:create] do
+    resources :users, only: [:create, :edit, :update] do
         resource :event, only: [:new, :create]
         resource :password,
             controller: "clearance/passwords",
@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     get "/meeting" => "invites#new", as: "meeting"
     post "/meeting_map" => "invites#map", as: "meeting_map"
     get "/invites_detail/:id" => "invites#detail"
+
+    # post "users/:id/edit" => "users#edit", as: "edit_user"
+
     post "/show_map" => "invites#show"
+
 
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
