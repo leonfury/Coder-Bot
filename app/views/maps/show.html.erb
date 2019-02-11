@@ -10,7 +10,7 @@
 
 <div id="sidebar_map" class="d-none">
     <div id="event_status" class="row p-0 m-2 justify-content-between">
-        <p class="ml-1 mr-1 mt-1 text-white">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
+        <p class="ml-1 mr-1 mt-1 text-white my-events-text">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
         <div class="ml-2 mr-2 "> 
             <button type="button" id="view_event_btn" class="btn btn-primary active">View Events</button>
         </div>
