@@ -34,9 +34,7 @@
 </head>
 
 <body>
-    <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark pt-3 pb-3">
-    <%# <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark pt-3 pb-3">          %>
         <div class='w-100 mobile_view_hide'>
             <ul class="nav nav-pills nav-fill">
                 <% if signed_in? %>
@@ -72,8 +70,6 @@
         <div class="desk_view_hide w-100">
             <div class="navbar-nav">
                 <% if signed_in? %>
-
-                <!-- <div class="icons"> -->
                     <ul class="nav nav-pills nav-fill">
                         <li class="nav-item">
                             <a class="navbar-brand ml-3" href="/" onclick="location.replace('/')">
@@ -96,20 +92,14 @@
                             <%end%>
                         </li>
                     </ul>
-                    
-
-                <!-- </div> -->
-
                 <% else %>
                     <%= link_to "Home", root_path, class:"navbar-brand home_btn" %>
                 <% end %>
-
-                
             </div>
         </div>   
     </nav>
 
-    <div id="flash" >
+    <!-- <div id="flash" >
         <% flash.each do |key, value| %>
             <% if key == "success" %>
                 <div class="text-dark text-center font-weight-bold bg-success flash <%= key %>"><%= value %></div>
@@ -120,16 +110,10 @@
             <% end %>
         <% end %>
     </div>
+     -->
     
-    <div class="">
         <%= yield %>
-    </div>
-<!--
-    <div id="demo">
-        <p id="image" onmouseover="animateScript()" onmouseout="stopAnimate()">
-        </p>
-    </div>
---> 
+
 <% image_tag('pin_python_static.png') %>   
 <% image_tag('pin_hypercss_static.png') %>   
 <% image_tag('pin_js_static.png') %>   
