@@ -55,7 +55,6 @@ map.on("load", () => {
         method: "POST",
         dataType: "JSON",
         success: function(response){
-            console.log(response[0]);
             map.addSource('Hotel', {
                 type: 'geojson',
                 data: response[0]

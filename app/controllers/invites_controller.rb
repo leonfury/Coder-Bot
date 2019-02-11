@@ -50,6 +50,7 @@ class InvitesController < ApplicationController
                         "landmark": true,
                         "category": "building",
                         "iconSize": [60, 60],
+                        "coordinates": [h.longtitude, h.latitude] 
                     },
                     "center": [h.longtitude, h.latitude],
                     "geometry":{
