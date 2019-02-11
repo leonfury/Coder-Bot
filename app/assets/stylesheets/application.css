@@ -37,8 +37,14 @@ body {
       display: none !important;
       width: 0%!important;}
 }
-
+.mapboxgl-canvas {
+  width:450px !important;
  /* robot animation */
+}
+
+#map {
+  width:450px;
+}
 #image {
     height: 256px;
     width: 256px;
@@ -347,3 +353,16 @@ input {
     background: #4CAF50;
     cursor: pointer;
   }
+
+
+
+.new_form label{
+    width: 30%;
+    /* positions the label text beside the input */
+    text-align: right;
+}
+.form-buttons input {
+  text-align:center;
+  margin-left: 15px;
+}
+
