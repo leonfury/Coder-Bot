@@ -181,6 +181,7 @@ body {
 .mapboxgl-popup-content {
     border-radius: 5px;
     box-shadow: 2px 2px 4px #000000;
+
 }   
 
 .carousel-item {
@@ -431,3 +432,8 @@ input {
 
 }
 
+.popup{
+  max-width: 150px !important;
+  max-height: 300px !important;
+  background-color: aqua;
+}

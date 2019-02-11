@@ -26,11 +26,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='#{u.avatar}' height='142' width='100'> 
+                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
+                        <br> Description: <span class='description'>#{u.description}</span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -51,11 +52,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
+                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
+                        <br> Description: <span class='description'>#{u.description}</span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
@@ -76,11 +78,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
+                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
+                        <br> Description: <span class='description'>#{u.description}</span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
                     "poi": "#{u.poi}",
                     "category": "college, university, building",
@@ -102,11 +105,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
+                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
                         <br><span class='username'>#{u.username} </span>
+                        <br> Description: <span class='description'>#{u.description}</span>
                         <br> Language: <span class='user_lang'> #{u.lang} </span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
