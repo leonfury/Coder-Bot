@@ -97,6 +97,7 @@ i = User.last.id
         latitude: rand(2.0014384..3.809542),
         poi: "poi_#{i+1}",
         avatar: Faker::Avatar.image,
+        description: Faker::TvShows::GameOfThrones.quote,
     )
     p "User#{i+1} created"
     i += 1
