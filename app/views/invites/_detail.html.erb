@@ -162,8 +162,10 @@ callMap(2);
             popup.remove();
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.description;
-        console.log(coordinates)
-        console.log('hi')
+        console.log('-----------');
+        var start = e.features[0]._geometry.coordinates;
+        var end = map.getSource('meetpoint')._data.features[0].center;
+        getRoute(start,end);
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -184,7 +186,90 @@ callMap(2);
     });
 
 
+//show routes' code -----------------------------------------------------
+ var canvas = map.getCanvasContainer(); //map canvas
 
+function getRoute(start, end){
+    
+     var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + 'pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
+
+console.log(url);
+    var req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.open('GET', url, true);
+    req.onload = function() {
+
+console.log('getroute');
+        var data = req.response.routes[0];
+        var route = data.geometry.coordinates;
+        var geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: route
+            }
+        };
+        //reset map using setData
+        if (map.getSource('route')){
+            console.log('true');
+            map.getSource('route').setData(geojson);
+        }
+        else { //make a new request
+        console.log('false');
+            map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: geojson
+                        }
+                    }
+                },
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#3887be',
+                    'line-width': 5,
+                    'line-opacity': 0.75
+                }
+            });
+            req.send();
+        }
+
+    // map.on('load', function(){
+    //     // getRoute(start);
+
+    //     map.addLayer({
+    //         id: 'point',
+    //         type: 'circle',
+    //         source: {
+    //             type: 'FeatureCollection',
+    //             features: [{
+    //                 type: 'Feature',
+    //                 properties: {},
+    //                 geometry: {
+    //                     type: 'point',
+    //                     coordinates: start
+    //                 }
+    //             }]
+    //         }
+    //     })
+    //     paint: {
+    //         'circle-radius': 10,
+    //         'circle-color': '#3887be'
+    //     }
+    // }
+
+    }
+}
 </script>
 
 <% end %>
