@@ -1,5 +1,5 @@
 <%# insert new background picture and logo with animation %>
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
   <div style="position: fixed; bottom: 0; width: 100%; height: 50px; z-index: 20; background-color: #343a40;">
     <div style ="padding: 10px;">
@@ -8,15 +8,15 @@
   </div>
 
    
-  <div class="carousel-inner" role="listbox" style="position: relative;">
+  <div class="carousel-inner" role="listbox" style="position: relative;"> -->
     
-    <div style=" width: 100%; height: 100%; position: relative;">
+ <!--    <div style=" width: 100%; height: 100%; position: relative;">
       <img src="https://i.ibb.co/9h8F5Bv/welcome-page-web.png" class="welcome_full" style="width: 100%;">
       <img src="https://i.ibb.co/0Yq3b50/welcome-page-responsive.png" class="welcome_mobile" style="width: 100%;">
-    </div>
+    </div> -->
 
 
-    <div class="carousel-caption">
+   <!--  <div class="carousel-caption">
       <img src="https://i.ibb.co/pyjgKzJ/coderbot-logo.gif" id="coderbot_logo" >
 
       <h1>
@@ -31,7 +31,38 @@
     </div>
 
   </div>
-</div>
+</div> -->
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+          <!-- Slide One - Set the background image for this slide in the line below -->
+         <!--  <div style=" width: 100%; height: auto; position: relative; background-repeat: no-repeat;"> -->
+      <img src="https://i.ibb.co/9h8F5Bv/welcome-page-web.png" class="welcome_full mobile_view_hide" style="width: 100%; height: 85%; background-repeat: no-repeat;">
+      <img src="https://i.ibb.co/0Yq3b50/welcome-page-responsive.png" class="welcome_mobile desk_view_hide" style="width: 100%; height: 85%;">
+    </div>
+
+            <div class="carousel-caption">
+              <div class="coderbot_logo" >
+            <img src="https://i.ibb.co/pyjgKzJ/coderbot-logo.gif" style="width: 100%;" id="coderbot_logo">
+          </div>
+              
+              <h3>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Sign In
+        </button> or <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
+          Sign Up
+          </button></h3>
+
+            </div>
+      </div>
+    </div>
+
+     <footer class="py-3 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; CoderBot 2019</p>
+      </div>
+      <!-- /.container -->
+    </footer>
 <%# ======================================================= %>
 
         <!-- Button trigger modal -->
@@ -71,7 +102,7 @@
         </div>
     
       </div>
-
+ 
 
 <script>
 // When the user clicks on <div>, open the popup
@@ -140,5 +171,5 @@
  //      $( "#dialog2" ).dialog( "open" );
  //    });
  //  } );
-$('nav').addClass('d-none');
+// $('nav').addClass('d-none');
 </script>

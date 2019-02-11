@@ -45,11 +45,11 @@ body {
 #map {
   width:450px;
 }
-#image {
+/*#image {
     height: 256px;
     width: 256px;
     background: url('https://i.ibb.co/JmRG2gV/coderbot.png') 0px 0px;
-}
+}*/
 
 /* map page gui */
 #menu {
@@ -383,26 +383,22 @@ input {
   }
 }
 
-.carousel-caption {
+/*.carousel-caption {
   top: 30%; 
   margin: auto;
-}
+}*/
 
 @media (max-width: 600px){
   .carousel-caption {
    position: absolute;
    box-sizing: border-box;
    top: 55%;
-   /* margin: auto; */
+/*    margin: auto; */
    margin-right: 0;
    margin-left: 0;
    left: 0;
    width: 100%;
   }
-}
-
-#coderbot_logo {
-  width: 78%;
 }
 
 @media (max-width: 600px){
