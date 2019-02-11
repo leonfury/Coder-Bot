@@ -2,7 +2,10 @@
 <div style="margin: auto;">
 <h3>Enter your information here</h3>
 
-    <%= form_with url: users_path, scope: "user" do |l| %>
+
+
+    <%= form_with url: user_path(current_user.id), scope: :user, method: :patch do |l| %>
+
         <%= l.label "username" %>
         <%= l.text_field :username %>
         <br>
@@ -21,6 +24,12 @@
         <%= l.label "address" %>
         <%= l.text_field :address %>
         <br>
+        <%= l.label "description" %>
+        <%= l.text_field :description %>
+        <br>
+        <%= l.label "lang" %>
+        <%= l.select :lang, options_for_select([["ruby"],["python"], ["javascript"], ["css"]]) %>
+        <br>
         <%= l.label "longtitude" %>
         <%= l.text_field :longtitude, readonly: true %>
         <br>
@@ -34,7 +43,7 @@
 
 
 
-    <div id="map" style="width:500px; height:500px;" class="col-6"></div>
+    <div id="map" style="width:700px; height:500px;" class="col-6"></div>
 
 </div>
 </div>

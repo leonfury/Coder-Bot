@@ -9,13 +9,20 @@ class UsersController <  Clearance::UsersController
         if user.save 
             p 'user info save'
             user.update(poi: "poi_#{user.id}")
-            redirect_to map_path
+            redirect_to profiles_path
         else
             p 'failed to save listing'
             p user.errors.full_messages
-           redirect_to sign_up_path, notice: "Error signing up"
+           redirect_to root_path, notice: "Error signing up"
         end
         
+    end
+
+    def update
+      user = User.find(params[:id])
+      user.update(user_params)
+      user.save
+      redirect_to profiles_path
     end
 
     private
@@ -25,7 +32,9 @@ class UsersController <  Clearance::UsersController
           :last_name, 
           :email, 
           :password,
-          :address, 
+          :address,
+          :description,
+          :lang, 
           :longtitude, 
           :latitude, 
           :poi

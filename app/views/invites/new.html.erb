@@ -48,6 +48,7 @@ var map = new mapboxgl.Map({
 
 });
 
+// load all hotel data into map
 map.on("load", () => {
     $.ajax({
         url: "/meeting_map",
@@ -60,6 +61,7 @@ map.on("load", () => {
                 data: response[0]
             });
 
+            //add layer of map
             map.addLayer({
                 'id': 'Hotel',
                 'type': 'circle',
@@ -73,6 +75,7 @@ map.on("load", () => {
                 }
             })
 
+            //add marker for hotel
             map.getSource('Hotel')._data.features.forEach(function(marker) {
                 var el = document.createElement('div');
                 el.className = 'marker d-none';
@@ -82,7 +85,7 @@ map.on("load", () => {
 
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
-            $('#sidebar_meeting').removeClass('d-none');
+            $('#sidebar_meeting').removeClass('d-none'); //meeting's sidebar
             
         },
         error: function(error){
@@ -90,7 +93,7 @@ map.on("load", () => {
         }
     });
     
-    map.on('mouseenter', 'Hotel', function () {
+    map.on('mouseenter', 'Hotel', function (e) {
         map.getCanvas().style.cursor = 'pointer';
     });
 
@@ -98,5 +101,6 @@ map.on("load", () => {
         map.getCanvas().style.cursor = '';
     });
 });
+
 
 </script>
