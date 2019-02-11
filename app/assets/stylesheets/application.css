@@ -22,6 +22,59 @@ body {
   background-color: gray !important;
 }
 
+/* next academy */
+#next_academy {
+    position: relative;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,.65);
+}
+
+.next_academy_text {
+    font-family: Lato, sans-serif !important;
+}
+
+.n_main-elements {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: rgba(0,0,0,.65);
+}
+
+.n_homepage-header {
+    text-align: center;
+    box-sizing: border-box;
+
+}
+
+.n_video-container {
+    width: 100vw;
+    opacity: 1;
+    background-color: rgba(0,0,0,.65);
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+}
+
+#n_background-video {
+    
+    width: 100vw;
+    top: 0;
+    box-sizing: border-box;
+    object-fit: contain;
+    text-align: center;
+
+}
 
 
 @media (min-width: 766px) {
@@ -166,6 +219,9 @@ body {
 }
 
 
+.map_user_popup {
+    border: 50px solid red !important;
+}
 
 /* mapbox */
 .marker {
@@ -455,3 +511,4 @@ input {
 .my-events-text{
   margin-bottom: 3px;
 }
+
