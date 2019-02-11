@@ -3,8 +3,9 @@
 <div>
       <h3>Enter your information here</h3>
 
-        <%= form_with model: @user do |l| %>
+        <%= form_with url: users_path, scope: "user" do |l| %>
         <div class="new_form">
+
         <%= l.label "username" %>
         <%= l.text_field :username %>
         <br>
@@ -21,7 +22,7 @@
         <%= l.text_field :email %>
         <br>
         <%= l.label "address" %>
-        <%= l.text_field :address, id:'user_address' %>
+        <%= l.text_field :address%>
         <br>
         <%= l.label "description" %>
         <%= l.text_field :description %>

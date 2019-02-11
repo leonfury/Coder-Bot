@@ -420,6 +420,7 @@ input {
 .form-buttons input {
   text-align:center;
   margin-left: 15px;
+}
 
 /* new design for welcome page */
 .welcome_full{
@@ -486,5 +487,28 @@ input {
     font-size: 18px;
   }
 
+}
+
+.popup-user{
+  width: 200px;
+  height: auto;
+  text-align: center;
+}
+
+.username-text{
+  margin-bottom: -20px;
+}
+
+.lang-text{
+  margin-bottom: -10px;
+}
+
+.des-text{
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+.my-events-text{
+  margin-bottom: 3px;
 }
 

@@ -26,10 +26,10 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='map_user_popup'><img src='#{u.avatar}' height='142' width='100'> 
-                        <br><span class='username'>#{u.username} </span>
-                        <br> Description: <span class='description'>#{u.description}</span>
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='100'> 
+                        <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
+                        <br><span class='user_lang'> <h5 class='lang-text'>Ruby</h5> </span>
+                        <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
                     "landmark": true,
@@ -52,10 +52,10 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
-                        <br><span class='username'>#{u.username} </span>
-                        <br> Description: <span class='description'>#{u.description}</span>
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='100'> 
+                        <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
+                        <br><span class='user_lang'> <h5 class='lang-text'>Python</h5> </span>
+                        <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
@@ -78,12 +78,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
-                        <br><span class='username'>#{u.username} </span>
-                        <br> Description: <span class='description'>#{u.description}</span>
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='100'> 
+                        <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
+                        <br><span class='user_lang'> <h5 class='lang-text'>JS</h5> </span>
+                        <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>",#
                     "landmark": true,
                     "poi": "#{u.poi}",
                     "category": "college, university, building",
@@ -105,12 +105,12 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='popup'><img src='#{u.avatar}' height='142' width='100'> 
-                        <br><span class='username'>#{u.username} </span>
-                        <br> Description: <span class='description'>#{u.description}</span>
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='100'> 
+                        <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
+                        <br><span class='user_lang'> <h5 class='lang-text'>CSS</h5> </span>
+                        <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
-                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
+                        <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>",#
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],
