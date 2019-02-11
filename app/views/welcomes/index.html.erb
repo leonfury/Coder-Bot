@@ -1,27 +1,37 @@
+<%# insert new background picture and logo with animation %>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="background-color: #343a40;">
 
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-          <!-- Slide One - Set the background image for this slide in the line below -->
-          <div class="carousel-item active" style="background-image: url('https://images.pexels.com/photos/358502/pexels-photo-358502.jpeg?cs=srgb&dl=architecture-buildings-business-358502.jpg&fm=jpg')" id="photo">
-          </div>
+  <div style="position: fixed; bottom: 0; width: 100%; height: 50px; z-index: 20; background-color: #343a40;">
+    <div style ="padding: 10px;">
+      <p class="copyright">&copy; 2019 CODERBOT TEAM @ nextacademy All Right Reserved </p>
+    </diV>
+  </div>
 
-            <div class="carousel-caption">
-              <div class="text">
-              <p>CoderBot is a social networking platform <br>designed specifically for coders.<br>
-                Find, meet and collaborate <br> with coders in your area.<br> 
-              </p>
-          </div>
-              <img src="https://i.ibb.co/Pg8dRZ5/ezgif-com-gif-maker-1.gif" class="w-75">
-              <h3>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-          Sign In
-        </button> or <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
-          Sign Up
-          </button></h3>
-
-            </div>
-      </div>
+  <div class="carousel-inner" role="listbox" style="position: relative;">
+    
+    <div style=" width: 100%; height: 100%; position: relative;">
+      <img src="https://i.ibb.co/9h8F5Bv/welcome-page-web.png" class="welcome_full" style="width: 100%;">
+      <img src="https://i.ibb.co/0Yq3b50/welcome-page-responsive.png" class="welcome_mobile" style="width: 100%;">
     </div>
+
+    <div class="carousel-caption">
+      <img src="https://i.ibb.co/pyjgKzJ/coderbot-logo.gif" id="coderbot_logo" >
+
+      <h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Sign In
+        </button>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
+        Sign Up
+        </button>
+      </h1>
+    </div>
+
+  </div>
+</div>
+<%# ======================================================= %>
+
         <!-- Button trigger modal -->
 
         <!-- Modal -->
@@ -59,13 +69,7 @@
         </div>
     
       </div>
-    <!-- Footer -->
-    <footer class="py-3 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; CoderBot 2019</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+
 
 <script>
 // When the user clicks on <div>, open the popup

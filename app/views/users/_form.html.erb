@@ -1,9 +1,11 @@
-<div>
+<div style="position: relative;">
+<div style="margin: auto;">
 <h3>Enter your information here</h3>
 
 
 
     <%= form_with url: user_path(current_user.id), scope: :user, method: :patch do |l| %>
+
         <%= l.label "username" %>
         <%= l.text_field :username %>
         <br>
@@ -44,6 +46,8 @@
     <div id="map" style="width:700px; height:500px;" class="col-6"></div>
 
 </div>
+</div>
+
 <script>
     function getCoordinates(){
         getAddress = document.getElementById('user_address').value;
