@@ -54,8 +54,8 @@ body {
 /* map page gui */
 #menu {
     position: absolute !important;
-    top: 83px !important;
-    right: 0px;
+    top: 33px !important;
+    right: -10px;
     z-index: 3;
     width: 375px;
 }
@@ -70,7 +70,7 @@ body {
 
 .mapboxgl-ctrl-geocoder {
     position: relative !important;
-    margin-top: 135px !important;
+    margin-top: 95px !important;
     max-width: 100% !important;
     width: 350px !important;
     z-index: 3;
@@ -82,7 +82,7 @@ body {
     height: auto;
     max-height: 75vh;
     position: absolute;
-    top: 190px;
+    top: 150px;
     right: 0px;
     width: 375px;
     background-color:#343a40;
@@ -423,10 +423,10 @@ input {
   }
 }
 
-.btn-primary {
+/* .btn-primary {
   font-weight: bold; 
   font-size: 20px;
-}
+} */
 
 @media (max-width: 600px){
   .btn-primary { 
