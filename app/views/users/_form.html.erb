@@ -6,6 +6,8 @@
 
     <%= form_with url: user_path(current_user.id), scope: :user, method: :patch do |l| %>
 
+        <div class="new_form">
+
         <%= l.label "username" %>
         <%= l.text_field :username %>
         <br>
@@ -35,15 +37,14 @@
         <br>
         <%= l.label "latitude" %>
         <%= l.text_field :latitude, readonly: true  %>
-        
+    </div>
+        <div class="form_buttons">
         <%= l.hidden_field :poi %>
         <%= l.submit "submit" %>
     <% end %>
     <input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
-
-
-
-    <div id="map" style="width:700px; height:500px;" class="col-6"></div>
+</div>
+    <div id="map" style="width:700px; height:500px;"></div>
 
 </div>
 </div>

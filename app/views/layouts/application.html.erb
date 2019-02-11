@@ -62,16 +62,6 @@
                     <li class="nav-item">
                         <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: #<%= current_user.id %> <%= current_user.username %></span>
                     </li>
-                <% else %>
-                    <li class='nav-item'>
-                        <% if Clearance.configuration.allow_sign_up? %>
-                            <%= link_to t(".sign_up"), root_path, method: :get, remote: true, class:"navbar-brand mr-5 sign_up_btn" %>
-                        <% end %>
-                        <%= link_to 'Sign in', root_path, method: :get, remote: true, class:"navbar-brand sign_in_btn" %>
-                    </li>
-                    <li class='nav-item'>
-
-                    </li>
                 <% end %>
             </ul>
         </div>
@@ -94,12 +84,12 @@
                         </li>
                         <li class="nav-item">
                             <%= link_to profiles_path do %>
-                                <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui2-03-512.png", size: "25x25" %>
+                                <%= image_tag "https://cdn1.iconfinder.com/data/icons/glyph-ui/100/ui2-03-512.png", size: "30x30" %>
                             <%end%>
                         </li>
                         <li class="nav-item">
                             <%= link_to sign_out_path, method: :delete do %>
-                                <%= image_tag "https://cdn2.iconfinder.com/data/icons/pictograms-3/512/18-512.png", size: "25x25" %>
+                                <%= image_tag "https://cdn2.iconfinder.com/data/icons/pictograms-3/512/18-512.png", size: "30x30" %>
                             <%end%>
                         </li>
                     </ul>

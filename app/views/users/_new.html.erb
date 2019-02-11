@@ -1,8 +1,10 @@
 <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
-<div class="row">
+
+<div>
       <h3>Enter your information here</h3>
 
         <%= form_with model: @user do |l| %>
+        <div class="new_form">
         <%= l.label "username" %>
         <%= l.text_field :username %>
         <br>
@@ -19,12 +21,12 @@
         <%= l.text_field :email %>
         <br>
         <%= l.label "address" %>
-        <%= l.text_field :address %>
+        <%= l.text_field :address, id:'user_address' %>
         <br>
         <%= l.label "description" %>
         <%= l.text_field :description %>
         <br>
-        <%= l.label "lang" %>
+        <%= l.label "language" %>
         <%= l.select :lang, options_for_select([["ruby"],["python"], ["javascript"], ["css"]]) %>
         <br>
         <%= l.label "longtitude" %>
@@ -32,12 +34,15 @@
         <br>
         <%= l.label "latitude" %>
         <%= l.text_field :latitude, readonly: true  %>
-            <%= l.hidden_field :poi %>
-            <%= l.submit "edit" %>
-        <% end %>
-        <input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
-
-    <div id="map" style="width:700px; height:500px;" class="col-6"></div>
+        <%= l.hidden_field :poi %>
+    </div>
+        <div class="form_buttons text-center">
+            <%= l.submit "Submit", class:"ml-5" %>
+            <br><br>
+            <input type="button" value="Verify Address" onclick="getCoordinates();showMap()", class="ml-5" />
+            </div>
+<% end %>
+    <div id="map" style="width:450px; height:500px;"></div>
 </div>
 <script>
 	function getCoordinates(){
