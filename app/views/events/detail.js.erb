@@ -65,25 +65,3 @@ $('#meet_colab_btn').on('click', () => {  //sync detail
     }
 })
 
-
-var check = $('#shortlist .user_id');
-for (let i = 0; i < check.length; i++) {
-    var user_lang = $('#shortlist .user_lang')[i].textContent;
-    var url_pin;
-    $('.colab-btn').attr('disabled', 'disabled');
-    switch (user_lang) {
-        case "ruby":
-            url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_ruby-f9e7c67ae8ff82488b5c76c39acd3e59986b9da9bf3bc264ed8f5ee35f7ff1d4.gif)";
-            break;
-        case "python":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_js-fcfe1f683250bcfb04668263143e2b63e31eebfd2656c31ea6c3f7454c6af974.gif)';
-            break;
-        case "javascript":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_python-2944811398096b663838b230aa84d0f14c870609d07835bd8ce4e0c135e368bf.gif)';
-            break;
-        case "css":
-            url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/selected_user_hypercss-41d9e7bc0d76d0daeaeb7d10ae12ebabd63dac5da3d0ee39bf34749649e1a593.gif)';
-            break;
-    }
-    $(`.poi_${check[i].textContent}`)[0].style.backgroundImage = url_pin;
-}

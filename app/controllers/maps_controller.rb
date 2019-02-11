@@ -1,4 +1,5 @@
 class MapsController < ApplicationController
+    before_action :authorize_user
 
     def show
         @users = User.all
@@ -134,5 +135,10 @@ class MapsController < ApplicationController
     end
 
     def redirect
+    end
+
+    private
+    def authorize_user
+        redirect_to root_path if !signed_in?
     end
 end

@@ -1,8 +1,8 @@
-<h4> Create New Event </h4>
+<h4> Create New Project </h4>
 <%= form_with url: user_event_path(current_user.id), scope: "event", remote: true do |form| %>    
     <table class="text-white">
         <tr>
-            <td colspan="3"><%= form.label :Description %> </td>
+            <td colspan="3"><%= form.label :Project_Description %> </td>
         </tr>
 
         <tr>

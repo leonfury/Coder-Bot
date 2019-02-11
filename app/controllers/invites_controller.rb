@@ -1,4 +1,5 @@
 class InvitesController < ApplicationController
+    before_action :authorize_user
 
     def create_colabs
         colabs = params[:colaborators]
@@ -6,6 +7,13 @@ class InvitesController < ApplicationController
             Invite.create(
                 event_id: params[:event_id], 
                 user_id: u,
+            )
+        end
+
+        if Event.find(params[:event_id]).invites.where(user_id: current_user.id).count == 0
+            Invite.create(
+                event_id: params[:event_id], 
+                user_id: current_user.id,
             )
         end
     end
@@ -99,4 +107,9 @@ class InvitesController < ApplicationController
         render :json => ActiveSupport::JSON.encode(bundle)
     end
     
+
+    private
+    def authorize_user
+        redirect_to root_path if !signed_in?
+    end
 end

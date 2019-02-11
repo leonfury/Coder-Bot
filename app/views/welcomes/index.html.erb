@@ -69,77 +69,43 @@
         <!-- Button trigger modal -->
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Sign In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-              <div class="modal-body">
-                <%= render partial: 'sessions/form' %>
-              </div>
             </div>
-          </div>
+
+            <div class="modal-body">
+                <%= render partial: 'sessions/form' %>
+            </div>
         </div>
-      </div>
-          
-          <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="signup_modal" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Sign Up</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-              <div class="modal-body">
-                <%= render partial: 'users/new' %>
-              </div>
             </div>
-          </div>
+            <div class="modal-body" id="signup_modal_body">
+                <%= render partial: 'users/new' %>
+            </div>
         </div>
+    </div>
+</div>
     
-      </div>
- 
-
 <script>
 // When the user clicks on <div>, open the popup
 
-  function getCoordinates(){
-    getAddress = document.getElementById('user_address').value;
-    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
-    var client = new MapboxClient(mapboxgl.accessToken);
-    var test = client.geocodeForward(getAddress, function(err, data, res){
-      var coordinates = data.features[0].center;
-      $('#user_longtitude')[0].value = coordinates[0];
-      $('#user_latitude')[0].value = coordinates[1];
-      $('#user_longtitude').value = coordinates[0];
-      $('#user_latitude').value = coordinates[1];
-      $('#user_poi')[0].value = data.features[0].id
-    });
-  }
-    function showMap(){
-        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
-        var client = new MapboxClient(mapboxgl.accessToken);
-        var address = document.getElementById('user_address').value;
-        var test = client.geocodeForward(address, function(err, data, res) {
-        // data is the geocoding result as parsed JSON
-        // res is the http response, including: status, headers and entity properties
-        var coordinates = data.features[0].center;
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v10',
-            center: coordinates,
-            zoom: 14
-        });
-        new mapboxgl.Marker()
-            .setLngLat(coordinates)
-            .addTo(map);
-        });
-    }
    
  // $( function() {
  //    $( "#dialog" ).dialog({

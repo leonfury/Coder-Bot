@@ -12,10 +12,10 @@
     <div id="event_status" class="row p-0 m-2 justify-content-between">
         <p class="ml-1 mr-1 mt-1 text-white my-events-text">My Events: <span id="user_event_count"><%= Event.where(user: current_user).count %></span> </p>
         <div class="ml-2 mr-2 "> 
-            <button type="button" id="view_event_btn" class="btn btn-primary active">View Events</button>
+            <button type="button" id="view_event_btn" class="btn btn-primary active">My Projects</button>
         </div>
         <div class="ml-2 mr-2 "> 
-            <button type="button" id="new_event_btn" class="btn btn-primary active">New Event</button>
+            <button type="button" id="new_event_btn" class="btn btn-primary active">New Project</button>
         </div>
     </div>
 
@@ -306,26 +306,26 @@ $(document).on('turbolinks:load', function(){
         // map.getSource('Ruby')._data.features.forEach(function(marker)
         $('.colab-btn').on('click', () => {
             var poi = e.features[0].properties.poi;
-            var user_lang = $('.user_lang')[0].textContent;
+            var user_lang = $('.lang-text')[0].textContent;
             var username = $('.username')[0].textContent;
             var lang;
             var url_pin;
             $('.colab-btn').attr('disabled', 'disabled');
             $('.colab-btn').addClass('btn-danger');
             switch (user_lang) {
-                case " ruby ":
+                case "Ruby":
                     url_pin = "url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_ruby-2facb68414521576ff9345e34c248b2fab39888a157bdef5c36c97d5a78a3ccf.gif)";
                     lang = "Ruby";
                     break;
-                case " python ":
+                case "Python":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_python-4057585d43531c540df81a94c4c9baaa24f49f1c4723f4339fc2f2c3fa67c5d2.gif)';
                     lang = "Python";
                     break;
-                case " javascript ":
+                case "JS":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_js-59b89cbee8572126b342daa1409f49b396524ee80a1543166f1a1943787e194f.gif)';
                     lang = "Java-Script";
                     break;
-                case " css ":
+                case "CSS":
                     url_pin = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/pin_hypercss-8c6f2261d1e9eee252ab52e4d9c090aae0c7dc9ccc4924c13cf4fc811e1d6ba0.gif)';
                     lang = "CSS";
                     break;

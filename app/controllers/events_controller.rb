@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
     include EventsHelper
+    before_action :authorize_user
 
     def new
         @event = Event.new
@@ -224,5 +225,9 @@ class EventsController < ApplicationController
           :event_date,
           :event_time,
         )
+    end
+
+    def authorize_user
+        redirect_to root_path if !signed_in?
     end
 end
