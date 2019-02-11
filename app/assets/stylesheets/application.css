@@ -500,7 +500,9 @@ input {
 }
 
 .lang-text{
-  margin-bottom: -10px;
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .des-text{
@@ -510,5 +512,9 @@ input {
 
 .my-events-text{
   margin-bottom: 3px;
+}
+
+.lang-gif{
+  display: inline;
 }
 
