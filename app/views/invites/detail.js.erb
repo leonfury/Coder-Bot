@@ -1,13 +1,17 @@
 $("#event_details").html("<%= escape_javascript(render partial: 'invites/detail') %>"); 
 
-
 $('.back_btn').on('click', () => {
     $('#event_list').removeClass('d-none');
     $('#event_details').addClass('d-none');
-
-
+    popup.remove();
+    $('.marker').remove();   
     if (map.getSource('meetpoint')) {
         map.removeLayer('meetpoint');
-        map.removeSource('meetpoint');
+        map.removeSource('meetpoint');        
     }
+
+    if (map.getSource(`show_hotel`)) {
+        map.removeLayer(`show_hotel`);
+        map.removeSource(`show_hotel`);
+    }  
 })

@@ -42,17 +42,16 @@ class EventsController < ApplicationController
 
         longtitude_tot = @users.maximum(:longtitude).to_f + @users.minimum(:longtitude).to_f
         latitude_tot = @users.maximum(:latitude).to_f + @users.minimum(:latitude).to_f
-        longtitude_dif = @users.maximum(:longtitude).to_f - @users.minimum(:longtitude).to_f
-        latitude_dif = @users.maximum(:latitude).to_f - @users.minimum(:latitude).to_f
-        # zoom = 0;
-        zoom = 12;
-        if longtitude_dif > latitude_dif 
-            # zoom = longtitude_dif * 45.614104674
-        else
-            # zoom = latitude_dif * 45.614104674
-        end
+        
+        zoom = 10;
+   
         @center = [ longtitude_tot / 2, latitude_tot / 2 , zoom]
         @Locresults = Midpoint.all
+
+        if @colabs.count == 0
+            @center = [ 108.649, 5.509 , 6]
+        end
+
     end
 
 

@@ -33,14 +33,19 @@ $('.event_list_items').on('click', () => {
     $('#event_details').removeClass('d-none');
 });
 
-
-
 mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v10', 
-    center: [101.6958, 3.1466],
-    zoom:12
+    <% if @invites.count != 0 %>
+        center: [101.6958, 3.1466],
+        zoom: 12,
+    <% else %>
+        // style: 'mapbox://styles/mapbox/satellite-v9', 
+        center: [101.6958, 3.1466],
+        zoom: 1,
+    <% end %>
+
 });
 
 map.on("load", () => {
@@ -49,7 +54,7 @@ map.on("load", () => {
         method: "POST",
         dataType: "JSON",
         success: function(response){
-            console.log(response[0])
+            console.log(response[0]);
             map.addSource('Hotel', {
                 type: 'geojson',
                 data: response[0]
@@ -60,7 +65,7 @@ map.on("load", () => {
                 'type': 'circle',
                 'source': 'Hotel',
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': 'none'
                 },
                 'paint': {
                     'circle-radius': 18,
@@ -69,23 +74,29 @@ map.on("load", () => {
             })
 
             map.getSource('Hotel')._data.features.forEach(function(marker) {
-                //create a DOM element for the marker
                 var el = document.createElement('div');
-                el.className = 'marker';
+                el.className = 'marker d-none';
                 el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
                 el.style.height = "50px";
                 el.style.width = "50px";
 
-                //add marker to map
-                // coordinates = [hotel.latitude, hotel.longtitude]
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
             $('#sidebar_meeting').removeClass('d-none');
+            
         },
         error: function(error){
             console.log(error);
         }
-    })
-})
+    });
+    
+    map.on('mouseenter', 'Hotel', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'Hotel', function () {
+        map.getCanvas().style.cursor = '';
+    });
+});
 
 </script>

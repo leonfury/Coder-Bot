@@ -29,7 +29,12 @@ Rails.application.routes.draw do
     get "/meeting" => "invites#new", as: "meeting"
     post "/meeting_map" => "invites#map", as: "meeting_map"
     get "/invites_detail/:id" => "invites#detail"
+
     # post "users/:id/edit" => "users#edit", as: "edit_user"
+
+    post "/show_map" => "invites#show"
+
+
     post "/map" => "maps#map", as: "map"
     get "/show" => "welcomes#show", as: "show"
     post "/invite_colabs" => "invites#create_colabs", as: "invite_colabs"

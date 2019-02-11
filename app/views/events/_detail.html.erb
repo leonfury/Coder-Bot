@@ -30,12 +30,21 @@
                 
                 <div>
                     <span class="user_id d-none"><%= i.user.id %></span>
-                    <%= i.user.username %>, 
-                    <span class="user_lang"><%= i.user.lang %></span> specialist
+                    <span class="user_lang d-none"><%= i.user.lang %></span>
+                    <%= i.user.username %>,
+                    <% lang = i.user.lang %>
+                    <span class="text-success">
+                        <%= "Ruby" if lang == "ruby" %>
+                        <%= "CSS" if lang == "css" %>
+                        <%= "Java-Script" if lang == "javascript" %>
+                        <%= "Python" if lang == "python" %>
+                        <%= ['Specialist', 'Master', 'Intermediate', 'Novice'].sample %>
+                    </span>
                 </div>
             <% end %>
         <% end %>
     </div>
 
 <% end %>
+<br>
 <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
