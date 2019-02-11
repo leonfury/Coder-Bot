@@ -12,6 +12,7 @@ class InvitesController < ApplicationController
 
     def new
         @invites = current_user.invites
+        
     end
 
     def detail
