@@ -8,6 +8,7 @@ class UsersController <  Clearance::UsersController
         
         if user.save 
             user.update(poi: "poi_#{user.id}")
+            user.update(avatar: Faker::Avatar.image)
             sign_in(user)
             redirect_to maps_path
         else
@@ -27,18 +28,19 @@ class UsersController <  Clearance::UsersController
     private
     def user_params
         params.require(:user).permit(
-          :first_name, 
-          :last_name, 
-          :email, 
-          :password,
-          :address,
-          :description,
-          :lang, 
-          :longtitude, 
-          :latitude,
-          :avatar, 
-          :poi
-          )
+            :username,
+            :first_name, 
+            :last_name, 
+            :email, 
+            :password,
+            :address,
+            :description,
+            :lang, 
+            :longtitude, 
+            :latitude,
+            :avatar, 
+            :poi
+        )
     end
 end
 
