@@ -188,9 +188,9 @@ User.create(
     last_name: 'Jeremiah',
     email: 'malcolm@mail.com',
     password: "123",
-    address: 'Miri',
-    longtitude: "101.38884",
-    latitude: "4.493392",
+    address: 'Penang Hill',
+    longtitude: "100.249517",
+    latitude: "5.374512827",
     poi: "po_11",
     lang: "ruby",
     avatar: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/malcolm-1b62d4956a4fa062c45d3ca5054ea56f2812a416c62961bf4dbc970f88a5493e.jpg',
@@ -383,6 +383,17 @@ Midpoint.create(
     category: 'work space',
 )
 
+Midpoint.create(
+    name: 'Pulau Tikus Penang',
+    address: 'Georgetown',
+    description: 'Many food',
+    longtitude: "100.31180984",
+    latitude: "5.4317162436",
+    poi: 'poi.',
+    category: 'food street',
+)
+
+
 15.times {
     Midpoint.create(
         name: Faker::Company.name,
@@ -411,11 +422,35 @@ csv.each do |row|
     puts "#{h.hotel_name} saved"
 end
 
+Event.create(
+    user_id: 10,
+    midpoint_id: 1, #4
+    remark: "Top Secret Project",
+    event_date: "Mon, 18 Feb 2019",
+    event_time: "Sat, 01 Jan 2000 05:00:00 UTC +00:00",
+)
 
+Invite.create(event_id: 1, user_id: 16)
+Invite.create(event_id: 1, user_id: 8)
+Invite.create(event_id: 1, user_id: 14)
+Invite.create(event_id: 1, user_id: 12)
+Invite.create(event_id: 1, user_id: 11)
+Invite.create(event_id: 1, user_id: 10)
+
+
+Event.create(
+    user_id: 11,
+    midpoint_id: 10, #4
+    remark: "Project Facebook",
+    event_date: "Thu, 21 Feb 2019",
+    event_time: "Sat, 01 Jan 2000 22:30:00 UTC +00:00",
+)
+
+
+Invite.create(event_id: 2, user_id: 11)
+Invite.create(event_id: 2, user_id: 15)
 
 =begin
-
-
 sign in luke
 colab with
 - sam
