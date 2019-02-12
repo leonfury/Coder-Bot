@@ -17,11 +17,93 @@
 body { 
   margin:0; 
   padding:0; 
-  margin-top: 60px;
+  /* margin-top: 60px; */
   position:relative;
-  background-color: gray !important;
+  background-color: #343a40 !important;
 }
 
+/* next academy */
+#next_academy {
+    position: relative;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,.65);
+}
+
+.next_academy_text {
+    font-family: Lato, sans-serif !important;
+}
+
+.n_main-elements {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: rgba(0,0,0,.65);
+}
+
+.n_homepage-header {
+    text-align: center;
+    box-sizing: border-box;
+
+}
+
+.n_video-container {
+    width: 100vw;
+    opacity: 1;
+    background-color: rgba(0,0,0,.65);
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+}
+
+#n_background-video {
+    
+    width: 100vw;
+    top: 0;
+    box-sizing: border-box;
+    object-fit: contain;
+    text-align: center;
+
+}
+
+#signup_modal {
+    width: 75vw !important;
+    min-width: 75vw !important;
+    max-width: 75vw !important;
+    height: 90vh !important;
+}
+
+#signup_modal_body {
+    height: 90vh !important;
+    padding: 0! important;
+}
+
+#signup_modal_side {
+    height: auto;
+    max-height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 375px;
+    background-color:#343a40;
+    border-bottom-left-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+    opacity: 0.8;
+    overflow: hidden;
+    clear: both;
+    padding: 20px;
+    z-index: 500;
+}
 
 
 @media (min-width: 766px) {
@@ -38,12 +120,14 @@ body {
       width: 0%!important;}
 }
 .mapboxgl-canvas {
-  width:100% !important;
- /* robot animation */
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 #map {
-  width:450px;
+  width: 450px;
 }
 /*#image {
     height: 256px;
@@ -54,15 +138,17 @@ body {
 /* map page gui */
 #menu {
     position: absolute !important;
-    top: 33px !important;
-    right: -10px;
+    top: 80px !important;
+    right: 0;
+    padding-right: 0px !important;
+    margin-right: 0px !important;
     z-index: 3;
     width: 375px;
 }
 
 .mapboxgl-ctrl-top-right {
     width: 375px !important;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     border-bottom-left-radius: 10px !important;
     background-color:#343a40;
     opacity: 0.8;
@@ -70,11 +156,12 @@ body {
 
 .mapboxgl-ctrl-geocoder {
     position: relative !important;
-    margin-top: 95px !important;
+    margin-top: 130px !important;
     max-width: 100% !important;
     width: 350px !important;
     z-index: 3;
     clear: both;
+    margin-bottom: 10px !important;
 }
 
 
@@ -82,13 +169,13 @@ body {
     height: auto;
     max-height: 75vh;
     position: absolute;
-    top: 150px;
+    top: 185px;
     right: 0px;
     width: 375px;
     background-color:#343a40;
     border-bottom-left-radius: 10px !important;
     border-top-left-radius: 10px !important;
-    opacity: 0.8;
+    opacity: 0.9;
     overflow-y: auto;
     clear: both;
 }
@@ -166,6 +253,9 @@ body {
 }
 
 
+.map_user_popup {
+    border: 50px solid red !important;
+}
 
 /* mapbox */
 .marker {
@@ -181,6 +271,7 @@ body {
 .mapboxgl-popup-content {
     border-radius: 5px;
     box-shadow: 2px 2px 4px #000000;
+
 }   
 
 .carousel-item {
@@ -288,9 +379,7 @@ button:hover, a:hover {
     -webkit-animation-duration: 20s;
 }     
 @-webkit-keyframes run {
-    /* 0% { left: 0;}
-    50%{ left : 100%;}
-    100%{ left: 0%;} */
+
     from {left: 0%;}
     to {left: 80%;}
 }
@@ -299,10 +388,6 @@ img.rubybot{
     height: 200px;
     width: auto;
 }   
-
-input {
-  width: 275px !important;
-}
 
 .carousel-caption {
   color: black !important;
@@ -318,9 +403,9 @@ input {
 /* slider */
 .slidecontainer {
     width: 100%;
-  }
-  
-  .slider {
+}
+
+.slider {
     -webkit-appearance: none;
     width: 100%;
     height: 15px;
@@ -330,7 +415,7 @@ input {
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-  }
+}
   
   .slider:hover {
     opacity: 1;
@@ -356,20 +441,21 @@ input {
 
 
 .new_form label{
-    width: 30%;
+    width: 100%;
+    margin-right: 10px;
     /* positions the label text beside the input */
-    text-align: right;
 }
 .form-buttons input {
   text-align:center;
   margin-left: 15px;
+}
 
 /* new design for welcome page */
 .welcome_full{
   display: block;
  }
 
-.welcome_mobile{
+.welcome_mobile {
   display: none;
  }
 
@@ -383,27 +469,37 @@ input {
   }
 }
 
-/*.carousel-caption {
-  top: 30%; 
-  margin: auto;
-}*/
+.carousel-caption {
+  /* top: 30%; 
+  margin: auto; */
+  padding: 0 !important; 
+  width: 60% !important; 
+  height: auto !important; 
+  position: absolute !important; 
+  top: 53% !important; 
+  left: 50% !important; 
+  transform: translate(-50%, -50%);
+}
 
 @media (max-width: 600px){
   .carousel-caption {
-   position: absolute;
-   box-sizing: border-box;
-   top: 55%;
+   /* position: absolute; */
+   /* box-sizing: border-box; */
+   /* top: 60% !important; */
 /*    margin: auto; */
-   margin-right: 0;
+   /* margin-right: 0;
    margin-left: 0;
-   left: 0;
-   width: 100%;
+   left: 0; */
+   top: 55% !important;
+   width: 100% !important;
+   height: auto !important;
+   /* height: 50%; */
   }
 }
 
 @media (max-width: 600px){
   #coderbot_logo {
-   width: 98%;
+   width: 98% !important;
   }
 }
 
@@ -440,5 +536,34 @@ input {
 
 .ratings {
   color: white;
+}
+
+.popup-user{
+  width: 200px;
+  height: auto;
+  text-align: center;
+}
+
+.username-text{
+  margin-bottom: -20px;
+}
+
+.lang-text{
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.des-text{
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+.my-events-text{
+  margin-bottom: 3px;
+}
+
+.lang-gif{
+  display: inline;
 }
 

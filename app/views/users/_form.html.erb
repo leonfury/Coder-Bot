@@ -9,24 +9,24 @@
         <div class="new_form">
 
         <%= l.label "username" %>
-        <%= l.text_field :username %>
+        <%= l.text_field :username, placeholder: "Username" %>
         <br>
         <%= l.label "first name" %>
-        <%= l.text_field :first_name %>
+        <%= l.text_field :first_name, placeholder:"First name" %>
         <br>
-        <%= l.label "last name" %>
+        <%= l.label "last name", placeholder:"Last Name" %>
         <%= l.text_field :last_name %>
         <br>
-        <%= l.label "password" %>
+        <%= l.label "password", placeholder:"******" %>
         <%= l.password_field :password %>
         <br>
-        <%= l.label "email" %>
+        <%= l.label "email", placeholder:"example@mail.com" %>
         <%= l.text_field :email %>
         <br>
-        <%= l.label "address" %>
+        <%= l.label "address", placeholder:"Enter and verify your address" %>
         <%= l.text_field :address %>
         <br>
-        <%= l.label "description" %>
+        <%= l.label "description", placeholder:"Add some interesting description" %>
         <%= l.text_field :description %>
         <br>
         <%= l.label "lang" %>
@@ -44,8 +44,9 @@
     <% end %>
     <input type="button" value="Verify Address" onclick="getCoordinates();showMap() " />
 </div>
+    
     <div id="map" style="width:700px; height:500px;"></div>
-
+    <h1>Is this your address?</h1>
 </div>
 </div>
 

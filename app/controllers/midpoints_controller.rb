@@ -1,4 +1,5 @@
 class MidpointsController < ApplicationController
+    before_action :authorize_user
     def create
 
         midpoint = Midpoint.new(midpoint_params)
@@ -24,6 +25,10 @@ class MidpointsController < ApplicationController
             :poi,
             :category,
         )
+    end
+
+    def authorize_user
+        redirect_to root_path if !signed_in?
     end
 
 end

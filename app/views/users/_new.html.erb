@@ -1,82 +1,111 @@
 <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
 
-<div>
-      <h3>Enter your information here</h3>
+  
+    <div id="map" style="min-width: 100%; width: 100%; min-height: 100%; height: 100%;"></div>
+    
+    <div id="signup_modal_side" class="text-white">
+        <h3>Enter your information</h3>
 
         <%= form_with url: users_path, scope: "user" do |l| %>
-        <div class="new_form">
+            <table class="new_form text-white">
 
-        <%= l.label "username" %>
-        <%= l.text_field :username %>
-        <br>
-        <%= l.label "first name" %>
-        <%= l.text_field :first_name %>
-        <br>
-        <%= l.label "last name" %>
-        <%= l.text_field :last_name %>
-        <br>
-        <%= l.label "password" %>
-        <%= l.password_field :password %>
-        <br>
-        <%= l.label "email" %>
-        <%= l.text_field :email %>
-        <br>
-        <%= l.label "address" %>
-        <%= l.text_field :address%>
-        <br>
-        <%= l.label "description" %>
-        <%= l.text_field :description %>
-        <br>
-        <%= l.label "language" %>
-        <%= l.select :lang, options_for_select([["ruby"],["python"], ["javascript"], ["css"]]) %>
-        <br>
-        <%= l.label "longtitude" %>
-        <%= l.text_field :longtitude, readonly: true %>
-        <br>
-        <%= l.label "latitude" %>
-        <%= l.text_field :latitude, readonly: true  %>
-        <%= l.hidden_field :poi %>
+                <tr>
+                    <td><%= l.label "username" %></td>
+                    <td><%= l.text_field :username, class:"form-control", placeholder:"Username", autocomplete: 'off' %></td>
+                </tr>
+                <tr>
+                    <td><%= l.label "first name" %></td>
+                    <td><%= l.text_field :first_name, class:"form-control", placeholder:"First name" %></td>
+                </tr>
+                <tr>
+                    <td><%= l.label "last name" %></td>
+                    <td><%= l.text_field :last_name, class:"form-control", placeholder:"Last name" %></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td><%= l.label "email" %></td>
+                    <td><%= l.text_field :email, class:"form-control", placeholder:"example@mail.com" %></td>
+                </tr>
+                <tr>
+                    <td><%= l.label "password" %></td>
+                    <td><%= l.password_field :password, class:"form-control", placeholder:"******" %></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td colspan="2"><%= l.label "Tell Us About Yourself" %></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><%= l.text_area :description, class:"form-control", placeholder: "Add some intresting description about yourself" %></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td colspan="2"><%= l.label "address" %></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><%= l.text_area :address, class:"form-control", placeholder:"Type and verify your address" %></td>
+                </tr>
+                <tr>
+                    <td><%= l.label "language" %></td>
+                    <td><%= l.select :lang, options_for_select([["ruby"],["python"], ["javascript"], ["css"]]), class:"form-control" %></td>
+                </tr>
+                <% l.label "longtitude" %>
+                <%= l.hidden_field :longtitude, readonly: true %>
+                
+                <% l.label "latitude" %>
+                <%= l.hidden_field :latitude, readonly: true  %>
+                <%= l.hidden_field :poi %>
+            
+
+                <tr class="text-right">
+                    <td></td>
+                    <td><%= l.submit "Submit", class:"ml-5 btn btn-primary w-auto pl-5 pr-5" %></td>
+                </tr>
+        </table>
+        <% end %>                                                                                                                   
     </div>
-        <div class="form_buttons text-center">
-            <%= l.submit "Submit", class:"ml-5" %>
-            <br><br>
-            <input type="button" value="Verify Address" onclick="getCoordinates();showMap()", class="ml-5" />
-            </div>
-<% end %>
-    <div id="map" style="width:450px; height:500px;"></div>
-</div>
+
+
 <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
+    var marker = 0;
+    var client = new MapboxClient(mapboxgl.accessToken);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+    });
+
+    $('#user_address').on('keyup', () => {
+        getCoordinates();
+        showMap();
+    })
+
+
 	function getCoordinates(){
-		getAddress = document.getElementById('user_address').value;
-		mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
-		var client = new MapboxClient(mapboxgl.accessToken);
-		var test = client.geocodeForward(getAddress, function(err, data, res){
+		var getAddress = document.getElementById('user_address').value;
+		client.geocodeForward(getAddress, function(err, data, res){
 			var coordinates = data.features[0].center;
 			$('#user_longtitude')[0].value = coordinates[0];
 			$('#user_latitude')[0].value = coordinates[1];
 			$('#user_longtitude').value = coordinates[0];
 			$('#user_latitude').value = coordinates[1];
 			$('#user_poi')[0].value = data.features[0].id
-		});
+        });
 	}
-    function showMap(){
-        mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';    
-        var client = new MapboxClient(mapboxgl.accessToken);
+
+    function showMap() {
+        if (marker) {
+            marker.remove()
+        }
         var address = document.getElementById('user_address').value;
-        var test = client.geocodeForward(address, function(err, data, res) {
-        // data is the geocoding result as parsed JSON
-        // res is the http response, including: status, headers and entity properties
-        var coordinates = data.features[0].center;
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v10',
-            center: coordinates,
-            zoom: 14
-        });
-        new mapboxgl.Marker()
-            .setLngLat(coordinates)
-            .addTo(map);
-        });
+        client.geocodeForward(address, function(err, data, res) {
+            var coordinates = data.features[0].center;
+            
+            map.flyTo({
+                center: coordinates,
+                zoom: 18,
+            });
+            var marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        })
     }
 </script>
  

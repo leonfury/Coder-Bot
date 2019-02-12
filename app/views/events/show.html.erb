@@ -396,7 +396,10 @@ $(document).on('turbolinks:load', function(){
         var req = new XMLHttpRequest();
         req.responseType = 'json';
         req.open('GET', url, true);
+        console.log(url);
+        console.log(req);
         req.onload = function() {
+            console.log('within function');
             var data = req.response.routes[0];
             let trip_duration = data.duration;
             let trip_distance = data.distance;

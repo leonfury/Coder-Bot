@@ -1,17 +1,20 @@
 <%= form_for :session, url: session_path do |form| %>
-  <div class="text-field">
-    <%= form.label :email %>
-    <%= form.text_field :email, type: 'email' %>
-  </div>
+  <table>
+    <tr>
+        <td><%= form.label :email %></td>
+        <td><%= form.text_field :email, type: 'email', placeholder:"example@mail.com" %></td>
+    </tr>
 
-  <div class="password-field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
+    <tr>
+        <td><%= form.label :password %></td>
+        <td><%= form.password_field :password, placeholder:"************" %></td>
+    </tr>
 
-  <div class="submit-field">
-    <%= form.submit class: "btn btn-primary", role: "button"%>
-  </div>
+    <tr>
+        <td></td>
+        <td><%= form.submit class: "btn btn-primary", role: "button", style:"width: auto;" %></td>
+    </tr>
+</table>
 
   <div class="other-links">
     <% if Clearance.configuration.allow_sign_up? %>
@@ -22,4 +25,5 @@
     <br>
     <%= link_to "Sign in with Google", "/auth/google_oauth2" %>
     <br>
+    </div>
 <% end %>

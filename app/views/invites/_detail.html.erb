@@ -36,13 +36,7 @@
     var output = document.getElementById("dist");
     output.innerHTML = slider.value;
 
-    // slider.oninput = function() {
-    //     output.innerHTML = this.value;
-    // }
-
-
     var coordinates = [<%= @event.midpoint.longtitude.to_f %>, <%= @event.midpoint.latitude.to_f %>];
-
 
     map.addSource('meetpoint', {
         type: 'geojson',
@@ -82,13 +76,10 @@
             var el = document.createElement('div');
             el.className = 'marker';
             el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
-            el.style.backgroundColor = "transnparent";
+            el.style.backgroundColor = "transparent";
             el.style.height = "50px";
             el.style.width = "50px";
-            el.style.zIndex = "100";
-
-            //add marker to map
-            // coordinates = [hotel.latitude, hotel.longtitude]
+            el.style.zIndex = "0";
             new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
             map.flyTo({
                 center: coordinates,
@@ -96,60 +87,58 @@
             });
         });
 
-slider.oninput = function() {
-    output.innerHTML = this.value;
-    var dist = output.innerHTML
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        var dist = output.innerHTML
 
-    if (map.getSource(`show_hotel`)) {
-        map.removeLayer(`show_hotel`);
-        map.removeSource(`show_hotel`);
-    }
-
-    $('.hotel_layer').remove();
-    callMap(dist);
- 
-}
-
-callMap(2);
-
- function callMap (dist) {
-    $.ajax({
-        url: "/show_map",
-        method: "POST",
-        data: {"event_id": <%= @event.id %>, "dist": dist },
-        dataType: "JSON",
-        success: function(response){
-            console.log(response[0])
-            map.addSource('show_hotel', {
-                type: 'geojson',
-                data: response[0]
-            });
-
-            map.addLayer({
-                'id': 'show_hotel',
-                'type': 'circle',
-                'source': 'show_hotel',
-                'layout': {
-                    'visibility': 'visible'
-                },
-                'paint': {
-                    'circle-radius': 18,
-                    'circle-color': 'rgba(255,0,0,1)'
-                }
-            })
-
-            map.getSource('show_hotel')._data.features.forEach(function(marker) {
-                var el = document.createElement('div');
-                el.className = 'marker hotel_layer';
-                el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
-                el.style.height = '50px';
-                el.style.width = '50px';
-                new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
-            });
+        if (map.getSource(`show_hotel`)) {
+            map.removeLayer(`show_hotel`);
+            map.removeSource(`show_hotel`);
         }
 
-    })
- }
+        $('.hotel_layer').remove();
+        callMap(dist);
+    }
+
+    callMap(2);
+
+    function callMap (dist) {
+        $.ajax({
+            url: "/show_map",
+            method: "POST",
+            data: {"event_id": <%= @event.id %>, "dist": dist },
+            dataType: "JSON",
+            success: function(response){
+                map.addSource('show_hotel', {
+                    type: 'geojson',
+                    data: response[0]
+                });
+
+                map.addLayer({
+                    'id': 'show_hotel',
+                    'type': 'circle',
+                    'source': 'show_hotel',
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 18,
+                        'circle-color': 'rgba(255,0,0,1)'
+                    }
+                })
+
+                map.getSource('show_hotel')._data.features.forEach(function(marker) {
+                    var el = document.createElement('div');
+                    el.className = 'marker hotel_layer';
+                    el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
+                    el.style.height = '50px';
+                    el.style.width = '50px';
+                    new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
+                });
+            }
+
+        })
+    }
 
     // pop up function
     
@@ -159,64 +148,56 @@ callMap(2);
     });
 
     map.on('mouseenter', 'show_hotel', function (e) {
-            popup.remove();
+        popup.remove();
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.description;
-        console.log('-----------');
-        var start = e.features[0]._geometry.coordinates;
-        var end = map.getSource('meetpoint')._data.features[0].center;
-        getRoute(start,end);
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
-    popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
     });
-
-
         
     map.on('click', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
 
+    map.on('click', 'show_hotel', function (e) {
+        var start = e.features[0].properties.coordinates;
+        var end = map.getSource('meetpoint')._data.features[0].center;
+        getRoute2(start, end);
+    })
 
 //show routes' code -----------------------------------------------------
- var canvas = map.getCanvasContainer(); //map canvas
+    var canvas = map.getCanvasContainer(); //map canvas
 
-function getRoute(start, end){
-    
-     var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + 'pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
-
-console.log(url);
-    var req = new XMLHttpRequest();
-    req.responseType = 'json';
-    req.open('GET', url, true);
-    req.onload = function() {
-
-console.log('getroute');
-        var data = req.response.routes[0];
-        var route = data.geometry.coordinates;
-        var geojson = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates: route
-            }
-        };
-        //reset map using setData
-        if (map.getSource('route')){
-            console.log('true');
-            map.getSource('route').setData(geojson);
+    function getRoute2(start, end){
+        if (map.getSource(`route`)) {
+            map.removeLayer(`route`);
+            map.removeSource(`route`);
+            $('.hotel_journey_detail').remove();
         }
-        else { //make a new request
-        console.log('false');
+        start = start.split(",");
+        var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0].slice(2, -1) + ',' + start[1].slice(1, -2) + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
+
+        var req = new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.send();
+        req.responseType = 'json';
+        req.onload = function() {
+            var data = req.response.routes[0];
+            var trip_duration = data.duration;
+            var trip_distance = data.distance;
+            var route = data.geometry.coordinates;
+            var geojson = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: route
+                }
+            };
+            //reset map using setData
             map.addLayer({
                 id: 'route',
                 type: 'line',
@@ -237,39 +218,31 @@ console.log('getroute');
                 },
                 paint: {
                     'line-color': '#3887be',
+                    // 'line-color': 'black',
                     'line-width': 5,
                     'line-opacity': 0.75
                 }
             });
-            req.send();
+            map.getSource('route').setData(geojson);   
+
+            var coor = [`${start[0].slice(2, -1)}`, `${start[1].slice(1, -2)}`];
+            console.log(coor);
+            let new_p = document.createElement('p');
+
+            var dist = parseFloat(trip_distance / 1000).toFixed(1);
+            var text_class;
+            if (dist > 100) { text_class = "text-danger"; }
+            var jour_det = `Journey: <span class="journey_detail ${text_class}">${parseFloat(trip_duration / 60).toFixed(1)} minutes across <span class="journey_dist">${dist}</span> km </span>`;
+
+
+            if (dist > 100) { text_class = "exceed_range"; }
+            let el = document.createElement('div');
+            el.className = `hotel_journey_detail map_journey_detail ${text_class}`;
+            el.innerHTML = `<span class="">${parseFloat(trip_duration / 60).toFixed(1)} mins across <span class="journey_dist">${dist}</span> km </span>`;
+            el.style.top = "30px";
+            new mapboxgl.Marker(el).setLngLat(coor).addTo(map);
         }
-
-    // map.on('load', function(){
-    //     // getRoute(start);
-
-    //     map.addLayer({
-    //         id: 'point',
-    //         type: 'circle',
-    //         source: {
-    //             type: 'FeatureCollection',
-    //             features: [{
-    //                 type: 'Feature',
-    //                 properties: {},
-    //                 geometry: {
-    //                     type: 'point',
-    //                     coordinates: start
-    //                 }
-    //             }]
-    //         }
-    //     })
-    //     paint: {
-    //         'circle-radius': 10,
-    //         'circle-color': '#3887be'
-    //     }
-    // }
-
     }
-}
 </script>
 
 <% end %>

@@ -14,4 +14,10 @@ $('.back_btn').on('click', () => {
         map.removeLayer(`show_hotel`);
         map.removeSource(`show_hotel`);
     }  
+
+    if (map.getSource(`route`)) {
+        map.removeLayer(`route`);
+        map.removeSource(`route`);
+        $('.hotel_journey_detail').remove();
+    }
 })

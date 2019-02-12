@@ -7,13 +7,13 @@ class UsersController <  Clearance::UsersController
         user = User.new(user_params)
         
         if user.save 
-            p 'user info save'
             user.update(poi: "poi_#{user.id}")
-            redirect_to profiles_path
+            user.update(avatar: Faker::Avatar.image)
+            sign_in(user)
+            redirect_to maps_path
         else
-            p 'failed to save listing'
             p user.errors.full_messages
-           redirect_to root_path, notice: "Error signing up"
+           redirect_to root_path
         end
         
     end
@@ -28,18 +28,19 @@ class UsersController <  Clearance::UsersController
     private
     def user_params
         params.require(:user).permit(
-          :first_name, 
-          :last_name, 
-          :email, 
-          :password,
-          :address,
-          :description,
-          :lang, 
-          :longtitude, 
-          :latitude,
-          :avatar, 
-          :poi
-          )
+            :username,
+            :first_name, 
+            :last_name, 
+            :email, 
+            :password,
+            :address,
+            :description,
+            :lang, 
+            :longtitude, 
+            :latitude,
+            :avatar, 
+            :poi
+        )
     end
 end
 
