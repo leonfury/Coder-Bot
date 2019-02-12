@@ -66,7 +66,14 @@ class InvitesController < ApplicationController
 
 
         @hotels = Hotel.all
-        @hotels.each do |h|            
+        @hotels.each do |h| 
+            stars = 0
+            stars = "⭐️" if h.star == "1"
+            stars = "⭐️⭐️" if  h.star == "2"
+            stars = "⭐️⭐️⭐️" if h.star == "3"
+            stars = "⭐️⭐️⭐️⭐️" if h.star == "4"
+            stars = "⭐️⭐️⭐️⭐️⭐️" if h.star == "5" 
+
             if ((lng_min < h.longtitude.to_f) &&  (h.longtitude.to_f < lng_max) && (lat_min < h.latitude.to_f) &&  (h.latitude.to_f< lat_max))
                 show_hotel << {
                     "type": "Feature",
@@ -74,10 +81,11 @@ class InvitesController < ApplicationController
                     "properties": {
                         "description": "<div><img src='#{img_src.sample}' height='400' width='400' style='background-size: cover; background-position: 50% 50%;'>
                             <br> <h4 class='username-text'> #{h.hotel_name}  </h4>
-                            <br> Star: <span>#{h.star}</span>
-                            <br> RM <span>#{h.price}</span> / night
-                            <br><br> City: <span>#{h.city}</span>
-                            <br> Address: <span>#{h.address}</span><div>",
+                            
+                            <br><span style='font-size:30px; line-height:1.2;'>#{stars}</span> 
+                            <br> Price: <strong>RM <span>#{h.price}</span>/night</strong>
+                            <br> City: <strong><span>#{h.city}</span></strong>
+                            <br> Address: <strong><span>#{h.address}</span></strong><div>",
                         "landmark": true,
                         "category": "building",
                         "iconSize": [60, 60],
