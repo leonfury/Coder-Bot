@@ -526,6 +526,17 @@ img.rubybot{
   }
 
 }
+.profile_container {
+  align-content: center;
+  background-color: black;
+  opacity: .8;
+  width: 80%;
+  padding: 25px;
+}
+
+.ratings {
+  color: white;
+}
 
 .popup-user{
   width: 200px;

@@ -58,7 +58,9 @@
 
                 <% if signed_in? %>
                     <li class="nav-item">
-                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.username %></span>
+
+                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.first_name.capitalize %></span>
+
                     </li>
                 <% end %>
             </ul>
