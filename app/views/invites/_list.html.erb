@@ -93,7 +93,8 @@
             $('#sidebar_meeting').removeClass('d-none');
             setTimeout(() => {
                 map.flyTo({
-                    center: ["101.62993634", "3.1350717"],
+                    // center: ["101.62993634", "3.1350717"],
+                    center: ["101.62996634", "3.1350717"],
                     zoom: 18.5,
                     pitch: 80,
                     bearing: 145,
@@ -104,15 +105,27 @@
                         'type': 'circle',
                         'source': 'next_academy',
                         'layout': {
-                            // 'visibility': 'visible'
-                            'icon-image': "https://i.ibb.co/zPtc397/nextacademy-logo.png",
-                            'icon-size': 0.25
+                            'visibility': 'visible',
+                            // 'icon-image': "https://i.ibb.co/zPtc397/nextacademy-logo.png",
+                            // 'icon-size': 0.25
                         },
-                        // 'paint': {
-                        //     'circle-radius': 18,
-                        //     'circle-color': 'rgba(255,0,0,1)'
-                        // }
+                        'paint': {
+                            'circle-radius': 1,
+                            'circle-color': 'rgba(0,0,0,0)'
+                        }
                     })
+
+                    map.getSource('next_academy')._data.features.forEach(function(marker) {
+                        let el = document.createElement('div');
+                        el.className = 'marker';
+                        el.style.width = "70px";
+                        el.style.borderRadius = "50%";
+                        el.style.left = "-80px";
+                        // el.style.top = "50px";
+                        el.style.backgroundImage = 'url(https://i.ibb.co/zPtc397/nextacademy-logo.png)';
+                        // add marker to map
+                        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+                    });
 
                     setTimeout(() => {
                         map.flyTo({
@@ -121,19 +134,13 @@
                             pitch: 80,
                             bearing: 145,
                         });
+
                         $('#next_academy').removeClass('d-none');
                             
                         setTimeout(() => {
                             
-                            
-                            // $('#sidebar_meeting').addClass('d-none');
-                            $( "#map" ).hide( "puff", {percent: 100}, 3000 );
-                             $( "#sidebar_meeting" ).hide( "puff", {percent: 100}, 3000 );
-                            // $('#map').addClass('d-none');
-
-                            // setTimeout(() => {
-                            //   $( '#next_academy' ).show( "shake" );
-                            // }, 3000)
+                            $("#map").hide( "puff", {percent: 100}, 3000 );
+                            $("#sidebar_meeting").hide( "puff", {percent: 100}, 3000 );
                         })
 
                     }, 5000)

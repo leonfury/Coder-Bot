@@ -31,7 +31,8 @@ User.create(
     longtitude: 101.63043,
     latitude: 3.133894,
     poi: "po_1",
-    avatar: Faker::Avatar.image,
+    avatar: 'https://i.ibb.co/hWCzwsx/callum.jpg',
+    description: Faker::TvShows::GameOfThrones.quote,
 )
 
 User.create(
@@ -45,6 +46,7 @@ User.create(
     latitude: 3.201563,
     poi: "po_2",
     avatar: Faker::Avatar.image,
+    description: Faker::TvShows::GameOfThrones.quote,
 )
 
 User.create(
@@ -58,8 +60,8 @@ User.create(
     latitude: 3.168957,
     poi: "po_3",
     avatar: Faker::Avatar.image,
+    description: Faker::TvShows::GameOfThrones.quote,
 )
-
 
 User.create(
     username: 'user4',
@@ -72,6 +74,7 @@ User.create(
     latitude: 3.1360686,
     poi: "po_4",
     avatar: Faker::Avatar.image,
+    description: Faker::TvShows::GameOfThrones.quote,
 )
 
 User.create(
@@ -85,10 +88,11 @@ User.create(
     latitude: 3.150991,
     poi: "po_5",
     avatar: Faker::Avatar.image,
+    description: Faker::TvShows::GameOfThrones.quote,
 )
 
 i = User.last.id
-20.times {
+1.times {
     User.create(
         username: Faker::FunnyName.name,
         first_name: Faker::Name.first_name,
@@ -125,7 +129,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'KLCC Outdoor Plaza',
     address: 'KLCC Outdoor Plaza, Infront Suria KLCC, Kuala Lumpur, 50450, Malaysia',
-    description: '',
+    description: 'Meet at KLCC Outdoor Park',
     longtitude: 101.71126,
     latitude: 3.158599,
     poi: 'poi.1236950609238',
@@ -165,9 +169,6 @@ Midpoint.create(
 }
 p "Midpoint creation complete"
 
-
-
-# School
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'kl_hotel.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
