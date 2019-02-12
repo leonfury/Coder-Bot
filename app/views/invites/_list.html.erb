@@ -90,7 +90,7 @@
                     'fill-extrusion-opacity': .6
                 }
             });
-
+            $('#sidebar_meeting').removeClass('d-none');
             setTimeout(() => {
                 map.flyTo({
                     center: ["101.62993634", "3.1350717"],
@@ -121,16 +121,24 @@
                         });
 
                         setTimeout(() => {
-                            $('#next_academy').removeClass('d-none');
-                            $('#map').addClass('d-none');
-                            $('#sidebar_meeting').addClass('d-none');
-                        }, 500)
+                            // $('#next_academy').removeClass('d-none');
+                            
+                            
+                            // $('#sidebar_meeting').addClass('d-none');
+                            $( "#map" ).hide( "puff", {percent: 100}, 3000 );
+                             $( "#sidebar_meeting" ).hide( "puff", {percent: 100}, 3000 );
+                            // $('#map').addClass('d-none');
 
-                    }, 10000)
+                            // setTimeout(() => {
+                            //   $( '#next_academy' ).show( "shake" );
+                            // }, 3000)
+                        })
+
+                    }, 5000)
 
 
                 }, 3500);
-            }, 7000);
+            }, 4000);
         })
     </script>
 <% end %>
