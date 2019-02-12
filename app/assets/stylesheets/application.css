@@ -478,7 +478,7 @@ img.rubybot{
   position: absolute !important; 
   top: 53% !important; 
   left: 50% !important; 
-  transform: translate(-50%, -50%);"
+  transform: translate(-50%, -50%);
 }
 
 @media (max-width: 600px){
