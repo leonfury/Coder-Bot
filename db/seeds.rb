@@ -74,7 +74,7 @@ User.create(
     last_name: 'lee',
     email: 'dave@mail.com',
     password: "123",
-    address: 'Skytree',
+    address: 'B50, Jalan Dato Lim Hoe Lek, Kampung Mutan Setali, 25200 Kuantan, Pahang',
     longtitude: "103.32653",
     latitude: "3.822586",
     poi: "po_4",
@@ -166,7 +166,7 @@ User.create(
 
 
 User.create(
-    username: 'luke',
+    username: 'codeyluke',
     first_name: 'Codey',
     last_name: 'Luke',
     email: 'luke@mail.com',
@@ -189,8 +189,8 @@ User.create(
     email: 'malcolm@mail.com',
     password: "123",
     address: 'Miri',
-    longtitude: "113.99333",
-    latitude: "4.440278",
+    longtitude: "101.38884",
+    latitude: "4.493392",
     poi: "po_11",
     lang: "ruby",
     avatar: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/malcolm-1b62d4956a4fa062c45d3ca5054ea56f2812a416c62961bf4dbc970f88a5493e.jpg',
@@ -276,7 +276,7 @@ User.create(
     latitude: "3.175736",
     poi: "po_16",
     lang: "javascript",
-    avatar: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/yijun-ef34cc021a6b2e77ee42b5861d5dc12eeb04f6349fd0089b48cdb5ac617b34f1.jpg',
+    avatar: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/haris-804297d0104dcf785fe9adf2d0f8ad96607607175b340fb7a3359ccf98aebef8.jpg',
     joined: Date.today(),
     description: Faker::TvShows::GameOfThrones.quote,
 )
@@ -311,7 +311,7 @@ Midpoint.create(
     poi: 'poi.1219770754374',
     category: 'mall, shop',
 )
-
+=begin
 Midpoint.create(
     name: 'NEXT Academy',
     address: 'Next Academy, Kuala Lumpur, 60000, Malaysia',
@@ -321,7 +321,7 @@ Midpoint.create(
     poi: 'poi.1580547980092',
     category: 'college, university, building',
 )
-
+=end
 Midpoint.create(
     name: 'WorQ Glo Damansara',
     address: 'WorQ Glo Damansara, Level 3A-1A Glo Damansara Shopping Mall, Selangor 60000, Malaysia',
@@ -383,17 +383,6 @@ Midpoint.create(
     category: 'work space',
 )
 
-
-
-
-
-
-
-
-
-
-
-
 15.times {
     Midpoint.create(
         name: Faker::Company.name,
@@ -421,3 +410,32 @@ csv.each do |row|
     h.save
     puts "#{h.hotel_name} saved"
 end
+
+
+
+=begin
+
+
+sign in luke
+colab with
+- sam
+- joel
+- kevin
+- haris
+- yijun
+
+meet at worq glo damansara
+
+sign in yijun account
+for hotels
+
+
+sign in dave account for
+meetings
+
+
+
+highlight distance too far!
+
+
+=end

@@ -1,31 +1,59 @@
 <h4> Upcoming Meetings </h4>
 <% if @invites.count != 0 %>
     <% @invites.each do |i| %>
+        <script>
+            var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + <%= current_user.longtitude %> + ',' +  <%= current_user.latitude %>  + ';' +  <%= i.event.midpoint.longtitude %>  + ',' + <%= i.event.midpoint.latitude %> + '?steps=true&geometries=geojson&access_token=pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
+            var req = new XMLHttpRequest();
+            req.responseType = 'json';
+            req.open('GET', url, true);
+            console.log(url);
+            console.log(req);
+            req.onload = function() {
+                console.log('within function');
+                var data = req.response.routes[0];
+                let trip_distance = data.distance;
+                var dist = parseFloat(trip_distance / 1000).toFixed(1);
+                if (dist > 100) {    
+                    $('#event_sidebar_list_user').append('<tr><td colspan="2" class="text-primary"><strong> The meeting location is too far for you! <br> Find a hotel nearby! </strong></td></tr>')
+                }
+            };
+            req.send();
+        </script>
+
         <a id="event_<%= i.event.id %>" class="w-100 m-1 mb-3 p-3 border-primary border rounded bg-dark event_list_items text-white text-left text-sm" href="/invites_detail/<%= i.event.id %>" data-remote="true">
-            <h5>Project Description:</h5>
-            <%= i.event.remark %>   
-            <table class="text-white">
-                <tr><td><br></td></tr>
+            <!-- <h5>Project Description:</h5> -->
+            <p><%= i.event.remark %>   </p>
+            <table class="text-white" id="event_sidebar_list_user">
+                <!-- <tr><td><br></td></tr> -->
                 <tr>
-                    <td>Project Led By</td>
-                    <td><%= i.event.user.username %></td>
+                    <td>Led By </td>
+                    <td>: <%= i.event.user.username.upcase[0] + i.event.user.username[1..-1] %></td>
                 </tr>
+                <tr><td><br></td></tr>
 
                 <tr>
                     <td colspan="2">Meeting Details</td>
                 </tr>
-                <tr><td><br></td></tr>
+                
                 <tr>
                     <td>Location</td>
-                    <td class="pr-2"><%= i.event.midpoint.name %> </td>
+                    <td class="pr-2">: <%= i.event.midpoint.name %> </td>
                 </tr>
                 <tr>
                     <td>Time</td>
-                    <td><%= i.event.event_date.strftime("%d %b %Y, %A") %>, <%= i.event.event_time.strftime("%I:%M %p") %> </td>
+                    <td>: <%= i.event.event_date.strftime("%d %b %Y, %A") %>, <%= i.event.event_time.strftime("%I:%M %p") %> </td>
                 </tr>
+                
             </table>
         </a>
     <% end %>
+
+
+
+
+
+
+
 <% else %>
     <h5><strong> You have <span class="text-danger">NO upcoming meetings. :( </span></strong></h5>
     <h5> Perhaps you don't have a good portfolio. :'( </h5>
