@@ -478,7 +478,7 @@ img.rubybot{
   position: absolute !important; 
   top: 53% !important; 
   left: 50% !important; 
-  transform: translate(-50%, -50%);"
+  transform: translate(-50%, -50%);
 }
 
 @media (max-width: 600px){
@@ -525,6 +525,17 @@ img.rubybot{
     font-size: 18px;
   }
 
+}
+.profile_container {
+  align-content: center;
+  background-color: black;
+  opacity: .8;
+  width: 80%;
+  padding: 25px;
+}
+
+.ratings {
+  color: white;
 }
 
 .popup-user{

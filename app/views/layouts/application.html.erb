@@ -1,6 +1,6 @@
 <html>
 <head>
-     <title>Codermon</title>
+     <title>Coderbot</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -39,9 +39,6 @@
             <ul class="nav nav-pills nav-fill">
                 <% if signed_in? %>
                     <li class="nav-item">
-                        <a class="navbar-brand ml-3" href="/" onclick="location.replace('/')">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="navbar-brand ml-3" href="/maps" onclick="location.replace('/maps')">Map</a>
                     </li>
                     <li class="nav-item">
@@ -61,7 +58,9 @@
 
                 <% if signed_in? %>
                     <li class="nav-item">
-                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.first_name %> <%= current_user.username %></span>
+
+                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.first_name.capitalize %></span>
+
                     </li>
                 <% end %>
             </ul>
@@ -111,7 +110,7 @@
         <% end %>
     </div>
      -->
-    
+
         <%= yield %>
 
 <% image_tag('pin_python_static.png') %>   
@@ -129,7 +128,27 @@
 <% image_tag('selected_user_hypercss.gif') %>   
 <% image_tag('selected_user_js.gif') %>   
 <% image_tag('selected_user_ruby.gif') %>   
-
 <% image_tag('coderbot_head.gif') %>   
+<% image_tag('hotels/hotel_1.jpg') %>
+<% image_tag('hotels/hotel_2.jpg') %>
+<% image_tag('hotels/hotel_3.jpg') %>
+<% image_tag('hotels/hotel_4.jpg') %>
+<% image_tag('hotels/hotel_5.jpg') %>
+<% image_tag('hotels/hotel_6.jpg') %>
+<% image_tag('hotels/hotel_7.jpg') %>
+<% image_tag('hotels/hotel_8.jpg') %>
+<% image_tag('hotels/hotel_9.jpg') %>
+<% image_tag('hotels/hotel_10.jpg') %>
+<% image_tag('hotels/hotel_11.jpg') %>
+<% image_tag('hotels/hotel_12.jpg') %>
+<% image_tag('hotels/hotel_13.jpg') %>
+<% image_tag('hotels/hotel_14.jpg') %>
+<% image_tag('hotels/hotel_15.jpg') %>
+<% image_tag('hotels/hotel_16.jpg') %>
+<% image_tag('hotels/hotel_17.jpg') %>
+<% image_tag('hotels/hotel_18.jpg') %>
+<% image_tag('hotels/hotel_19.jpg') %>
+<% image_tag('hotels/hotel_20.jpg') %>
+<% image_tag('hotels/hotel_21.jpg') %>
 </body>
 </html>

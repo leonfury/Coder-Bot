@@ -30,7 +30,8 @@ User.create(
     address: 'Desa Kiara Condominium',
     longtitude: 101.63043,
     latitude: 3.133894,
-    poi: "po_1"
+    poi: "po_1",
+    avatar: Faker::Avatar.image,
 )
 
 User.create(
@@ -42,7 +43,8 @@ User.create(
     address: 'PV15',
     longtitude: 101.71627,
     latitude: 3.201563,
-    poi: "po_2"
+    poi: "po_2",
+    avatar: Faker::Avatar.image,
 )
 
 User.create(
@@ -54,7 +56,8 @@ User.create(
     address: 'Casa Kiara',
     longtitude: 101.646255,
     latitude: 3.168957,
-    poi: "po_3"
+    poi: "po_3",
+    avatar: Faker::Avatar.image,
 )
 
 
@@ -67,7 +70,8 @@ User.create(
     address: 'TTDI Ascencia',
     longtitude: 101.6278817,
     latitude: 3.1360686,
-    poi: "po_4"
+    poi: "po_4",
+    avatar: Faker::Avatar.image,
 )
 
 User.create(
@@ -79,7 +83,8 @@ User.create(
     address: 'Semantan',
     longtitude: 101.6631873,
     latitude: 3.150991,
-    poi: "po_5"
+    poi: "po_5",
+    avatar: Faker::Avatar.image,
 )
 
 i = User.last.id

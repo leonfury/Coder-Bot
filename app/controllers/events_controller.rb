@@ -187,10 +187,13 @@ class EventsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
-                        <br> #{u.username} 
-                        <br> Language: <span class='user_lang'> #{u.lang} </span>
-                        <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>", #
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='150'> 
+                    <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
+                    <br> <h5 class='lang-text'>Ruby</h5> 
+                    <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
+                    <br> <p class='des-text'>Email me: #{u.email}</p>
+                    <br> <span class='user_lang d-none'> #{u.lang} </span>
+                    <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>", #
                     "landmark": true,
                     "category": "college, university, building",
                     "iconSize": [60, 60],

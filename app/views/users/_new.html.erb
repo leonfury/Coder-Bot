@@ -11,38 +11,38 @@
 
                 <tr>
                     <td><%= l.label "username" %></td>
-                    <td><%= l.text_field :username, class:"form-control" %></td>
+                    <td><%= l.text_field :username, class:"form-control", placeholder:"Username", autocomplete: 'off' %></td>
                 </tr>
                 <tr>
                     <td><%= l.label "first name" %></td>
-                    <td><%= l.text_field :first_name, class:"form-control" %></td>
+                    <td><%= l.text_field :first_name, class:"form-control", placeholder:"First name" %></td>
                 </tr>
                 <tr>
                     <td><%= l.label "last name" %></td>
-                    <td><%= l.text_field :last_name, class:"form-control" %></td>
+                    <td><%= l.text_field :last_name, class:"form-control", placeholder:"Last name" %></td>
                 </tr>
                 <tr><td><br></td></tr>
                 <tr>
                     <td><%= l.label "email" %></td>
-                    <td><%= l.text_field :email, class:"form-control" %></td>
+                    <td><%= l.text_field :email, class:"form-control", placeholder:"example@mail.com" %></td>
                 </tr>
                 <tr>
                     <td><%= l.label "password" %></td>
-                    <td><%= l.password_field :password, class:"form-control" %></td>
+                    <td><%= l.password_field :password, class:"form-control", placeholder:"******" %></td>
                 </tr>
                 <tr><td><br></td></tr>
                 <tr>
                     <td colspan="2"><%= l.label "Tell Us About Yourself" %></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><%= l.text_area :description, class:"form-control" %></td>
+                    <td colspan="2"><%= l.text_area :description, class:"form-control", placeholder: "Add some intresting description about yourself" %></td>
                 </tr>
                 <tr><td><br></td></tr>
                 <tr>
                     <td colspan="2"><%= l.label "address" %></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><%= l.text_area :address, class:"form-control"%></td>
+                    <td colspan="2"><%= l.text_area :address, class:"form-control", placeholder:"Type and verify your address" %></td>
                 </tr>
                 <tr>
                     <td><%= l.label "language" %></td>

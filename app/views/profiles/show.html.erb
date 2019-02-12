@@ -1,40 +1,35 @@
-<div class="jumbotron">
-                    
-                    <%= image_tag current_user.avatar.thumb.to_s %>
-                    <h2><%= current_user.first_name%> <%=current_user.last_name%></h2>
+
+<div class="jumbotron" style="height:100%">
+                    <div class="container" style= "background-color: black;
+  opacity: .8; width: 80%; color:white; border-radius: 25px; padding: 25px;">
+                    <h2><%= current_user.first_name.capitalize%> <%=current_user.last_name.capitalize%></h2>
                     <p><strong>About: </strong> <%= current_user.description %> </p>
                     <p><strong>Skills: </strong><%= current_user.lang%>
+                    <p><strong>Address: </strong><%= current_user.address%>
+                    <p><strong>Email: </strong><%= current_user.email%>
                     </p>           
                         <figcaption class="ratings">
                             <p>Ratings <br>
                             <a href="#">
-                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star-o" style="color:white;"></span>
                             </a>
                             <a href="#">
-                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star-o" style="color:white;"></span>
                             </a>
                             <a href="#">
-                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star-o" style="color:white;"></span>
                             </a>
                             <a href="#">
-                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star-o" style="color:white;"></span>
                             </a>
                             </p>
                         </figcaption>
-                    </figure>
-           
-                    <h2><strong> 5 </strong></h2>                    
-                    <p><small>Events</small></p>
-                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span>Events </button>
-                    <h2><strong>8</strong></h2>                    
-                    <p><small>Invite</small></p>
-                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Invite</button>
-                    <h2><strong>43</strong></h2>                    
-                    <p><small>Collaborations</small></p>
+
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
           Edit Profile
           </button>
-
+          <br>
+</div>
   </div>
 
 
