@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_015153) do
+ActiveRecord::Schema.define(version: 2019_02_12_124656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 2019_02_07_015153) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "codelangs", force: :cascade do |t|
+    t.string "lang"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_codelangs_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -89,6 +97,7 @@ ActiveRecord::Schema.define(version: 2019_02_07_015153) do
     t.text "git_link"
     t.text "description"
     t.text "avatar"
+    t.date "joined"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
