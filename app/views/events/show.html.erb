@@ -76,8 +76,10 @@ $(document).on('turbolinks:load', function(){
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: center_cor, // kuala lumpur //to be dynamic
-        zoom: center_calc[2],
+        // center: center_cor, // kuala lumpur //to be dynamic
+        // zoom: center_calc[2],
+        center: [101.95349576, 4.18341239],
+        zoom: 7,
         pitch: 45, //pitch adjusts view from above
         bearing: 0, //bearings adjust latitude baseline
     });

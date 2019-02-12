@@ -167,7 +167,7 @@ body {
 
 #sidebar_map {
     height: auto;
-    max-height: 75vh;
+    max-height: 73vh;
     position: absolute;
     top: 185px;
     right: 0px;
@@ -178,6 +178,8 @@ body {
     opacity: 0.95;
     overflow-y: auto;
     clear: both;
+    z-index: 2;
+    margin-bottom: 20px;
 }
 
 #shortlist {
