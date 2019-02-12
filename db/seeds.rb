@@ -88,7 +88,7 @@ User.create(
 )
 
 i = User.last.id
-100.times {
+20.times {
     User.create(
         username: Faker::FunnyName.name,
         first_name: Faker::Name.first_name,
@@ -98,8 +98,8 @@ i = User.last.id
         address: "-",
         # longtitude: rand(101.4318908..101.7506561),
         # latitude: rand(3.0014384..3.209542),
-        longtitude: rand(101.4318908..103.7506561),
-        latitude: rand(2.0014384..3.809542),
+        longtitude: rand(101.4002711836..101.8997188),
+        latitude: rand(2.8743528..3.243149346),
         poi: "poi_#{i+1}",
         avatar: Faker::Avatar.image,
         description: Faker::TvShows::GameOfThrones.quote,
@@ -152,13 +152,13 @@ Midpoint.create(
     category: 'college, university, building',
 )
 
-50.times {
+10.times {
     Midpoint.create(
         name: Faker::Company.name,
         address: Faker::Address.street_address,
         description: Faker::TvShows::GameOfThrones.quote,
-        longtitude: rand(101.4318908..103.7506561),
-        latitude: rand(2.0014384..3.809542),
+        longtitude: rand(101.4002711836..101.8997188),
+        latitude: rand(2.8743528..3.243149346),
         category: ['coffee', 'workspace', 'eventspace', 'cafe'].sample,
     )
     p "Midpoint created"

@@ -20,7 +20,34 @@ class InvitesController < ApplicationController
 
     def new
         @invites = current_user.invites
+    end
+
+    def invite_event
+        @invites = current_user.invites
+        show_invite, bundle = [], []
+        @invites.each do |i|            
+            show_invite << {
+                "type": "Feature",
+                "revelance": 1,
+                "properties": {
+                    "description": "<div><img src='#{}' height='400' width='400' style='background-size: cover; background-position: 50% 50%;'>
+                        <br> <h4 class='username-text'> #{i.event.midpoint.name}  </h4>",
+                    "landmark": true,
+                    "category": "building",
+                    "iconSize": [60, 60],
+                    "coordinates": [i.event.midpoint.longtitude, i.event.midpoint.latitude] 
+                },
+                "center": [i.event.midpoint.longtitude, i.event.midpoint.latitude],
+                "geometry":{
+                    "coordinates": [i.event.midpoint.longtitude, i.event.midpoint.latitude],
+                    "type": "Point"
+            }
+        }
         
+        end
+        invite = {"type": "FeatureCollection", "features":  show_invite}
+        bundle  << invite
+        render :json => ActiveSupport::JSON.encode(bundle)
     end
 
     def detail
@@ -64,7 +91,6 @@ class InvitesController < ApplicationController
             "https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotels/hotel_21-5f0cd78cb8cf93102425e07a90e0aa60c3587bb8b2f4c46ad22df27a275cfcc3.jpg"
         ]
 
-
         @hotels = Hotel.all
         @hotels.each do |h| 
             stars = 0
@@ -96,12 +122,9 @@ class InvitesController < ApplicationController
                         "coordinates": [h.longtitude, h.latitude],
                         "type": "Point"
                 }
-
             }
             end
-
         end
-
         hotel = {"type": "FeatureCollection", "features":  show_hotel}
         bundle  << hotel
         render :json => ActiveSupport::JSON.encode(bundle)
