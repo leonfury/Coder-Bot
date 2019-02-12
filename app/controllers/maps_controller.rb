@@ -31,6 +31,7 @@ class MapsController < ApplicationController
                         <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
                         <br><span class='user_lang'> <h5 class='lang-text'>Ruby</h5> </span>
                         <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
+                        <br> <p class='des-text'>Email me: #{u.email}</p>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button>", #
                     "landmark": true,
@@ -57,6 +58,7 @@ class MapsController < ApplicationController
                         <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
                         <br><span class='user_lang'> <h5 class='lang-text'>Python</h5> </span>
                         <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
+                        <br> <p class='des-text'>Email me: #{u.email}</p>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>", #
                     "landmark": true,
@@ -83,6 +85,7 @@ class MapsController < ApplicationController
                         <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
                         <br><span class='user_lang'> <h5 class='lang-text'>JS</h5> </span> 
                         <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
+                        <br> <p class='des-text'>Email me: #{u.email}</p>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>",#
                     "landmark": true,
@@ -110,6 +113,7 @@ class MapsController < ApplicationController
                         <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
                         <br><span class='user_lang'> <h5 class='lang-text'>CSS</h5> </span>
                         <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
+                        <br> <p class='des-text'>Email me: #{u.email}</p>
                         <br> <span class='d-none'>User ID: #<span class='user_id'>#{u.id}</span></span>
                         <br><button id='#{u.id}' class='colab-btn btn btn-primary'>Collaborate!</button></div>",#
                     "landmark": true,
