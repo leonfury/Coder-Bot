@@ -28,7 +28,7 @@
 
 
 
-<div id="sidebar_meeting" class="d-none" style="z-index: 11; max-height:98vh;">
+<div id="sidebar_meeting" class="" style="z-index: 11; max-height:98vh;">
 
     <div id="event_list" class="m-3 text-white">
         <%= render partial: "invites/list" %>
@@ -39,8 +39,7 @@
     </div>
 </div>
 
-<div id="next_academy" style="z-index: 1;">
-    <%# <img src="https://www.nextacademy.com/img/nextacademy-white-logo.png" class="pb-5" style="height: 200px; position: absolute; top: 80px; left: 10px; z-index: 50;"> %>
+<div id="next_academy" class="d-none" style="z-index: 1;">
     <div class="n_main-elements">
         <div class="n_homepage-header">
   
@@ -48,11 +47,8 @@
                 Build your portfolio 
                 <br/>with a 10 week Coding Bootcamp
             </h1>
-            <br>
-            
-            <%# <p class="next_academy_text text-white d-none d-md-block">Join our community of graduates who run multi-million dollar businesses, impact communities through social projects,<br /> and work at great companies like Google, Uber, AirAsia, Fave, Mindvalley</p>
-            
-            <p class="next_academy_text text-white d-block d-md-none">Join our graduate community who run multi-million dollar businesses, impact communities through social projects, and work at great companies like Google, Uber, AirAsia, Fave, Mindvalley</p> %>
+            <br>  
+          
             <a href="https://www.nextacademy.com/" class="btn btn-success" style="border: 2px solid white; padding: 20px; background-color: transparent;">
             <h3 style="color: white;"> Check it out at </h3>
             <div style="width: 300px; align-item: center;">
@@ -99,68 +95,61 @@ var map = new mapboxgl.Map({
 });
 
 // load all hotel data into map
-map.on("load", () => {
-    $.ajax({
-        url: "/meeting_map",
-        method: "POST",
-        dataType: "JSON",
-        success: function(response){
-            map.addSource('Hotel', {
-                type: 'geojson',
-                data: response[0]
-            });
+// map.on("load", () => {
+//     $.ajax({
+//         url: "/meeting_map",
+//         method: "POST",
+//         dataType: "JSON",
+//         success: function(response){
+//             map.addSource('Hotel', {
+//                 type: 'geojson',
+//                 data: response[0]
+//             });
 
-            //add layer of map
-            map.addLayer({
-                'id': 'Hotel',
-                'type': 'circle',
-                'source': 'Hotel',
-                'layout': {
-                    'visibility': 'none'
-                },
-                'paint': {
-                    'circle-radius': 18,
-                    'circle-color': 'rgba(255,0,0,0)'
-                }
-            })
+//             //add layer of map
+//             map.addLayer({
+//                 'id': 'Hotel',
+//                 'type': 'circle',
+//                 'source': 'Hotel',
+//                 'layout': {
+//                     'visibility': 'none'
+//                 },
+//                 'paint': {
+//                     'circle-radius': 18,
+//                     'circle-color': 'rgba(255,0,0,0)'
+//                 }
+//             })
 
-            //add marker for hotel
-            map.getSource('Hotel')._data.features.forEach(function(marker) {
-                var el = document.createElement('div');
-                el.className = 'marker d-none';
-                el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
-                el.style.height = "50px";
-                el.style.width = "50px";
+//             //add marker for hotel
+//             map.getSource('Hotel')._data.features.forEach(function(marker) {
+//                 var el = document.createElement('div');
+//                 el.className = 'marker d-none';
+//                 el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
+//                 el.style.height = "50px";
+//                 el.style.width = "50px";
 
-                new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
-            });
-            $('#sidebar_meeting').removeClass('d-none'); //meeting's sidebar
+//                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
+//             });
+//             $('#sidebar_meeting').removeClass('d-none'); //meeting's sidebar
             
-        },
-        error: function(error){
-            console.log(error);
-        }
-    });
+//         },
+//         error: function(error){
+//             console.log(error);
+//         }
+//     });
     
-    map.on('mouseenter', 'Hotel', function (e) {
-        map.getCanvas().style.cursor = 'pointer';
-    });
+//     map.on('mouseenter', 'Hotel', function (e) {
+//         map.getCanvas().style.cursor = 'pointer';
+//     });
 
-    map.on('mouseleave', 'Hotel', function () {
-        map.getCanvas().style.cursor = '';
-    });
-});
-
-// $( document ).ready(function() {
-//   $( "#next_academy" ).toggle( "puff" );
+//     map.on('mouseleave', 'Hotel', function () {
+//         map.getCanvas().style.cursor = '';
+//     });
 // });
 
-// $(document).ready(function() {
-//                                 $( "#next_academy" ).toggle( "puff" );
-//                                 })
 
 
 
 </script>
 
-</script>
+

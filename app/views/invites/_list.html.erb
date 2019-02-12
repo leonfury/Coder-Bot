@@ -43,7 +43,7 @@
         });
 
         map.on("load", () => {
-            console.log('run')
+            console.log('run');
             map.addSource('next_academy', {
                 type: 'geojson',
                 data: {
@@ -104,12 +104,14 @@
                         'type': 'circle',
                         'source': 'next_academy',
                         'layout': {
-                            'visibility': 'visible'
+                            // 'visibility': 'visible'
+                            'icon-image': "https://i.ibb.co/zPtc397/nextacademy-logo.png",
+                            'icon-size': 0.25
                         },
-                        'paint': {
-                            'circle-radius': 18,
-                            'circle-color': 'rgba(255,0,0,1)'
-                        }
+                        // 'paint': {
+                        //     'circle-radius': 18,
+                        //     'circle-color': 'rgba(255,0,0,1)'
+                        // }
                     })
 
                     setTimeout(() => {
@@ -119,9 +121,9 @@
                             pitch: 80,
                             bearing: 145,
                         });
-
+                        $('#next_academy').removeClass('d-none');
+                            
                         setTimeout(() => {
-                            // $('#next_academy').removeClass('d-none');
                             
                             
                             // $('#sidebar_meeting').addClass('d-none');
