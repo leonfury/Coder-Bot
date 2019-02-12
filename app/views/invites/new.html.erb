@@ -50,13 +50,13 @@
             <br>  
           
             <a href="https://www.nextacademy.com/" class="btn btn-success" style="border: 2px solid white; padding: 20px; background-color: transparent;">
-            <h3 style="color: white;"> Check it out at </h3>
-            <div style="width: 300px; align-item: center;">
-            <img src="https://www.nextacademy.com/img/nextacademy-white-logo.png" style=" width: 100%;">
-            </div>
-             </a>
+                <h3 style="color: white;"> Check it out at </h3>
+                <div style="width: 300px; align-item: center;">
+                    <img src="https://www.nextacademy.com/img/nextacademy-white-logo.png" style=" width: 100%;">
+                </div>
+            </a>
         </div>
-      </div>
+    </div>
   
     <div class="n_video-container">
         <video id="n_background-video" class="header-video" autoplay loop muted poster="https://www.nextacademy.com/img/video-placeholder-bg.jpg">
@@ -84,8 +84,8 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v10', 
     <% if @invites.count != 0 %>
-        center: [101.6958, 3.1466],
-        zoom: 12,
+        center: [101.95349576, 4.18341239],
+        zoom: 7.5,
     <% else %> 
         // style: 'mapbox://styles/mapbox/satellite-streets-v9', 
         center: [101.6958, 3.1466],
@@ -124,6 +124,44 @@ map.on("load", () => {
                 }
             })
 
+            map.addSource('user', {
+                type: 'geojson',
+                data: {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "revelance": 1,
+                        "properties": {
+                            "description": "<%= current_user.description %>",
+                            "landmark": true,
+                            "category": "building",
+                            "iconSize": [60, 60],
+                        },
+                        "center": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                        // "center": ["101.62993634", "3.1350717"],
+                        "geometry":{
+                            "coordinates": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                            "type": "Point"
+                        }
+                    }]
+                }
+               
+            });
+
+            //add layer of map
+            map.addLayer({
+                'id': 'user',
+                'type': 'circle',
+                'source': 'user',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'circle-radius': 15,
+                    'circle-color': 'rgba(255,0,0,0)'
+                }
+            })
+
             //add marker for invite_event
             map.getSource('invite_event')._data.features.forEach(function(marker) {
                 console.log('xxx');
@@ -135,6 +173,18 @@ map.on("load", () => {
 
                 new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
             });
+
+            map.getSource('user')._data.features.forEach(function(marker) {
+                let el = document.createElement('div');
+                el.className = 'marker';
+                el.style.width = "70px";
+                el.style.borderRadius = "50%";
+                el.style.left = "";
+                el.style.backgroundImage = 'url(<%= current_user.avatar %>)';
+                el.style.backgroundSize = "cover";
+                new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+            });
+
             $('#sidebar_meeting').removeClass('d-none'); //meeting's sidebar
             
         },

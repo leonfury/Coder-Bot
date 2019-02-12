@@ -20,4 +20,123 @@ $('.back_btn').on('click', () => {
         map.removeSource(`route`);
         $('.hotel_journey_detail').remove();
     }
+    if (map.getSource(`route_ori`)) {
+        map.removeLayer(`route_ori`);
+        map.removeSource(`route_ori`);
+    }
+    if (map.getSource(`user`)) {
+        map.removeLayer(`user`);
+        map.removeSource(`user`);
+    }
+    if (map.getSource(`invite_event`)) {
+        map.removeLayer(`invite_event`);
+        map.removeSource(`invite_event`);
+    }
+
+
+
+
+   
+        var checkout = {};
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        checkout["authenticity_token"] = AUTH_TOKEN;
+    
+        $.ajax({
+            url: "/invite_event",
+            method: "POST",
+            dataType: "JSON",
+            data: checkout,
+            success: function(response){
+                console.log(response[0]);
+                map.addSource('invite_event', {
+                    type: 'geojson',
+                    data: response[0]
+                });
+    
+                //add layer of map
+                map.addLayer({
+                    'id': 'invite_event',
+                    'type': 'circle',
+                    'source': 'invite_event',
+                    'layout': {
+                        'visibility': 'none'
+                    },
+                    'paint': {
+                        'circle-radius': 15,
+                        'circle-color': 'rgba(255,0,0,0)'
+                    }
+                })
+    
+                map.addSource('user', {
+                    type: 'geojson',
+                    data: {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "revelance": 1,
+                            "properties": {
+                                "description": "<%= current_user.description %>",
+                                "landmark": true,
+                                "category": "building",
+                                "iconSize": [60, 60],
+                            },
+                            "center": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                            // "center": ["101.62993634", "3.1350717"],
+                            "geometry":{
+                                "coordinates": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                                "type": "Point"
+                            }
+                        }]
+                    }
+                   
+                });
+    
+                //add layer of map
+                map.addLayer({
+                    'id': 'user',
+                    'type': 'circle',
+                    'source': 'user',
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    'paint': {
+                        'circle-radius': 15,
+                        'circle-color': 'rgba(255,0,0,0)'
+                    }
+                })
+    
+                //add marker for invite_event
+                map.getSource('invite_event')._data.features.forEach(function(marker) {
+                    console.log('xxx');
+                    var el = document.createElement('div');
+                    el.className = 'marker event_marker';
+                    el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
+                    el.style.height = "50px";
+                    el.style.width = "50px";
+    
+                    new mapboxgl.Marker(el).setLngLat(marker.center).addTo(map);
+                });
+    
+                map.getSource('user')._data.features.forEach(function(marker) {
+                    let el = document.createElement('div');
+                    el.className = 'marker';
+                    el.style.width = "70px";
+                    el.style.borderRadius = "50%";
+                    el.style.left = "";
+                    el.style.backgroundImage = 'url(<%= current_user.avatar %>)';
+                    el.style.backgroundSize = "cover";
+                    new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+                });
+    
+                
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+        
+   
+
+    
+
 })

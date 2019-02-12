@@ -1,5 +1,7 @@
 <% if @event %>
 
+
+
     <div id="[<%= @event.midpoint.longtitude %>, <%= @event.midpoint.latitude %>]" class="event_detail_page m-1 mb-3 p-3 border-primary border rounded bg-dark">
         <strong>Project Description:</strong>
         <br><%= @event.remark %>
@@ -17,10 +19,10 @@
                 <span class="text-danger"> To be Determined </span>
             <% end %>
             <br>
-        <br>Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
+        <br>Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%I:%M %p") %>
     </div>
 
-    <div class="slidecontainer">
+    <div class="slidecontainer d-none" id="hotel_search">
         <h4>Hotels In The Area</h4>
         <input type="range" min="1" max="25" value="2" class="slider" id="myRange">
         <p>Search <span id="dist"></span> km radius</p>
@@ -67,25 +69,25 @@
         },
         'paint': {
             'circle-radius': 20,
-            'circle-color': 'rgba(255,250,205,1)'
+            'circle-color': 'rgba(255,250,205,0)'
         }
-    })
+    });
 
     map.getSource('meetpoint')._data.features.forEach(function(marker) {
-            //create a DOM element for the marker
-            var el = document.createElement('div');
-            el.className = 'marker';
-            el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
-            el.style.backgroundColor = "transparent";
-            el.style.height = "50px";
-            el.style.width = "50px";
-            el.style.zIndex = "0";
-            new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
-            map.flyTo({
-                center: coordinates,
-                zoom: 15,
-            });
+        //create a DOM element for the marker
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
+        el.style.backgroundColor = "transparent";
+        el.style.height = "50px";
+        el.style.width = "50px";
+        el.style.zIndex = "0";
+        new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
+        map.flyTo({
+            center: coordinates,
+            zoom: 15,
         });
+    });
 
     slider.oninput = function() {
         output.innerHTML = this.value;
@@ -95,12 +97,15 @@
             map.removeLayer(`show_hotel`);
             map.removeSource(`show_hotel`);
         }
+        if (map.getSource(`route_ori`)) {
+            map.removeLayer(`route_ori`);
+            map.removeSource(`route_ori`);
+        }
+
 
         $('.hotel_layer').remove();
         callMap(dist);
     }
-
-    callMap(2);
 
     function callMap (dist) {
         var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
@@ -124,7 +129,7 @@
                     },
                     'paint': {
                         'circle-radius': 18,
-                        'circle-color': 'rgba(255,0,0,1)'
+                        'circle-color': 'rgba(255,0,0,0)'
                     }
                 })
 
@@ -140,7 +145,6 @@
 
         })
     }
-
     // pop up function
     
     var popup = new mapboxgl.Popup({
@@ -167,7 +171,7 @@
         var start = e.features[0].properties.coordinates;
         var end = map.getSource('meetpoint')._data.features[0].center;
         getRoute2(start, end);
-    })
+    });
 
 //show routes' code -----------------------------------------------------
     var canvas = map.getCanvasContainer(); //map canvas
@@ -244,6 +248,134 @@
             new mapboxgl.Marker(el).setLngLat(coor).addTo(map);
         }
     }
+
+// user location to meetpoint
+if (map.getSource(`user`)) {
+            map.removeLayer(`user`);
+            map.removeSource(`user`);
+        }
+
+map.addSource('user', {
+                type: 'geojson',
+                data: {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "revelance": 1,
+                        "properties": {
+                            "description": "<%= current_user.description %>",
+                            "landmark": true,
+                            "category": "building",
+                            "iconSize": [60, 60],
+                        },
+                        "center": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                        // "center": ["101.62993634", "3.1350717"],
+                        "geometry":{
+                            "coordinates": [<%= current_user.longtitude %>, <%= current_user.latitude %>],
+                            "type": "Point"
+                        }
+                    }]
+                }
+               
+            });
+
+            //add layer of map
+            map.addLayer({
+                'id': 'user',
+                'type': 'circle',
+                'source': 'user',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'circle-radius': 15,
+                    'circle-color': 'rgba(255,0,0,0)'
+                }
+            })
+
+            map.getSource('user')._data.features.forEach(function(marker) {
+                let el = document.createElement('div');
+                el.className = 'marker';
+                el.style.width = "70px";
+                el.style.borderRadius = "50%";
+                el.style.left = "";
+                el.style.backgroundImage = 'url(<%= current_user.avatar %>)';
+                el.style.backgroundSize = "cover";
+                new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+            });
+
+
+
+    var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + <%= current_user.longtitude %> + ',' +  <%= current_user.latitude %>  + ';' + <%= @event.midpoint.longtitude %>  + ',' + <%= @event.midpoint.latitude %> + '?steps=true&geometries=geojson&access_token=pk.eyJ1IjoibGVvbmZ1cnkiLCJhIjoiY2pyaDUxNDZnMDQ0bzQ1cWp0MjFqNDh5aSJ9.lXa113BsThiaf5YBcxwQFA';
+    var req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    req.send();
+    req.responseType = 'json';
+    req.onload = function() {
+        var data = req.response.routes[0];
+        var trip_duration = data.duration;
+        var trip_distance = data.distance;
+        var route = data.geometry.coordinates;
+        var geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: route
+            }
+        };
+        //reset map using setData
+        map.addLayer({
+            id: 'route_ori',
+            type: 'line',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: geojson
+                    }
+                }
+            },
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#3887be',
+                // 'line-color': 'black',
+                'line-width': 5,
+                'line-opacity': 0.75
+            }
+        });
+        map.getSource('route_ori').setData(geojson);   
+        var dist = parseFloat(trip_distance / 1000).toFixed(1);
+        var dur = parseFloat(trip_duration / 60).toFixed(1);
+        var meet_time = new Date('<%= @event.event_time.strftime("%B %d, %Y %H:%M:%S") %>');
+        var depart = new Date(meet_time.valueOf() - (dist * 60000));
+        var meet_hours = depart.getHours();
+        var meet_minutes = depart.getMinutes();
+        var time_zone = "";
+
+        if (meet_hours < 13) {
+            time_zone = "AM";
+        }
+        else {
+            meet_hours = meet_hours - 12;
+            time_zone = "PM";
+        }
+        var depart_time = meet_hours + ":" + meet_minutes + " " + time_zone;        
+        $('.event_detail_page').append(`<hr style="background-color: white;"> Travelling time: <span class="distance_style"> ${dist} minutes across ${dur} km </span><br> Please depart for meeting point by ${depart_time} `)
+
+        if (dist > 100) {
+            $('#hotel_search').removeClass('d-none');
+            $('.distance_style').addClass('text-warning')
+            callMap(2);  
+        }
+    }
+
 </script>
 
 <% end %>
