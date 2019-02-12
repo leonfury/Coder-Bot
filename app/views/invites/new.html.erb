@@ -63,6 +63,7 @@
 $('.event_list_items').on('click', () => {
     $('#event_list').addClass('d-none');
     $('#event_details').removeClass('d-none');
+    // $('.event_marker').addClass('d-none');
 });
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
@@ -83,34 +84,35 @@ var map = new mapboxgl.Map({
 // load all hotel data into map
 map.on("load", () => {
     $.ajax({
-        url: "/meeting_map",
+        url: "/invite_event",
         method: "POST",
         dataType: "JSON",
         success: function(response){
-            map.addSource('Hotel', {
+            console.log(response[0]);
+            map.addSource('invite_event', {
                 type: 'geojson',
                 data: response[0]
             });
 
             //add layer of map
             map.addLayer({
-                'id': 'Hotel',
+                'id': 'invite_event',
                 'type': 'circle',
-                'source': 'Hotel',
+                'source': 'invite_event',
                 'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
-                    'circle-radius': 18,
+                    'circle-radius': 15,
                     'circle-color': 'rgba(255,0,0,0)'
                 }
             })
 
-            //add marker for hotel
-            map.getSource('Hotel')._data.features.forEach(function(marker) {
+            //add marker for invite_event
+            map.getSource('invite_event')._data.features.forEach(function(marker) {
                 var el = document.createElement('div');
-                el.className = 'marker d-none';
-                el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/hotel_icon-fa5aa9fe3ae2a15f6465af79aa852e5db02d6aed3a2cbdc46bfeaee4dcf775a4.gif)';
+                el.className = 'marker event_marker';
+                el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
                 el.style.height = "50px";
                 el.style.width = "50px";
 
@@ -124,11 +126,11 @@ map.on("load", () => {
         }
     });
     
-    map.on('mouseenter', 'Hotel', function (e) {
+    map.on('mouseenter', 'invite_event', function (e) {
         map.getCanvas().style.cursor = 'pointer';
     });
 
-    map.on('mouseleave', 'Hotel', function () {
+    map.on('mouseleave', 'invite_event', function () {
         map.getCanvas().style.cursor = '';
     });
 });
