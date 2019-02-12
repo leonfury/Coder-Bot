@@ -77,7 +77,6 @@
 $('.event_list_items').on('click', () => {
     $('#event_list').addClass('d-none');
     $('#event_details').removeClass('d-none');
-    // $('.event_marker').addClass('d-none');
 });
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
@@ -87,20 +86,23 @@ var map = new mapboxgl.Map({
     <% if @invites.count != 0 %>
         center: [101.6958, 3.1466],
         zoom: 12,
-    <% else %>
-        // style: 'mapbox://styles/mapbox/satellite-v9', 
+    <% else %> 
         center: [101.6958, 3.1466],
         zoom: 1,
     <% end %>
 
 });
 
-// load all hotel data into map
 map.on("load", () => {
+    var checkout = {};
+    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+    checkout["authenticity_token"] = AUTH_TOKEN;
+
     $.ajax({
         url: "/invite_event",
         method: "POST",
         dataType: "JSON",
+        data: checkout,
         success: function(response){
             console.log(response[0]);
             map.addSource('invite_event', {
@@ -124,6 +126,7 @@ map.on("load", () => {
 
             //add marker for invite_event
             map.getSource('invite_event')._data.features.forEach(function(marker) {
+                console.log('xxx');
                 var el = document.createElement('div');
                 el.className = 'marker event_marker';
                 el.style.backgroundImage = 'url(https://next-academy-group-1-coder-bot.herokuapp.com/assets/coderbot_head-336fa35287d0221cadcbf78a70390f3a9abada5d383781b1e05753bf70320c27.gif)';
@@ -134,11 +137,11 @@ map.on("load", () => {
             });
             $('#sidebar_meeting').removeClass('d-none'); //meeting's sidebar
             
-//         },
-//         error: function(error){
-//             console.log(error);
-//         }
-//     });
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
     
 
     map.on('mouseenter', 'invite_event', function (e) {
@@ -149,14 +152,6 @@ map.on("load", () => {
         map.getCanvas().style.cursor = '';
     });
 });
-
-//     map.on('mouseleave', 'Hotel', function () {
-//         map.getCanvas().style.cursor = '';
-//     });
-// });
-
-
-
 
 </script>
 

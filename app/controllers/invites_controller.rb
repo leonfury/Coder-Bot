@@ -23,9 +23,8 @@ class InvitesController < ApplicationController
     end
 
     def invite_event
-        @invites = current_user.invites
         show_invite, bundle = [], []
-        @invites.each do |i|            
+        current_user.invites.each do |i|            
             show_invite << {
                 "type": "Feature",
                 "revelance": 1,
@@ -59,6 +58,7 @@ class InvitesController < ApplicationController
     end
 
     def show
+
         @event = Event.find(params[:event_id])
         limit = params[:dist].to_f * 0.009
         lng_min = @event.midpoint.longtitude.to_f - limit

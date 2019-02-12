@@ -89,7 +89,7 @@
 
     slider.oninput = function() {
         output.innerHTML = this.value;
-        var dist = output.innerHTML
+        var dist = output.innerHTML;
 
         if (map.getSource(`show_hotel`)) {
             map.removeLayer(`show_hotel`);
@@ -103,10 +103,11 @@
     callMap(2);
 
     function callMap (dist) {
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
         $.ajax({
             url: "/show_map",
             method: "POST",
-            data: {"event_id": <%= @event.id %>, "dist": dist },
+            data: {"event_id": <%= @event.id %>, "dist": dist, "authenticity_token": AUTH_TOKEN  },
             dataType: "JSON",
             success: function(response){
                 map.addSource('show_hotel', {
