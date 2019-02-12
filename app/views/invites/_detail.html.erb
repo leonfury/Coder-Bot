@@ -1,7 +1,7 @@
 <% if @event %>
 
     <div id="[<%= @event.midpoint.longtitude %>, <%= @event.midpoint.latitude %>]" class="event_detail_page m-1 mb-3 p-3 border-primary border rounded bg-dark">
-        Project Description:
+        <strong>Project Description:</strong>
         <br><%= @event.remark %>
         <br>
         <br> Project Led by: <%= @event.user.username %>
