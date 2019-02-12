@@ -54,7 +54,7 @@ class MapsController < ApplicationController
                 "type": "Feature",
                 "relevance": 1,
                 "properties": {
-                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='142' width='150'> 
+                    "description": "<div class='popup-user'><img src='#{u.avatar}' height='200' width='200' style='border-radius: 10px; text-align: center; margin: auto;'> 
                         <br><span class='username'><h4 class='username-text'>#{u.username}</h4> </span>
                         <br><span class='user_lang'> <h5 class='lang-text'>Python</h5> </span>
                         <br> <p class='des-text'>About me:</p> <span class='description'><p class='des-text'>#{u.description}</p></span>
