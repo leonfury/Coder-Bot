@@ -2,33 +2,40 @@
 <div id="map" style="height:100vh;  width:100vw"></div>
         
 <pre id='info' class="w-100 text-center" style="z-index: 5; bottom: 0px; position: absolute;"></pre>
-<div id="event_description" class="text-white p-2">
+<div id="event_description" class="text-white p-2" style=" width:30vw;">
     <h4> Create New Meeting Point </h4>
     <%= form_with url: midpoints_path, scope: "midpoint" do |m| %>
         <div class="text-white w-100">
             
                 <%= m.label "Location Name" %>
                 <br>
-                <%= m.text_field :name, class:"w-100" %>
-            
-            
+                <%= m.text_field :name, class:"w-100 form-control", placeholder: "Type in a location name" %>
+
+                <br>
+                <div class="form-group">
+                <%# address label and text-box %>
                 <%= m.label "Address" %>
                 <br>
-                <%= m.text_area :address, class:"w-100", rows:"5" %>
-                <span><%= m.text_field :longtitude, readonly: true %>
-                <%= m.text_field :latitude, readonly: true  %></span>
+                <%= m.text_area :address, class:"w-100 form-control", rows:"5", placeholder:"Enter an address and verify" %>
+
+                <%# longtitude and latitude box area %>
+                <div class="form-row" style="margin-right:0; margin-left: 0">
+                    <%= m.text_field :latitude, readonly: true, class:"form-control col", placeholder:"Longtitude"  %>
+                    <%= m.text_field :longtitude, readonly: true, class:"form-control col", placeholder:"Latitude" %>
+                </div>
+                </div>
+
                 <br>
                 <%= m.label "Description" %>
                 <br>
-                <%= m.text_area :description, class:"w-100", rows:"5" %>
+                <%= m.text_area :description, class:"w-100 form-control", rows:"5", placeholder:"Enter a description for this meeting point" %>
             
-            
+                <br>
                 <%= m.label "Category" %>
                 <br>
-                <%= m.text_field :category, class:"w-100" %>
+                <%= m.text_field :category, class:"w-100, form-control", placeholder:"What category is this meeting point" %>
                 <br>
-                <br>
-                <%= m.submit "submit", class:"btn btn-primary kill_map" %>
+                <%= m.submit "Submit", class:"btn btn-primary kill_map" %>
             
             <%= m.hidden_field :poi %>
             
