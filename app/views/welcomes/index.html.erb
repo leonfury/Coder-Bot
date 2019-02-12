@@ -34,34 +34,39 @@
 </div> -->
 
 <div>
-    <div>
+    <div style="position: relative;">
           <!-- Slide One - Set the background image for this slide in the line below -->
          <!--  <div style=" width: 100%; height: auto; position: relative; background-repeat: no-repeat;"> -->
-        <img src="https://i.ibb.co/pQLBhhh/welcome-page-670.png" class="welcome_full mobile_view_hide" style="width: 100%;">
-        <img src="https://i.ibb.co/0Yq3b50/welcome-page-responsive.png" class="welcome_mobile desk_view_hide" style="width: 100%; height: auto;">
+        <%# <img src="/assets/images/welcome-page-670.png" class="welcome_full" style="width: 100%; box-sizing: border-box;">
+        <img src="/assets/images/welcome-page-414.png" class="welcome_mobile" style="width: 100%; height: auto; box-sizing: border-box;"> %>
+        <%= image_tag("welcome_page_670.png", class: "welcome_full", style:"width: 100%; box-sizing: border-box;") %>
+
+        <%= image_tag("welcome_page_414.png", class: "welcome_mobile", style:"width: 100%; height: auto; box-sizing: border-box;") %>
+
+        <div class="carousel-caption">
+          <div class="coderbot_logo" >
+            <%= image_tag("coderbot_logo.gif", style: "width: 100%;", id: "coderbot_logo") %>
+          </div>
+                
+          <h3>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                  Sign In
+              </button>
+              or 
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
+              Sign Up
+              </button>
+          </h3> 
+
+      </div>
     </div>
 
-    <div class="carousel-caption" style="top: 28%;">
-        <div class="coderbot_logo" >
-            <img src="https://i.ibb.co/pyjgKzJ/coderbot-logo.gif" style="width: 80%;" id="coderbot_logo">
-        </div>
-              
-        <h3>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Sign In
-            </button>
-             or 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">
-            Sign Up
-            </button>
-        </h3> 
-
-    </div>
+    
 </div>
 
-<footer class="py-3 bg-dark">
+<footer class="py-2 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; CoderBot 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; CODERBOT 2019</p>
     </div>
 </footer>
 <%# ======================================================= %>
