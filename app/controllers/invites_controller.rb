@@ -43,14 +43,15 @@ class InvitesController < ApplicationController
 
         @hotels = Hotel.all
         @hotels.each do |h|
+
+            
             if ((lng_min < h.longtitude.to_f) &&  (h.longtitude.to_f < lng_max) && (lat_min < h.latitude.to_f) &&  (h.latitude.to_f< lat_max))
                 show_hotel << {
                     "type": "Feature",
                     "revelance": 1,
                     "properties": {
-                        "description": "<img src='https://i.ibb.co/yPYz8x4/ruby-pin.gif' height='142' width='100' class='d-none'> 
+                        "description": "<img src='#{img}' height='142' width='100' class=''>
                         <br> #{h.hotel_name} 
-                        <br> Coordinates: #{h.longtitude}, #{h.latitude} 
                         <br> Star: <span>#{h.star}</span>
                         <br> Price: <span>#{h.price}</span>
                         <br> City: <span>#{h.city}</span>
