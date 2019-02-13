@@ -144,7 +144,6 @@ class EventsController < ApplicationController
                     <img src='#{p.photo}' height='350' width='350' style='background-size: cover; background-position: 50% 50%; border-radius: 10px;'>
                     <br><h4 class='username-text'>#{p.name}</h4>
                     <br>#{p.description}
-                    <br> Address: <strong><span>#{p.address}</span></strong><div>
                     </div>", #
                     "address": "#{p.address}",
                     "pname": "#{p.name}",
@@ -174,7 +173,6 @@ class EventsController < ApplicationController
                     <img src='#{p.photo}' height='350' width='350' style='background-size: cover; background-position: 50% 50%; border-radius: 10px;'>
                     <br><h4 class='username-text'>#{p.name}</h4>
                     <br>#{p.description}
-                    <br> Address: <strong><span>#{p.address}</span></strong><div>
                     </div>", #
                     "address": "#{p.address}",
                     "pname": "#{p.name}",

@@ -69,7 +69,7 @@ User.create(
 )
 
 User.create(
-    username: 'Dave',
+    username: 'Cool Dave',
     first_name: 'dave',
     last_name: 'lee',
     email: 'dave@mail.com',
@@ -295,7 +295,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'KLCC Outdoor Plaza',
     address: 'KLCC Outdoor Plaza, Infront Suria KLCC, Kuala Lumpur, 50450, Malaysia',
-    description: 'Meet at KLCC Outdoor Park',
+    description: 'Designed to be a city within a city, the 100-acre site hosts the tallest twin buildings in the world, a shopping mall, office buildings and several hotels. A public park and a mosque have also been built in the area and open to everyone. The whole project is cooled via district cooling located on the property.',
     longtitude: 101.71126,
     latitude: 3.158599,
     poi: 'poi.1236950609238',
@@ -306,7 +306,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'Mid Valley Megamall',
     address: 'Mid Valley Megamall, Lingkaran Syed Putra, Kuala Lumpur, 59200, Malaysia',
-    description: 'Impossible to find parking',
+    description: 'Mid Valley Megamall is a shopping mall in Mid Valley City, Kuala Lumpur. It sits at the entrance of Petaling Jaya and Kuala Lumpur. Developed by IGB Corporation, this complex was opened in 1999. It comprises a shopping mall, an office tower block, 30 offices, and three hotels.',
     longtitude: 101.67693,
     latitude: 3.117723,
     poi: 'poi.1219770754374',
@@ -327,7 +327,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'WorQ Glo Damansara',
     address: 'WorQ Glo Damansara, Level 3A-1A Glo Damansara Shopping Mall, Selangor 60000, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 600 / day</strong><br>A co-working space. Our mission is simple. We want to change the way people work together - for the better. We are creating the largest and most productive coworking community by taking care of all your workplace needs and facilitating deeper connection. Every inch of space we design, and every community event curated has this in mind.<br><br> Facilities: WiFi, WhiteBoard, Free Flow Water, Projector, TV, Stationary',
     longtitude: "101.63028",
     latitude: "3.133192",
     poi: 'poi.532575957367',
@@ -339,7 +339,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'WorQ UOA Business Park',
     address: 'UOA Business Park, No. 1 Jalan Pengaturcara U1/51A, Shah Alam, Selangor 40150, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 700 / day</strong><br>A co-working space.<br>Our mission is simple. We want to change the way people work together - for the better. We are creating the largest and most productive coworking community by taking care of all your workplace needs and facilitating deeper connection. Every inch of space we design, and every community event curated has this in mind.<br><br> Facilities: WiFi, WhiteBoard, Free Flow Water, Projector, TV, Stationary',
     longtitude: "101.58643",
     latitude: "3.0866",
     poi: 'poi.1314260031596',
@@ -350,18 +350,20 @@ Midpoint.create(
 Midpoint.create(
     name: 'H Space, Petaling Jaya',
     address: 'H Space, Jalan PJU 5/1, Kota Damansara, Petaling Jaya, Selangor 47810, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 50 / hour</strong><br>We believe in creating comfortable and healthy workspaces to increase your wellbeing and productivity.
+    Our in-house team handles everything— from conceptual design through to construction and workspace management.
+    We provide a seamless user experience.<br><br> Facilities: WiFi, Photocopy, Cleaning Services, 24 hours, Personal Locker',
     longtitude: "101.59703",
     latitude: "3.154741",
     poi: 'poi.360777254997',
-    category: 'work space',
+    category: 'work space, meeting space',
     photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/hspacekotadamansara-ece42f1407fce81615c2c6ca2310bf33ebc23d2e41c65718a22912825aba60f8.jpg',
 )
 
 Midpoint.create(
     name: 'Tedboy Express @ Menara Standard Chartered',
     address: 'Lot 1.4, Ground Floor, Menara Standard Chartered, No., 30, Jalan Sultan Ismail, Bukit Bintang, Kuala Lumpur, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 40 / hour</strong><br>We have a great space with spacious tables, free wifi and even a meeting room for discussions that fits up to 12 pax comfortably. Projector and screen can also be provided. If you are looking for corporate environment to work for a day, this will be a perfect change of environment from your living room.<br><br>This location is easily accessible, located directly opposite Raja Chulan Monorail. <br><br>We have a cafe/bakery downstairs that caters to the working crowds needs i.e specialty coffee, sandwiches, bread, bun, pastries, pasta, pizza and soup made fresh daily. ',
     longtitude: "101.71121",
     latitude: "3.149833",
     poi: 'poi.1580548015986',
@@ -372,7 +374,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'The Co. - The Row @ Chow Kit',
     address: 'No. 42-48, Jalan Doraisamy, Chow Kit, Kuala Lumpur, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 900 / day</strong><br>Built around our philosophy to create and foster connections and ideas, we made sure our second location in Kuala Lumpur is well thought out to promote and nurture togetherness.',
     longtitude: "101.69927",
     latitude: "3.166502",
     poi: 'poi.1314260001920',
@@ -383,7 +385,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'PAPER + TOAST @ Bukit Bintang',
     address: 'Level 13A, Fahrenheit Office Tower, Jalan Gading, Bukit Bintang, Kuala Lumpur, Malaysia',
-    description: 'A co-working space',
+    description: '<strong>RM 50 / hour</strong><br>PAPER + TOAST is the first coworking space in Malaysia. Established in 2010, our aim is to serve as a one stop community platform for entrepreneurs and startups to get together, gaining critical business skills & knowledge and collaborate.',
     longtitude: "101.710625",
     latitude: "3.147366",
     poi: 'poi.26628798156',
@@ -394,7 +396,7 @@ Midpoint.create(
 Midpoint.create(
     name: 'Pulau Tikus Penang @ Penang',
     address: 'Georgetown',
-    description: 'Many food',
+    description: 'Pulau Tikus is a northwestern suburb of George Town in Penang, Malaysia. Situated between the city centre and Tanjung Tokong, this upper class suburb was named after a rock just off the coast of Penang Island.[1] Pulau Tikus is one of the well-known places to sample Penang cuisine, as well as the home to small minorities of Eurasians, Thais and Burmese.',
     longtitude: "100.31180984",
     latitude: "5.4317162436",
     poi: 'poi.',

@@ -368,7 +368,7 @@ $(document).on('turbolinks:load', function(){
         
         let properties = feature.properties
         let new_p = document.createElement('p');
-        new_p.innerHTML = `<h4>${properties.pname}</h4>${properties.description} <br>Category: ${properties.category}  <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button><button class='ml-5 btn btn-primary'  disabled>Book This Work Space Now</button></form> <img src="${properties.photo}" height='440' width='440' style='background-size: cover; background-position: 50% 50%; border-radius: 10px;'><br> Address: ${properties.address}`;
+        new_p.innerHTML = `<h4>${properties.pname}</h4>${properties.description} <br><br>Category: ${properties.category}  <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button><button class='ml-5 btn btn-primary'  disabled>Book This Work Space Now</button></form> <img src="${properties.photo}" height='440' width='440' style='background-size: cover; background-position: 50% 50%; border-radius: 10px;'><br> Address: ${properties.address}`;
         $('#meet_point').append(new_p);
     }
 
