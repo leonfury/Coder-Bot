@@ -107,9 +107,7 @@ class InvitesController < ApplicationController
                     "properties": {
                         "description": "<div style='max-width: 350px;'><img src='#{img_src.sample}' height='350' width='350' style='background-size: cover; background-position: 50% 50%; border-radius: 10px;'>
                             <br> <h4 class='username-text'> #{h.hotel_name}  </h4>
-                            <br><span style='font-size:24px; line-height:1.2;'>#{stars}</span> <span class='float-right text-right' style='font-size:20px; padding-top: 5px;'><strong>RM #{h.price}/night</strong></span>
-                    
-                            
+                            <br><span style='font-size:24px; line-height:1.2;'>#{stars}</span> <span class='float-right text-right' style='font-size:20px; padding-top: 5px;'><strong>RM #{h.price}/night</strong></span>        
                             <br> Address: <strong><span>#{h.address}, #{h.city}</span></strong><div>
                             <br><button class='btn btn-primary' style='margin-top: -20px;' disabled>Book Now</button>",
                         "landmark": true,

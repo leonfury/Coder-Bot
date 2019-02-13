@@ -300,7 +300,7 @@ Midpoint.create(
     latitude: 3.158599,
     poi: 'poi.1236950609238',
     category: 'outdoors, attraction, tourism',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/klccoutdoorplaza-7ba732977305c24ed73f45b6287e68293e623e279e63114745b6d60e2b636e1d.jpg',
 )
 
 Midpoint.create(
@@ -311,7 +311,7 @@ Midpoint.create(
     latitude: 3.117723,
     poi: 'poi.1219770754374',
     category: 'mall, shop',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/midvalleymegamall-17d0540779cbcea8088246f7123e27a338e3c0d4a03458133037c893ec99c55a.jpg',
 )
 =begin
 Midpoint.create(
@@ -332,7 +332,7 @@ Midpoint.create(
     latitude: "3.133192",
     poi: 'poi.532575957367',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/worqglo-85e9d5ff885d23f5634d3a9289e53b0b0c9e4a117f8653c51299a052e1c09299.jpg',
 )
 
 
@@ -344,7 +344,7 @@ Midpoint.create(
     latitude: "3.0866",
     poi: 'poi.1314260031596',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/worquoa-f3e8f5a5e1ae3adf61bd58037133723eb4668279bb5c34f00080e4f1bb3e0845.jpg',
 )
 
 Midpoint.create(
@@ -355,7 +355,7 @@ Midpoint.create(
     latitude: "3.154741",
     poi: 'poi.360777254997',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/hspacekotadamansara-ece42f1407fce81615c2c6ca2310bf33ebc23d2e41c65718a22912825aba60f8.jpg',
 )
 
 Midpoint.create(
@@ -366,7 +366,7 @@ Midpoint.create(
     latitude: "3.149833",
     poi: 'poi.1580548015986',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/tedboyexpress-a5ba23c8882f1a9965f1fa27cccbbc1ba376bc522c9aa151812c173d959052ee.jpg',
 )
 
 Midpoint.create(
@@ -377,7 +377,7 @@ Midpoint.create(
     latitude: "3.166502",
     poi: 'poi.1314260001920',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/thecotherow-bccf44b10440a0e5c1fd6f20f55446555942e2af08812ee04488dc8b840df945.jpg',
 )
 
 Midpoint.create(
@@ -388,7 +388,7 @@ Midpoint.create(
     latitude: "3.147366",
     poi: 'poi.26628798156',
     category: 'work space',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/paperandtoast-83ead71385e8e3913c48b02e17e081524113ec2c98d4e9ad1f0dfd7f2dd9395e.jpg',
 )
 
 Midpoint.create(
@@ -399,7 +399,7 @@ Midpoint.create(
     latitude: "5.4317162436",
     poi: 'poi.',
     category: 'food street',
-    photo: '',
+    photo: 'https://next-academy-group-1-coder-bot.herokuapp.com/assets/mps/pulautikuspenang-66c179c6de99dd97ef3186d7b9e819d0e6843b85ebf88ae1535beeab3354e572.jpg',
 )
 
 

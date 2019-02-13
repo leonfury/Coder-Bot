@@ -368,7 +368,7 @@ $(document).on('turbolinks:load', function(){
         
         let properties = feature.properties
         let new_p = document.createElement('p');
-        new_p.innerHTML = `<h4>Meeting Point</h4>${properties.name} <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br> Description: ${properties.description} <br> Address: ${properties.address}<br> Category: ${properties.category} <br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button></form>`;
+        new_p.innerHTML = `<h4>Meeting Point</h4>${properties.name} <form action="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" data-remote="true"><%= hidden_field_tag :authenticity_token, form_authenticity_token -%><br> Category: ${properties.category} <br><button type="submit" class="btn btn-success" formaction="/event/<%= @event.id %>/midpoint/${properties.midpoint_id}" formmethod="post">Set Meeting Here</button></form><button class='btn btn-primary'  disabled>Book This Work Space Now</button>`;
         $('#meet_point').append(new_p);
     }
 
