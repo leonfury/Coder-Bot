@@ -59,7 +59,11 @@
                 <% if signed_in? %>
                     <li class="nav-item">
 
-                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.username %></span>
+                        <span class="mr-3 text-light"> <%= link_to 'Sign out', sign_out_path, method: :delete, class:"navbar-brand" %>| Signed in as: <%= current_user.username %>
+                            
+                            <%= image_tag("users/#{current_user.first_name}.jpg", size:'30x30', style:"border-radius: 50%;") %>
+                        
+                        </span>
 
                     </li>
                 <% end %>
@@ -187,7 +191,15 @@ https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/wesley-fc81a76
 https://next-academy-group-1-coder-bot.herokuapp.com/assets/users/yijun-ef34cc021a6b2e77ee42b5861d5dc12eeb04f6349fd0089b48cdb5ac617b34f1.jpg
 -->
 
-
+<%= image_tag('mps/hspacekotadamansara.jpg') %>
+<%= image_tag('mps/klccoutdoorplaza.jpg') %>
+<%= image_tag('mps/midvalleymegamall.jpg') %>
+<%= image_tag('mps/paperandtoast.jpg') %>
+<%= image_tag('mps/pulautikuspenang.jpg') %>
+<%= image_tag('mps/tedboyexpress.jpg') %>
+<%= image_tag('mps/thecotherow.jpg') %>
+<%= image_tag('mps/worqglo.jpg') %>
+<%= image_tag('mps/worquoa.jpg') %>
 
 
 
