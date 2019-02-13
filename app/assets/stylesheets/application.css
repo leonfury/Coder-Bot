@@ -214,10 +214,13 @@ body {
     padding-top: 80px !important;
     border-bottom-left-radius: 10px !important;
     background-color:#343a40;
-    opacity: 0.8;
+    opacity: 0.9;
     overflow-y: auto;
     clear: both;
     font-color: white !important;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    z-index: 20;
 }
 
 .map_journey_detail {
@@ -249,7 +252,7 @@ body {
     background-color:#343a40;
     border-bottom-left-radius: 10px !important;
     border-top-left-radius: 10px !important;
-    opacity: 0.8;
+    opacity: 0.9;
     overflow-y: auto;
     clear: both;
 }
