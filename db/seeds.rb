@@ -477,7 +477,7 @@ Invite.create(event_id: 3, user_id: 3)
 Invite.create(event_id: 3, user_id: 11)
 
 
-
+ 
 =begin
 sign in luke
 colab with
