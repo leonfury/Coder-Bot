@@ -10,6 +10,7 @@
                 <p><strong>Address: </strong><%= current_user.address%></p>
                 <p><strong>Email: </strong><%= current_user.email%></p>
                 <p><strong>Joined Since: </strong><%= current_user.joined.strftime("%Y %B") %></p>
+                <p><strong>Project Collaborations: </strong><%= Invite.where(user_id: current_user.id).count %></p>
                 <!--
                     <figcaption class="ratings">
                         <p>Ratings <br>

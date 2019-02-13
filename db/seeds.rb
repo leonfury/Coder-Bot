@@ -38,7 +38,7 @@ User.create(
 
 User.create(
     username: 'ben',
-    first_name: 'Ben',
+    first_name: 'ben',
     last_name: 'Sommerbille',
     email: 'ben@mail.com',
     password: "123",
@@ -86,7 +86,7 @@ User.create(
 
 User.create(
     username: 'diana',
-    first_name: 'Diana',
+    first_name: 'diana',
     last_name: 'Seidakhmetova',
     email: 'diana@mail.com',
     password: "123",
@@ -102,7 +102,7 @@ User.create(
 
 User.create(
     username: 'farah',
-    first_name: 'Farah',
+    first_name: 'farah',
     last_name: 'far',
     email: 'farah@mail.com',
     password: "123",
@@ -118,7 +118,7 @@ User.create(
 
 User.create(
     username: 'garic',
-    first_name: 'Garic',
+    first_name: 'garic',
     last_name: 'Poon',
     email: 'garic@mail.com',
     password: "123",
@@ -134,7 +134,7 @@ User.create(
 
 User.create(
     username: 'joel',
-    first_name: 'Joel',
+    first_name: 'joel',
     last_name: 'MacDonald',
     email: 'joel@mail.com',
     password: "123",
@@ -150,7 +150,7 @@ User.create(
 
 User.create(
     username: 'kevin',
-    first_name: 'Kevin',
+    first_name: 'kevin',
     last_name: 'Devastian',
     email: 'kevin@mail.com',
     password: "123",
@@ -167,8 +167,8 @@ User.create(
 
 User.create(
     username: 'codeyluke',
-    first_name: 'Codey',
-    last_name: 'Luke',
+    first_name: 'luke',
+    last_name: 'Sia',
     email: 'luke@mail.com',
     password: "123",
     address: 'Damansara Utama',
@@ -184,7 +184,7 @@ User.create(
 
 User.create(
     username: 'Prophet',
-    first_name: 'Malcolm',
+    first_name: 'malcolm',
     last_name: 'Jeremiah',
     email: 'malcolm@mail.com',
     password: "123",
@@ -200,8 +200,8 @@ User.create(
 
 
 User.create(
-    username: 'sam',
-    first_name: 'Sam',
+    username: 'sampras',
+    first_name: 'sam',
     last_name: 'Lee',
     email: 'sam@mail.com',
     password: "123",
@@ -217,7 +217,7 @@ User.create(
 
 User.create(
     username: 'sonaly',
-    first_name: 'Sonaly',
+    first_name: 'sonaly',
     last_name: 'Verma',
     email: 'sonaly@mail.com',
     password: "123",
@@ -234,7 +234,7 @@ User.create(
 
 User.create(
     username: 'wesley',
-    first_name: 'Wesley',
+    first_name: 'wesley',
     last_name: 'Weston',
     email: 'wesley@mail.com',
     password: "123",
@@ -251,7 +251,7 @@ User.create(
 
 User.create(
     username: 'yijun',
-    first_name: 'Yi Jun',
+    first_name: 'yijun',
     last_name: 'Lim',
     email: 'yijun@mail.com',
     password: "123",
@@ -267,7 +267,7 @@ User.create(
 
 User.create(
     username: 'Haris',
-    first_name: 'Haris',
+    first_name: 'haris',
     last_name: 'Mazlan',
     email: 'haris@mail.com',
     password: "123",
@@ -300,6 +300,7 @@ Midpoint.create(
     latitude: 3.158599,
     poi: 'poi.1236950609238',
     category: 'outdoors, attraction, tourism',
+    photo: '',
 )
 
 Midpoint.create(
@@ -310,6 +311,7 @@ Midpoint.create(
     latitude: 3.117723,
     poi: 'poi.1219770754374',
     category: 'mall, shop',
+    photo: '',
 )
 =begin
 Midpoint.create(
@@ -330,6 +332,7 @@ Midpoint.create(
     latitude: "3.133192",
     poi: 'poi.532575957367',
     category: 'work space',
+    photo: '',
 )
 
 
@@ -341,6 +344,7 @@ Midpoint.create(
     latitude: "3.0866",
     poi: 'poi.1314260031596',
     category: 'work space',
+    photo: '',
 )
 
 Midpoint.create(
@@ -351,6 +355,7 @@ Midpoint.create(
     latitude: "3.154741",
     poi: 'poi.360777254997',
     category: 'work space',
+    photo: '',
 )
 
 Midpoint.create(
@@ -361,6 +366,7 @@ Midpoint.create(
     latitude: "3.149833",
     poi: 'poi.1580548015986',
     category: 'work space',
+    photo: '',
 )
 
 Midpoint.create(
@@ -371,6 +377,7 @@ Midpoint.create(
     latitude: "3.166502",
     poi: 'poi.1314260001920',
     category: 'work space',
+    photo: '',
 )
 
 Midpoint.create(
@@ -381,6 +388,7 @@ Midpoint.create(
     latitude: "3.147366",
     poi: 'poi.26628798156',
     category: 'work space',
+    photo: '',
 )
 
 Midpoint.create(
@@ -391,6 +399,7 @@ Midpoint.create(
     latitude: "5.4317162436",
     poi: 'poi.',
     category: 'food street',
+    photo: '',
 )
 
 
@@ -402,6 +411,7 @@ Midpoint.create(
         longtitude: rand(101.4002711836..101.8997188),
         latitude: rand(2.8743528..4.243149346),
         category: ['coffee', 'workspace', 'eventspace', 'cafe'].sample,
+        photo: Faker::Avatar.image,
     )
     p "Midpoint created"
 }
