@@ -1,6 +1,7 @@
 <h4> Upcoming Meetings </h4>
 <% if @invites.count != 0 %>
     <% @invites.each do |i| %>
+    <% next if i.event.id == 3 %>
         <script>
             // var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + <%= current_user.longtitude %> + ',' +  <%= current_user.latitude %>  + ';' +  <%= i.event.midpoint.longtitude %>  + ',' + <%= i.event.midpoint.latitude %> + '?steps=true&geometries=geojson&access_token=pk.eyJ1IjoibGltankwMTE0IiwiYSI6ImNqcmZyeGVveTFmenM0OWxwb2pheGZ3MW8ifQ.ka2dxppOoMDqiLiqzhh96Q';
             // var req = new XMLHttpRequest();
