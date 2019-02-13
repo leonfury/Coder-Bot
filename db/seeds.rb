@@ -458,10 +458,26 @@ Event.create(
     event_time: "Sat, 01 Jan 2000 22:30:00 UTC +00:00",
 )
 
-
 Invite.create(event_id: 2, user_id: 11)
 Invite.create(event_id: 2, user_id: 15)
 
+Event.create(
+    user_id: 11,
+    midpoint_id: 1, #4
+    remark: "Show Map",
+    event_date: "Thu, 21 Feb 2019",
+    event_time: "Sat, 01 Jan 2000 22:30:00 UTC +00:00",
+)
+
+Invite.create(event_id: 3, user_id: 16)
+Invite.create(event_id: 3, user_id: 14)
+Invite.create(event_id: 3, user_id: 9)
+Invite.create(event_id: 3, user_id: 1)
+Invite.create(event_id: 3, user_id: 3)
+Invite.create(event_id: 3, user_id: 11)
+
+
+ 
 =begin
 sign in luke
 colab with
