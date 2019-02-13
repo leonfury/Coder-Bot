@@ -151,7 +151,8 @@ body {
     /* padding-bottom: 10px; */
     border-bottom-left-radius: 10px !important;
     background-color:#343a40;
-    opacity: 0.8;
+    opacity: 0.9;
+    z-index: 3;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -167,7 +168,7 @@ body {
 
 #sidebar_map {
     height: auto;
-    max-height: 73vh;
+    max-height: 71vh;
     position: absolute;
     top: 185px;
     right: 0px;

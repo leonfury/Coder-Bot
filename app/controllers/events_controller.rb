@@ -147,10 +147,12 @@ class EventsController < ApplicationController
                     <br> Address: <strong><span>#{p.address}</span></strong><div>
                     </div>", #
                     "address": "#{p.address}",
+                    "pname": "#{p.name}",
                     "description": "#{p.description}", #
                     "category": "#{p.category}",
                     "landmark": true,
                     "midpoint_id": "#{p.id}",
+                    "photo": "#{p.photo}",
                 },
                 "center": [p.longtitude, p.latitude], #
                 "geometry": {
@@ -175,10 +177,12 @@ class EventsController < ApplicationController
                     <br> Address: <strong><span>#{p.address}</span></strong><div>
                     </div>", #
                     "address": "#{p.address}",
+                    "pname": "#{p.name}",
                     "description": "#{p.description}", #
                     "category": "#{p.category}",
                     "landmark": true,
                     "midpoint_id": "#{p.id}",
+                    "photo": "#{p.photo}",
                 },
                 "center": [p.longtitude, p.latitude], #
                 "geometry": {
