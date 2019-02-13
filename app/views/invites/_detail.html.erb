@@ -358,7 +358,7 @@ map.addSource('user', {
         var meet_hours = depart.getHours();
         var meet_minutes = depart.getMinutes();
         var time_zone = "";
-
+        
         if (meet_hours < 13) {
             time_zone = "AM";
         }
@@ -366,6 +366,17 @@ map.addSource('user', {
             meet_hours = meet_hours - 12;
             time_zone = "PM";
         }
+
+        if (meet_hours < 10) {
+            meet_hours = `0${meet_hours}`;
+            meet_hours = meet_hours.toString();
+        }
+
+        if (meet_minutes < 10) {
+            meet_minutes = `0${meet_minutes}`;
+            meet_minutes = meet_minutes.toString();
+        }
+
         var depart_time = meet_hours + ":" + meet_minutes + " " + time_zone;        
         $('.event_detail_page').append(`<hr style="background-color: white;"> Travelling time: <span class="distance_style"> ${dist} minutes across ${dur} km </span><br> Please depart for meeting point by ${depart_time} `)
 
