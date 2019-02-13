@@ -469,12 +469,12 @@ Event.create(
     event_time: "Sat, 01 Jan 2000 22:30:00 UTC +00:00",
 )
 
+Invite.create(event_id: 3, user_id: 11)
 Invite.create(event_id: 3, user_id: 16)
 Invite.create(event_id: 3, user_id: 14)
 Invite.create(event_id: 3, user_id: 9)
 Invite.create(event_id: 3, user_id: 1)
 Invite.create(event_id: 3, user_id: 3)
-Invite.create(event_id: 3, user_id: 11)
 
 
  
