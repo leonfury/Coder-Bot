@@ -2,12 +2,12 @@
   <table>
     <tr>
         <td><%= form.label :email %></td>
-        <td><%= form.text_field :email, type: 'email', placeholder:"example@mail.com" %></td>
+        <td><%= form.text_field :email, type: 'email', placeholder:"example@mail.com", class:"form-control" %></td>
     </tr>
 
     <tr>
-        <td><%= form.label :password %></td>
-        <td><%= form.password_field :password, placeholder:"************" %></td>
+        <td class="pr-2"><%= form.label :password %></td>
+        <td><%= form.password_field :password, placeholder:"************", class:"form-control" %></td>
     </tr>
 
     <tr>

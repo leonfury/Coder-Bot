@@ -183,7 +183,7 @@ User.create(
 
 
 User.create(
-    username: 'Prophet Symnal',
+    username: 'Prophet Synmal',
     first_name: 'malcolm',
     last_name: 'Jeremiah',
     email: 'malcolm@mail.com',
@@ -200,7 +200,7 @@ User.create(
 
 
 User.create(
-    username: 'Sampras???',
+    username: 'Sampras???🤔🤔🤔',
     first_name: 'sam',
     last_name: 'Lee',
     email: 'sam@mail.com',
