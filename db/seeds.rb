@@ -21,7 +21,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!(:invites);
 ActiveRecord::Base.connection.reset_pk_sequence!(:hotels);
 
 User.create(
-    username: 'alex',
+    username: 'Alex',
     first_name: 'alex',
     last_name: 'chen',
     email: 'alex@mail.com',
@@ -37,7 +37,7 @@ User.create(
 )
 
 User.create(
-    username: 'ben',
+    username: 'Ben',
     first_name: 'ben',
     last_name: 'Sommerbille',
     email: 'ben@mail.com',
@@ -53,7 +53,7 @@ User.create(
 )
 
 User.create(
-    username: 'callum',
+    username: 'Callum Boy',
     first_name: 'callum',
     last_name: 'tan',
     email: 'callum@mail.com',
@@ -69,7 +69,7 @@ User.create(
 )
 
 User.create(
-    username: 'dave',
+    username: 'Dave',
     first_name: 'dave',
     last_name: 'lee',
     email: 'dave@mail.com',
@@ -85,7 +85,7 @@ User.create(
 )
 
 User.create(
-    username: 'diana',
+    username: 'Diana',
     first_name: 'diana',
     last_name: 'Seidakhmetova',
     email: 'diana@mail.com',
@@ -101,7 +101,7 @@ User.create(
 )
 
 User.create(
-    username: 'farah',
+    username: 'Farah',
     first_name: 'farah',
     last_name: 'far',
     email: 'farah@mail.com',
@@ -117,7 +117,7 @@ User.create(
 )
 
 User.create(
-    username: 'garic',
+    username: 'Garic',
     first_name: 'garic',
     last_name: 'Poon',
     email: 'garic@mail.com',
@@ -133,7 +133,7 @@ User.create(
 )
 
 User.create(
-    username: 'joel',
+    username: 'Joel',
     first_name: 'joel',
     last_name: 'MacDonald',
     email: 'joel@mail.com',
@@ -149,7 +149,7 @@ User.create(
 )
 
 User.create(
-    username: 'kevin',
+    username: 'Kevin',
     first_name: 'kevin',
     last_name: 'Devastian',
     email: 'kevin@mail.com',
@@ -166,7 +166,7 @@ User.create(
 
 
 User.create(
-    username: 'codeyluke',
+    username: 'Codeyluke',
     first_name: 'luke',
     last_name: 'Sia',
     email: 'luke@mail.com',
@@ -183,7 +183,7 @@ User.create(
 
 
 User.create(
-    username: 'Prophet',
+    username: 'Prophet Symnal',
     first_name: 'malcolm',
     last_name: 'Jeremiah',
     email: 'malcolm@mail.com',
@@ -200,7 +200,7 @@ User.create(
 
 
 User.create(
-    username: 'sampras',
+    username: 'Sampras???',
     first_name: 'sam',
     last_name: 'Lee',
     email: 'sam@mail.com',
@@ -216,7 +216,7 @@ User.create(
 )
 
 User.create(
-    username: 'sonaly',
+    username: 'Sonaly',
     first_name: 'sonaly',
     last_name: 'Verma',
     email: 'sonaly@mail.com',
@@ -233,7 +233,7 @@ User.create(
 
 
 User.create(
-    username: 'wesley',
+    username: 'Wesley',
     first_name: 'wesley',
     last_name: 'Weston',
     email: 'wesley@mail.com',
@@ -250,7 +250,7 @@ User.create(
 
 
 User.create(
-    username: 'yijun',
+    username: '12 PM Biscuit Man',
     first_name: 'yijun',
     last_name: 'Lim',
     email: 'yijun@mail.com',
@@ -348,7 +348,7 @@ Midpoint.create(
 )
 
 Midpoint.create(
-    name: 'H Space',
+    name: 'H Space, Petaling Jaya',
     address: 'H Space, Jalan PJU 5/1, Kota Damansara, Petaling Jaya, Selangor 47810, Malaysia',
     description: 'A co-working space',
     longtitude: "101.59703",
@@ -370,7 +370,7 @@ Midpoint.create(
 )
 
 Midpoint.create(
-    name: 'The Co. - The Row',
+    name: 'The Co. - The Row @ Chow Kit',
     address: 'No. 42-48, Jalan Doraisamy, Chow Kit, Kuala Lumpur, Malaysia',
     description: 'A co-working space',
     longtitude: "101.69927",
@@ -381,7 +381,7 @@ Midpoint.create(
 )
 
 Midpoint.create(
-    name: 'PAPER + TOAST',
+    name: 'PAPER + TOAST @ Bukit Bintang',
     address: 'Level 13A, Fahrenheit Office Tower, Jalan Gading, Bukit Bintang, Kuala Lumpur, Malaysia',
     description: 'A co-working space',
     longtitude: "101.710625",
@@ -392,7 +392,7 @@ Midpoint.create(
 )
 
 Midpoint.create(
-    name: 'Pulau Tikus Penang',
+    name: 'Pulau Tikus Penang @ Penang',
     address: 'Georgetown',
     description: 'Many food',
     longtitude: "100.31180984",

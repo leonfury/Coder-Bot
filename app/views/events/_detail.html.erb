@@ -24,6 +24,9 @@
         <br> Meeting Time: <%= @event.event_date.strftime("%d %b %Y, %A") %> <%= @event.event_time.strftime("%H:%M %p") %>
     </div>
     <div id="shortlist" class="ml-2">
+        <button type="button" class="back_btn btn btn-danger mr-2">Back</button>
+        <a href="/events/<%= @event.id if @event %>" class="btn btn-primary mr-2"> View Project Detail </a>
+        <br><br>
         <h4> Collaborators </h4>
         <% if @event.invites.count != 0 %>
             <% @event.invites.each do |i| %>
@@ -46,9 +49,7 @@
     </div>
 
 <% end %>
-<br>
-<button type="button" class="back_btn btn btn-danger mr-2">Back</button>
-<a href="/events/<%= @event.id if @event %>" class="btn btn-primary mr-2"> View Project Detail </a>
+
 
 
 <script>
