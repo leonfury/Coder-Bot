@@ -25,14 +25,6 @@ ActiveRecord::Schema.define(version: 2019_02_12_124656) do
     t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
-  create_table "codelangs", force: :cascade do |t|
-    t.string "lang"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_codelangs_on_user_id"
-  end
-
   create_table "events", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "midpoint_id"
